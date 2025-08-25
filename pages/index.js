@@ -1,5 +1,264 @@
 import { useState, useEffect, useRef } from "react";
 
+// Language translations
+const translations = {
+  ar: {
+    title: "Tabib.info",
+    subtitle: "المساعد الطبي الذكي",
+    nav: {
+      chat: "المحادثة",
+      features: "المميزات",
+      reviews: "التقييمات",
+      about: "عن التطبيق"
+    },
+    hero: {
+      title: "طبيبك الذكي",
+      subtitle: "استشارات طبية فورية بالذكاء الاصطناعي",
+      features: {
+        instant: "استشارات فورية 24/7",
+        images: "تحليل الصور الطبية",
+        privacy: "خصوصية تامة"
+      }
+    },
+    chat: {
+      title: "ابدأ محادثتك الطبية",
+      subtitle: "اكتب أعراضك أو ارفع صورة للحصول على استشارة فورية",
+      newChat: "بدء محادثة جديدة",
+      placeholder: "اكتب أعراضك هنا...",
+      addImage: "إضافة صورة",
+      imageSelected: "تم اختيار الصورة",
+      send: "إرسال"
+    },
+    features: {
+      title: "مميزات طبيبك",
+      subtitle: "اكتشف كيف يمكن لطبيبك الذكي مساعدتك",
+      instant: {
+        title: "استشارات فورية",
+        desc: "احصل على استشارة طبية فورية في أي وقت من اليوم، 24 ساعة في اليوم، 7 أيام في الأسبوع"
+      },
+      images: {
+        title: "تحليل الصور",
+        desc: "ارفع صور الأعراض أو الجروح للحصول على تحليل دقيق وتشخيص أولي"
+      },
+      privacy: {
+        title: "خصوصية تامة",
+        desc: "معلوماتك الطبية محمية بخصوصية تامة ولا يتم حفظها أو مشاركتها"
+      }
+    },
+    reviews: {
+      title: "آراء المستخدمين",
+      subtitle: "ماذا يقول الناس عن طبيبك"
+    },
+    about: {
+      title: "عن Tabib.info",
+      subtitle: "تعرف على المزيد عن تطبيقنا",
+      vision: {
+        title: "رؤيتنا",
+        desc1: "نسعى لتوفير رعاية صحية ذكية ومتاحة للجميع من خلال تقنيات الذكاء الاصطناعي المتقدمة.",
+        desc2: "Tabib.info هو مساعد طبي ذكي مصمم لتقديم استشارات أولية دقيقة وسريعة، مع الحفاظ على أعلى معايير الخصوصية والأمان."
+      },
+      stats: {
+        users: "مستخدم نشط",
+        consultations: "استشارة مكتملة"
+      },
+      info: {
+        title: "معلومات مهمة",
+        consultation: {
+          title: "استشارة أولية فقط",
+          desc: "هذا التطبيق لا يحل محل الطبيب المختص"
+        },
+        privacy: {
+          title: "خصوصية مضمونة",
+          desc: "معلوماتك محمية ولا يتم مشاركتها"
+        },
+        emergency: {
+          title: "للحالات الطارئة",
+          desc: "اتصل بـ 150 أو 141 للحالات الخطيرة"
+        }
+      }
+    },
+    footer: {
+      quickLinks: "روابط سريعة",
+      contact: "معلومات الاتصال",
+      emergency: "أرقام الطوارئ",
+      ambulance: "الإسعاف",
+      gendarmerie: "الدرك",
+      police: "الشرطة",
+      copyright: "Tabib.info © 2025 جميع الحقوق محفوظة. للاستشارات الطبية فقط."
+    }
+  },
+  en: {
+    title: "Tabib.info",
+    subtitle: "Smart Medical Assistant",
+    nav: {
+      chat: "Chat",
+      features: "Features",
+      reviews: "Reviews",
+      about: "About"
+    },
+    hero: {
+      title: "Your Smart Doctor",
+      subtitle: "Instant medical consultations with artificial intelligence",
+      features: {
+        instant: "24/7 instant consultations",
+        images: "Medical image analysis",
+        privacy: "Complete privacy"
+      }
+    },
+    chat: {
+      title: "Start Your Medical Chat",
+      subtitle: "Write your symptoms or upload an image for instant consultation",
+      newChat: "Start New Chat",
+      placeholder: "Write your symptoms here...",
+      addImage: "Add Image",
+      imageSelected: "Image Selected",
+      send: "Send"
+    },
+    features: {
+      title: "Your Doctor's Features",
+      subtitle: "Discover how your smart doctor can help you",
+      instant: {
+        title: "Instant Consultations",
+        desc: "Get instant medical consultation anytime, 24 hours a day, 7 days a week"
+      },
+      images: {
+        title: "Image Analysis",
+        desc: "Upload photos of symptoms or wounds for accurate analysis and initial diagnosis"
+      },
+      privacy: {
+        title: "Complete Privacy",
+        desc: "Your medical information is protected with complete privacy and is not saved or shared"
+      }
+    },
+    reviews: {
+      title: "User Reviews",
+      subtitle: "What people say about your doctor"
+    },
+    about: {
+      title: "About Tabib.info",
+      subtitle: "Learn more about our app",
+      vision: {
+        title: "Our Vision",
+        desc1: "We strive to provide smart healthcare accessible to everyone through advanced artificial intelligence technologies.",
+        desc2: "Tabib.info is a smart medical assistant designed to provide accurate and fast initial consultations while maintaining the highest standards of privacy and security."
+      },
+      stats: {
+        users: "active users",
+        consultations: "completed consultations"
+      },
+      info: {
+        title: "Important Information",
+        consultation: {
+          title: "Initial consultation only",
+          desc: "This app does not replace a specialist doctor"
+        },
+        privacy: {
+          title: "Guaranteed privacy",
+          desc: "Your information is protected and not shared"
+        },
+        emergency: {
+          title: "For emergencies",
+          desc: "Call 150 or 141 for serious cases"
+        }
+      }
+    },
+    footer: {
+      quickLinks: "Quick Links",
+      contact: "Contact Info",
+      emergency: "Emergency Numbers",
+      ambulance: "Ambulance",
+      gendarmerie: "Gendarmerie",
+      police: "Police",
+      copyright: "Tabib.info © 2025 All rights reserved. For medical consultations only."
+    }
+  },
+  fr: {
+    title: "Tabib.info",
+    subtitle: "Assistant Médical Intelligent",
+    nav: {
+      chat: "Chat",
+      features: "Fonctionnalités",
+      reviews: "Avis",
+      about: "À propos"
+    },
+    hero: {
+      title: "Votre Médecin Intelligent",
+      subtitle: "Consultations médicales instantanées avec l'intelligence artificielle",
+      features: {
+        instant: "Consultations instantanées 24/7",
+        images: "Analyse d'images médicales",
+        privacy: "Confidentialité totale"
+      }
+    },
+    chat: {
+      title: "Commencez Votre Chat Médical",
+      subtitle: "Écrivez vos symptômes ou téléchargez une image pour une consultation instantanée",
+      newChat: "Nouveau Chat",
+      placeholder: "Écrivez vos symptômes ici...",
+      addImage: "Ajouter Image",
+      imageSelected: "Image Sélectionnée",
+      send: "Envoyer"
+    },
+    features: {
+      title: "Fonctionnalités de Votre Médecin",
+      subtitle: "Découvrez comment votre médecin intelligent peut vous aider",
+      instant: {
+        title: "Consultations Instantanées",
+        desc: "Obtenez une consultation médicale instantanée à tout moment, 24 heures par jour, 7 jours par semaine"
+      },
+      images: {
+        title: "Analyse d'Images",
+        desc: "Téléchargez des photos de symptômes ou de blessures pour une analyse précise et un diagnostic initial"
+      },
+      privacy: {
+        title: "Confidentialité Totale",
+        desc: "Vos informations médicales sont protégées avec une confidentialité totale et ne sont pas sauvegardées ou partagées"
+      }
+    },
+    reviews: {
+      title: "Avis des Utilisateurs",
+      subtitle: "Ce que disent les gens de votre médecin"
+    },
+    about: {
+      title: "À Propos de Tabib.info",
+      subtitle: "En savoir plus sur notre application",
+      vision: {
+        title: "Notre Vision",
+        desc1: "Nous nous efforçons de fournir des soins de santé intelligents accessibles à tous grâce aux technologies avancées d'intelligence artificielle.",
+        desc2: "Tabib.info est un assistant médical intelligent conçu pour fournir des consultations initiales précises et rapides tout en maintenant les plus hauts standards de confidentialité et de sécurité."
+      },
+      stats: {
+        users: "utilisateurs actifs",
+        consultations: "consultations terminées"
+      },
+      info: {
+        title: "Informations Importantes",
+        consultation: {
+          title: "Consultation initiale uniquement",
+          desc: "Cette application ne remplace pas un médecin spécialiste"
+        },
+        privacy: {
+          title: "Confidentialité garantie",
+          desc: "Vos informations sont protégées et non partagées"
+        },
+        emergency: {
+          title: "Pour les urgences",
+          desc: "Appelez le 150 ou 141 pour les cas graves"
+        }
+      }
+    },
+    footer: {
+      quickLinks: "Liens Rapides",
+      contact: "Informations de Contact",
+      emergency: "Numéros d'Urgence",
+      ambulance: "Ambulance",
+      gendarmerie: "Gendarmerie",
+      police: "Police",
+      copyright: "Tabib.info © 2025 Tous droits réservés. Pour consultations médicales uniquement."
+    }
+  }
+};
+
 export default function Home() {
   const [messages, setMessages] = useState([
     { role: "assistant", content: "سلام! أنا الطبيب ديالك. شنو هي الأعراض لي كتحس بيهم؟" }
@@ -10,14 +269,24 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [threadId, setThreadId] = useState(null);
   const [activeSection, setActiveSection] = useState("chat");
+  const [language, setLanguage] = useState("ar");
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const bottomRef = useRef(null);
   const fileInputRef = useRef(null);
   const messagesContainerRef = useRef(null);
+
+  const t = translations[language];
 
   useEffect(() => {
     const savedThreadId = localStorage.getItem('tabib_thread_id');
     if (savedThreadId) {
       setThreadId(savedThreadId);
+    }
+    
+    // Load saved language preference
+    const savedLanguage = localStorage.getItem('tabib_language');
+    if (savedLanguage && ['ar', 'en', 'fr'].includes(savedLanguage)) {
+      setLanguage(savedLanguage);
     }
   }, []);
 
@@ -26,6 +295,23 @@ export default function Home() {
       localStorage.setItem('tabib_thread_id', threadId);
     }
   }, [threadId]);
+
+  useEffect(() => {
+    // Save language preference
+    localStorage.setItem('tabib_language', language);
+  }, [language]);
+
+  // Close language dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isLanguageDropdownOpen && !event.target.closest('.language-dropdown')) {
+        setIsLanguageDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isLanguageDropdownOpen]);
 
   useEffect(() => {
     if (copiedId !== null) {
@@ -147,8 +433,8 @@ export default function Home() {
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
               <img src="/logo.png" className="w-16 h-16 object-contain" alt="Tabib.info" />
               <div className="flex flex-col justify-center">
-                <h1 className="text-2xl font-bold" style={{ color: '#111' }}>Tabib.info</h1>
-                <span className="text-gray-500 text-base mt-1">المساعد الطبي الذكي</span>
+                <h1 className="text-2xl font-bold" style={{ color: '#111' }}>{t.title}</h1>
+                <span className="text-gray-500 text-base mt-1">{t.subtitle}</span>
               </div>
             </div>
             
@@ -157,29 +443,207 @@ export default function Home() {
                 onClick={() => scrollToSection('chat')}
                 className={`text-sm font-medium transition-colors ${activeSection === 'chat' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
               >
-                المحادثة
+                {t.nav.chat}
               </button>
               <button 
                 onClick={() => scrollToSection('features')}
                 className={`text-sm font-medium transition-colors ${activeSection === 'features' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
               >
-                المميزات
+                {t.nav.features}
               </button>
               <button 
                 onClick={() => scrollToSection('reviews')}
                 className={`text-sm font-medium transition-colors ${activeSection === 'reviews' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
               >
-                التقييمات
+                {t.nav.reviews}
               </button>
               <button 
                 onClick={() => scrollToSection('about')}
                 className={`text-sm font-medium transition-colors ${activeSection === 'about' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
               >
-                عن التطبيق
+                {t.nav.about}
               </button>
             </nav>
 
-            <div className="md:hidden">
+            {/* Language Switcher */}
+            <div className="hidden md:flex items-center relative language-dropdown">
+              <button
+                onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+                className="flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 rounded-lg border border-gray-200 bg-white text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 cursor-pointer hover:bg-gray-50"
+              >
+                <div className="w-6 h-4 rounded border border-gray-300 overflow-hidden">
+                  {language === 'ar' ? (
+                    <img 
+                      src="https://flagcdn.com/w40/ma.png" 
+                      alt="Morocco Flag" 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : language === 'en' ? (
+                    <img 
+                      src="https://flagcdn.com/w40/gb.png" 
+                      alt="UK Flag" 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <img 
+                      src="https://flagcdn.com/w40/fr.png" 
+                      alt="France Flag" 
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </div>
+                <span className="hidden sm:inline">
+                  {language === 'ar' ? 'العربية' : language === 'en' ? 'English' : 'Français'}
+                </span>
+                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {isLanguageDropdownOpen && (
+                <div className="absolute top-full right-0 rtl:right-auto rtl:left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                  <div className="py-1">
+                    <button
+                      onClick={() => { setLanguage('ar'); setIsLanguageDropdownOpen(false); }}
+                      className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-2 text-sm hover:bg-gray-100 transition-colors ${
+                        language === 'ar' ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                      }`}
+                    >
+                      <img 
+                        src="https://flagcdn.com/w40/ma.png" 
+                        alt="Morocco Flag" 
+                        className="w-6 h-4 rounded border border-gray-300 object-cover"
+                      />
+                      <span>العربية</span>
+                      {language === 'ar' && (
+                        <svg className="w-4 h-4 text-blue-600 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => { setLanguage('en'); setIsLanguageDropdownOpen(false); }}
+                      className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-2 text-sm hover:bg-gray-100 transition-colors ${
+                        language === 'en' ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                      }`}
+                    >
+                      <img 
+                        src="https://flagcdn.com/w40/gb.png" 
+                        alt="UK Flag" 
+                        className="w-6 h-4 rounded border border-gray-300 object-cover"
+                      />
+                      <span>English</span>
+                      {language === 'en' && (
+                        <svg className="w-4 h-4 text-blue-600 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => { setLanguage('fr'); setIsLanguageDropdownOpen(false); }}
+                      className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-2 text-sm hover:bg-gray-100 transition-colors ${
+                        language === 'fr' ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                      }`}
+                    >
+                      <img 
+                        src="https://flagcdn.com/w40/fr.png" 
+                        alt="France Flag" 
+                        className="w-6 h-4 rounded border border-gray-300 object-cover"
+                      />
+                      <span>Français</span>
+                      {language === 'fr' && (
+                        <svg className="w-4 h-4 text-blue-600 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="md:hidden flex items-center space-x-2 rtl:space-x-reverse">
+              {/* Mobile Language Switcher */}
+              <div className="relative language-dropdown">
+                <button
+                  onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+                  className="flex items-center space-x-1 rtl:space-x-reverse px-2 py-1 rounded border border-gray-200 bg-white text-xs font-medium focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all duration-200 cursor-pointer hover:bg-gray-50"
+                >
+                  <div className="w-5 h-3 rounded border border-gray-300 overflow-hidden">
+                    {language === 'ar' ? (
+                      <img 
+                        src="https://flagcdn.com/w40/ma.png" 
+                        alt="Morocco Flag" 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : language === 'en' ? (
+                      <img 
+                        src="https://flagcdn.com/w40/gb.png" 
+                        alt="UK Flag" 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <img 
+                        src="https://flagcdn.com/w40/fr.png" 
+                        alt="France Flag" 
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <span className="hidden xs:inline">
+                    {language === 'ar' ? 'ع' : language === 'en' ? 'EN' : 'FR'}
+                  </span>
+                  <svg className="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                {isLanguageDropdownOpen && (
+                  <div className="absolute top-full right-0 rtl:right-auto rtl:left-0 mt-1 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                    <div className="py-1">
+                      <button
+                        onClick={() => { setLanguage('ar'); setIsLanguageDropdownOpen(false); }}
+                        className={`w-full flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 text-xs hover:bg-gray-100 transition-colors ${
+                          language === 'ar' ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                        }`}
+                      >
+                        <img 
+                          src="https://flagcdn.com/w40/ma.png" 
+                          alt="Morocco Flag" 
+                          className="w-5 h-3 rounded border border-gray-300 object-cover"
+                        />
+                        <span>العربية</span>
+                      </button>
+                      <button
+                        onClick={() => { setLanguage('en'); setIsLanguageDropdownOpen(false); }}
+                        className={`w-full flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 text-xs hover:bg-gray-100 transition-colors ${
+                          language === 'en' ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                        }`}
+                      >
+                        <img 
+                          src="https://flagcdn.com/w40/gb.png" 
+                          alt="UK Flag" 
+                          className="w-5 h-3 rounded border border-gray-300 object-cover"
+                        />
+                        <span>English</span>
+                      </button>
+                      <button
+                        onClick={() => { setLanguage('fr'); setIsLanguageDropdownOpen(false); }}
+                        className={`w-full flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 text-xs hover:bg-gray-100 transition-colors ${
+                          language === 'fr' ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                        }`}
+                      >
+                        <img 
+                          src="https://flagcdn.com/w40/fr.png" 
+                          alt="France Flag" 
+                          className="w-5 h-3 rounded border border-gray-300 object-cover"
+                        />
+                        <span>Français</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
               <button className="text-gray-600 hover:text-black">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -209,26 +673,26 @@ export default function Home() {
           opacity: 1,
         }} />
         <div className="max-w-6xl mx-auto px-4 text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">طبيبك الذكي</h2>
-          <p className="text-xl md:text-2xl mb-8 opacity-90">استشارات طبية فورية بالذكاء الاصطناعي</p>
+          <h2 className="text-4xl md:text-6xl font-bold mb-6">{t.hero.title}</h2>
+          <p className="text-xl md:text-2xl mb-8 opacity-90">{t.hero.subtitle}</p>
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
             <div className="flex items-center space-x-2 rtl:space-x-reverse">
               <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
-              <span>استشارات فورية 24/7</span>
+              <span>{t.hero.features.instant}</span>
             </div>
             <div className="flex items-center space-x-2 rtl:space-x-reverse">
               <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
-              <span>تحليل الصور الطبية</span>
+              <span>{t.hero.features.images}</span>
             </div>
             <div className="flex items-center space-x-2 rtl:space-x-reverse">
               <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
-              <span>خصوصية تامة</span>
+              <span>{t.hero.features.privacy}</span>
             </div>
           </div>
         </div>
@@ -238,13 +702,13 @@ export default function Home() {
       <section id="chat" className="py-12" style={{ background: '#fff' }}>
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-gray-800 mb-4">ابدأ محادثتك الطبية</h3>
-            <p className="text-gray-600">اكتب أعراضك أو ارفع صورة للحصول على استشارة فورية</p>
+            <h3 className="text-3xl font-bold text-gray-800 mb-4">{t.chat.title}</h3>
+            <p className="text-gray-600">{t.chat.subtitle}</p>
             <button
               onClick={handleNewChat}
               className="mt-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg text-sm font-medium transition-colors"
             >
-              بدء محادثة جديدة
+              {t.chat.newChat}
             </button>
           </div>
           
@@ -326,13 +790,13 @@ export default function Home() {
                   type="text" 
                   value={input} 
                   onChange={e => setInput(e.target.value)} 
-                  placeholder="اكتب أعراضك هنا..." 
+                  placeholder={t.chat.placeholder} 
                   className="flex-1 p-3 rounded-xl border border-gray-200 shadow-inner focus:outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
                 />
                 <button 
                   type="submit" 
                   className="bg-[#95f16d] hover:bg-[#b6f7a0] text-white p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-[#95f16d]"
-                  aria-label="إرسال"
+                  aria-label={t.chat.send}
                   disabled={loading || (!input.trim() && !selectedImage)}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -353,8 +817,8 @@ export default function Home() {
                     ${selectedImage 
                       ? 'bg-green-500 hover:bg-green-600' 
                       : 'bg-gray-100 hover:bg-gray-200'}`}
-                  title={selectedImage ? 'تم اختيار الصورة' : 'إضافة صورة'}
-                  aria-label="إضافة صورة"
+                  title={t.chat.imageSelected}
+                  aria-label={t.chat.addImage}
                 >
                   <svg 
                     className={`w-5 h-5 ${selectedImage ? 'text-white' : 'text-gray-600'}`}
@@ -384,8 +848,8 @@ export default function Home() {
       <section id="features" className="py-16" style={{ background: 'linear-gradient(180deg, #f3fcf4 0%, #fff 100%)' }}>
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold mb-4" style={{ color: '#e11d48' }}>مميزات طبيبك</h3>
-            <p className="text-gray-600">اكتشف كيف يمكن لطبيبك الذكي مساعدتك</p>
+            <h3 className="text-3xl font-bold mb-4" style={{ color: '#e11d48' }}>{t.features.title}</h3>
+            <p className="text-gray-600">{t.features.subtitle}</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -395,8 +859,8 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h4 className="text-xl font-semibold text-gray-800 mb-3">استشارات فورية</h4>
-              <p className="text-gray-600">احصل على استشارة طبية فورية في أي وقت من اليوم، 24 ساعة في اليوم، 7 أيام في الأسبوع</p>
+              <h4 className="text-xl font-semibold text-gray-800 mb-3">{t.features.instant.title}</h4>
+              <p className="text-gray-600">{t.features.instant.desc}</p>
             </div>
             
             <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
@@ -405,8 +869,8 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4 4L20 6" />
                 </svg>
               </div>
-              <h4 className="text-xl font-semibold text-gray-800 mb-3">تحليل الصور</h4>
-              <p className="text-gray-600">ارفع صور الأعراض أو الجروح للحصول على تحليل دقيق وتشخيص أولي</p>
+              <h4 className="text-xl font-semibold text-gray-800 mb-3">{t.features.images.title}</h4>
+              <p className="text-gray-600">{t.features.images.desc}</p>
             </div>
             
             <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
@@ -415,8 +879,8 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <h4 className="text-xl font-semibold text-gray-800 mb-3">خصوصية تامة</h4>
-              <p className="text-gray-600">معلوماتك الطبية محمية بخصوصية تامة ولا يتم حفظها أو مشاركتها</p>
+              <h4 className="text-xl font-semibold text-gray-800 mb-3">{t.features.privacy.title}</h4>
+              <p className="text-gray-600">{t.features.privacy.desc}</p>
             </div>
           </div>
         </div>
@@ -426,8 +890,8 @@ export default function Home() {
       <section id="reviews" className="py-16" style={{ background: 'linear-gradient(180deg, #f3fcf4 0%, #fff 100%)' }}>
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-800 mb-4">آراء المستخدمين</h3>
-            <p className="text-gray-600">ماذا يقول الناس عن طبيبك</p>
+            <h3 className="text-3xl font-bold text-gray-800 mb-4">{t.reviews.title}</h3>
+            <p className="text-gray-600">{t.reviews.subtitle}</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -489,42 +953,42 @@ export default function Home() {
       <section id="about" className="py-16" style={{ background: '#fff' }}>
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold mb-4" style={{ color: '#111' }}>عن Tabib.info</h3>
-            <p className="text-gray-600">تعرف على المزيد عن تطبيقنا</p>
+            <h3 className="text-3xl font-bold mb-4" style={{ color: '#111' }}>{t.about.title}</h3>
+            <p className="text-gray-600">{t.about.subtitle}</p>
           </div>
           
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h4 className="text-2xl font-semibold text-gray-800 mb-6">رؤيتنا</h4>
+              <h4 className="text-2xl font-semibold text-gray-800 mb-6">{t.about.vision.title}</h4>
               <p className="text-gray-600 mb-4">
-                نسعى لتوفير رعاية صحية ذكية ومتاحة للجميع من خلال تقنيات الذكاء الاصطناعي المتقدمة.
+                {t.about.vision.desc1}
               </p>
               <p className="text-gray-600 mb-6">
-                <span style={{ color: '#111', fontWeight: 'bold' }}>Tabib.info</span> هو مساعد طبي ذكي مصمم لتقديم استشارات أولية دقيقة وسريعة، مع الحفاظ على أعلى معايير الخصوصية والأمان.
+                <span style={{ color: '#111', fontWeight: 'bold' }}>Tabib.info</span> {t.about.vision.desc2}
               </p>
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-blue-600 mb-2">+10K</div>
-                  <div className="text-sm text-gray-600">مستخدم نشط</div>
+                  <div className="text-sm text-gray-600">{t.about.stats.users}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-green-600 mb-2">+50K</div>
-                  <div className="text-sm text-gray-600">استشارة مكتملة</div>
+                  <div className="text-sm text-gray-600">{t.about.stats.consultations}</div>
                 </div>
               </div>
             </div>
             
             <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <h5 className="text-xl font-semibold text-gray-800 mb-4">معلومات مهمة</h5>
+              <h5 className="text-xl font-semibold text-gray-800 mb-4">{t.about.info.title}</h5>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3 rtl:space-x-reverse">
                   <svg className="w-6 h-6 text-blue-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div>
-                    <h6 className="font-semibold text-gray-800">استشارة أولية فقط</h6>
-                    <p className="text-sm text-gray-600">هذا التطبيق لا يحل محل الطبيب المختص</p>
+                    <h6 className="font-semibold text-gray-800">{t.about.info.consultation.title}</h6>
+                    <p className="text-sm text-gray-600">{t.about.info.consultation.desc}</p>
                   </div>
                 </div>
                 
@@ -533,8 +997,8 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                   <div>
-                    <h6 className="font-semibold text-gray-800">خصوصية مضمونة</h6>
-                    <p className="text-sm text-gray-600">معلوماتك محمية ولا يتم مشاركتها</p>
+                    <h6 className="font-semibold text-gray-800">{t.about.info.privacy.title}</h6>
+                    <p className="text-sm text-gray-600">{t.about.info.privacy.desc}</p>
                   </div>
                 </div>
                 
@@ -543,8 +1007,8 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                   </svg>
                   <div>
-                    <h6 className="font-semibold text-gray-800">للحالات الطارئة</h6>
-                    <p className="text-sm text-gray-600">اتصل بـ 150 أو 141 للحالات الخطيرة</p>
+                    <h6 className="font-semibold text-gray-800">{t.about.info.emergency.title}</h6>
+                    <p className="text-sm text-gray-600">{t.about.info.emergency.desc}</p>
                   </div>
                 </div>
               </div>
@@ -561,42 +1025,42 @@ export default function Home() {
               <div className="flex items-center space-x-3 rtl:space-x-reverse mb-4">
                 <img src="/logo.png" className="w-16 h-16 object-contain" alt="Tabib.info"/>
                 <div className="flex flex-col justify-center">
-                  <span className="text-xl font-bold" style={{ color: '#fff' }}>Tabib.info</span>
-                  <span className="text-gray-500 text-base mt-1">المساعد الطبي الذكي</span>
+                  <span className="text-xl font-bold" style={{ color: '#fff' }}>{t.title}</span>
+                  <span className="text-gray-500 text-base mt-1">{t.subtitle}</span>
                 </div>
               </div>
             </div>
             
             <div>
-              <h5 className="font-semibold mb-4">روابط سريعة</h5>
+              <h5 className="font-semibold mb-4">{t.footer.quickLinks}</h5>
               <ul className="space-y-2 text-sm text-gray-300">
-                <li><button onClick={() => scrollToSection('chat')} className="hover:text-white transition-colors">المحادثة</button></li>
-                <li><button onClick={() => scrollToSection('features')} className="hover:text-white transition-colors">المميزات</button></li>
-                <li><button onClick={() => scrollToSection('reviews')} className="hover:text-white transition-colors">التقييمات</button></li>
-                <li><button onClick={() => scrollToSection('about')} className="hover:text-white transition-colors">عن التطبيق</button></li>
+                <li><button onClick={() => scrollToSection('chat')} className="hover:text-white transition-colors">{t.nav.chat}</button></li>
+                <li><button onClick={() => scrollToSection('features')} className="hover:text-white transition-colors">{t.nav.features}</button></li>
+                <li><button onClick={() => scrollToSection('reviews')} className="hover:text-white transition-colors">{t.nav.reviews}</button></li>
+                <li><button onClick={() => scrollToSection('about')} className="hover:text-white transition-colors">{t.nav.about}</button></li>
               </ul>
             </div>
             
             <div>
-              <h5 className="font-semibold mb-4">معلومات الاتصال</h5>
+              <h5 className="font-semibold mb-4">{t.footer.contact}</h5>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li>البريد الإلكتروني: contact@tabib.info</li>
               </ul>
             </div>
             
             <div>
-              <h5 className="font-semibold mb-4">أرقام الطوارئ</h5>
+              <h5 className="font-semibold mb-4">{t.footer.emergency}</h5>
               <ul className="space-y-2 text-sm text-gray-300">
-                <li>🚑 الإسعاف: 141</li>
-                <li>👮 الدرك: 150</li>
-                <li>🚔 الشرطة: 19</li>
+                <li>🚑 {t.footer.ambulance}: 141</li>
+                <li>👮 {t.footer.gendarmerie}: 150</li>
+                <li>🚔 {t.footer.police}: 19</li>
               </ul>
             </div>
           </div>
           
           <div className="border-t border-gray-700 mt-8 pt-8 text-center">
             <p className="text-gray-300 text-sm">
-              <span style={{ color: '#fff', fontWeight: 'bold' }}>Tabib.info © 2025 جميع الحقوق محفوظة</span>. للاستشارات الطبية فقط.
+              <span style={{ color: '#fff', fontWeight: 'bold' }}>{t.footer.copyright}</span>
             </p>
           </div>
         </div>
