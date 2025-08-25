@@ -323,6 +323,23 @@ export default function Home() {
             <div className="border-t border-gray-100 p-4">
               <form onSubmit={sendMessage} className="flex gap-2">
                 <input 
+                  type="text" 
+                  value={input} 
+                  onChange={e => setInput(e.target.value)} 
+                  placeholder="اكتب أعراضك هنا..." 
+                  className="flex-1 p-3 rounded-xl border border-gray-200 shadow-inner focus:outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
+                />
+                <button 
+                  type="submit" 
+                  className="bg-[#95f16d] hover:bg-[#b6f7a0] text-white p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-[#95f16d]"
+                  aria-label="إرسال"
+                  disabled={loading || (!input.trim() && !selectedImage)}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+                <input 
                   type="file"
                   accept="image/*"
                   onChange={handleImageSelect}
@@ -337,35 +354,24 @@ export default function Home() {
                       ? 'bg-green-500 hover:bg-green-600' 
                       : 'bg-gray-100 hover:bg-gray-200'}`}
                   title={selectedImage ? 'تم اختيار الصورة' : 'إضافة صورة'}
+                  aria-label="إضافة صورة"
                 >
                   <svg 
                     className={`w-5 h-5 ${selectedImage ? 'text-white' : 'text-gray-600'}`}
-                    fill="none" 
-                    stroke="currentColor" 
                     viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     {selectedImage ? (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      // Checkmark when image selected
+                      <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     ) : (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4 4L20 6" />
+                      // Camera icon
+                      <>
+                        <path d="M4 7a2 2 0 00-2 2v7a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2h-3l-1.2-1.8A2 2 0 0014.4 4h-4.8a2 2 0 00-1.4.6L7 7H4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <circle cx="12" cy="13" r="3.5" stroke="currentColor" strokeWidth="2" />
+                      </>
                     )}
-                  </svg>
-                </button>
-                <input 
-                  type="text" 
-                  value={input} 
-                  onChange={e => setInput(e.target.value)} 
-                  placeholder="اكتب أعراضك هنا..." 
-                  className="flex-1 p-3 rounded-xl border border-gray-200 shadow-inner focus:outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
-                />
-                <button 
-                  type="submit" 
-                  className="bg-[#95f16d] hover:bg-[#b6f7a0] text-white p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-[#95f16d]"
-                  aria-label="إرسال"
-                  disabled={loading || input.trim() === ""}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
                 </button>
               </form>

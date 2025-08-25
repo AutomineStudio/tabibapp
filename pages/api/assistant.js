@@ -79,16 +79,38 @@ export default async function handler(req, res) {
     if (files.image) {
       try {
         const buffer = await fs.readFile(files.image.filepath);
-        const base64Image = buffer.toString("base64");
-        
+        const filename = files.image.originalFilename || 'image.jpg';
+        const mimetype = files.image.mimetype || 'application/octet-stream';
+
+        // Prepare multipart form for OpenAI file upload
+        const formData = new FormData();
+        const blob = new Blob([buffer], { type: mimetype });
+        formData.append('file', blob, filename);
+        formData.append('purpose', 'vision');
+
+        const uploadResponse = await fetch('https://api.openai.com/v1/files', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+          },
+          body: formData
+        });
+
+        if (!uploadResponse.ok) {
+          const errText = await uploadResponse.text();
+          console.error('Image upload failed:', errText);
+          throw new Error('فشل رفع الصورة إلى OpenAI');
+        }
+
+        const uploadData = await uploadResponse.json();
+
         // Clean up the temporary file
         await fs.unlink(files.image.filepath).catch(console.error);
-        
+
+        // Reference uploaded file in message content
         messageContent.push({
-          type: "image_url",
-          image_url: {
-            url: `data:image/jpeg;base64,${base64Image}`
-          }
+          type: 'image_file',
+          image_file: { file_id: uploadData.id }
         });
       } catch (error) {
         console.error("Image processing error:", error);
