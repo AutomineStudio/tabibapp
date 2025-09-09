@@ -426,11 +426,16 @@ export default function Home() {
 
     try {
       const formData = new FormData();
-      // Only send the latest user message to the API
-      formData.append("messages", JSON.stringify([userMessage]));
+      // Send recent conversation history for continuity (last 10 messages)
+      const history = [...messages, userMessage]
+        .map(m => ({ role: m.role, content: m.content }))
+        .slice(-10);
+      formData.append("messages", JSON.stringify(history));
       if (selectedImage) {
         formData.append("image", selectedImage);
       }
+      // Send selected UI language to enforce answer language server-side
+      formData.append("lang", language);
       if (threadId) {
         formData.append("threadId", threadId);
       }
@@ -473,17 +478,40 @@ export default function Home() {
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      if (file.type.startsWith('image/')) {
-        if (file.size <= 20 * 1024 * 1024) {
-          setSelectedImage(file);
-        } else {
-          alert('الصورة كبيرة جداً. الحد الأقصى هو 20 ميغابايت');
-        }
-      } else {
-        alert('يرجى اختيار ملف صورة صالح');
-      }
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      alert('يرجى اختيار ملف صورة صالح');
+      return;
     }
+
+    const maxDim = 1280;
+    const quality = 0.75;
+    const reader = new FileReader();
+    const img = new Image();
+
+    reader.onload = () => {
+      img.onload = () => {
+        let { width, height } = img;
+        const scale = Math.min(1, width > height ? maxDim / width : maxDim / height);
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(width * scale);
+        canvas.height = Math.round(height * scale);
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        const outType = file.type === 'image/png' ? 'image/jpeg' : (file.type || 'image/jpeg');
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            setSelectedImage(file);
+            return;
+          }
+          const optimized = new File([blob], file.name.replace(/\.(png|jpg|jpeg|webp)$/i, '.jpg'), { type: outType });
+          setSelectedImage(optimized);
+        }, outType, quality);
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
   };
 
   const scrollToSection = (sectionId) => {
