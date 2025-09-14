@@ -75,9 +75,9 @@ If the user reports emergency symptoms (e.g., chest pain, severe bleeding, loss 
 🔄 INTERACTION FLOW
 Greeting:
 
-In Darija: “السلام عليكم، آش خبارك؟”
+In Darija: "السلام عليكم، آش خبارك؟"
 
-In French: “Bonjour, comment allez-vous ?”
+In French: "Bonjour, comment allez-vous ?"
 
 Triage – Ask 3–5 Targeted Questions:
 🔸 Symptoms: What, when, severity.
@@ -94,7 +94,12 @@ In Darija: Medical terms should always be followed by the French equivalent (in 
 
 In French: Use only French terms.
 
-Advice & Medication
+⚠️ CRITICAL: DO NOT suggest any medicines until you have completed the full triage process and assessment. Only suggest medicines AFTER you have:
+1. Asked all necessary questions
+2. Gathered complete information about symptoms, history, medications, allergies, and demographics
+3. Provided a clear assessment of the possible condition
+
+Advice & Medication (ONLY after complete diagnosis)
 If suitable, suggest an over-the-counter medicine. Include:
 ✅ Medicine name (in Latin)
 ✅ Dosage
@@ -151,6 +156,17 @@ Example Advice (Darija):
       'If a medicine is not in the CSV, clearly state it is not available in Morocco.'
     );
     fullMessages.unshift({ role: 'system', content: csvDataSource });
+    
+    // Add conversation flow control
+    const conversationFlow = (
+      'CONVERSATION FLOW CONTROL: ' +
+      '1. Start with greeting and ask about symptoms ' +
+      '2. Ask follow-up questions about medical history, current medications, allergies, demographics ' +
+      '3. Provide assessment of possible condition ' +
+      '4. ONLY THEN suggest medicines from the CSV database ' +
+      'DO NOT suggest medicines in the first few exchanges. Focus on gathering information first.'
+    );
+    fullMessages.unshift({ role: 'system', content: conversationFlow });
 
     for (let i = 0; i < messages.length - 1; i++) {
       const m = messages[i];
@@ -184,8 +200,18 @@ Example Advice (Darija):
       }
     }
 
-    // Inject verified medicine info into context if present
-    if (latestMessage?.content) {
+    // Inject verified medicine info into context if present AND conversation has progressed
+    // Only inject medicine data if this is not the first exchange and user is asking about specific medicines
+    const isFirstExchange = messages.length <= 1;
+    const isAskingAboutMedicine = latestMessage?.content && (
+      latestMessage.content.toLowerCase().includes('medicine') ||
+      latestMessage.content.toLowerCase().includes('medication') ||
+      latestMessage.content.toLowerCase().includes('دواء') ||
+      latestMessage.content.toLowerCase().includes('médicament') ||
+      extractMedicineCandidates(latestMessage.content).length > 0
+    );
+    
+    if (latestMessage?.content && !isFirstExchange && isAskingAboutMedicine) {
       try {
         await ensureMedicamentsLoaded();
         const candidates = extractMedicineCandidates(latestMessage.content).slice(0, 5);
@@ -241,35 +267,55 @@ Example Advice (Darija):
 
     let reply = data?.choices?.[0]?.message?.content || 'عذراً، لم أتمكن من توليد رد في الوقت الحالي.';
 
-    // Postprocess: if the assistant mentioned medicines, append verified price info from CSV
-    try {
-      await ensureMedicamentsLoaded();
-      // Extract candidates from the reply itself (assistant's suggestions)
-      const mentioned = extractMedicineCandidates(reply).slice(0, 6);
-      const found = [];
-      for (const m of mentioned) {
-        // Try exact match first
-        let rec = await findByName(m);
-        if (!rec) {
-          // If no exact match, try loose search
-          const searchResults = await searchLoose(m, 1);
-          rec = searchResults[0] || null;
+    // Postprocess: only append medicine info if diagnosis is complete AND medicines are being recommended
+    if (!isFirstExchange) {
+      try {
+        // Check if the assistant is actually recommending medicines (not just asking questions)
+        const isAskingQuestions = reply.includes('؟') || reply.includes('?') || 
+                                 reply.includes('واش') || reply.includes('شحال') || 
+                                 reply.includes('شنو') || reply.includes('وعندك') ||
+                                 reply.includes('comment') || reply.includes('quand') ||
+                                 reply.includes('avez-vous') || reply.includes('prenez-vous');
+        
+        const isRecommendingMedicine = reply.toLowerCase().includes('تقدر تاخذ') || 
+                                      reply.toLowerCase().includes('recommande') ||
+                                      reply.toLowerCase().includes('suggest') ||
+                                      reply.toLowerCase().includes('prendre') ||
+                                      reply.toLowerCase().includes('mg') ||
+                                      reply.toLowerCase().includes('قرص') ||
+                                      reply.toLowerCase().includes('comprimé');
+        
+        // Only show medicine data if assistant is recommending medicines, not asking questions
+        if (!isAskingQuestions && isRecommendingMedicine) {
+          await ensureMedicamentsLoaded();
+          // Extract candidates from the reply itself (assistant's suggestions)
+          const mentioned = extractMedicineCandidates(reply).slice(0, 6);
+          const found = [];
+          for (const m of mentioned) {
+            // Try exact match first
+            let rec = await findByName(m);
+            if (!rec) {
+              // If no exact match, try loose search
+              const searchResults = await searchLoose(m, 1);
+              rec = searchResults[0] || null;
+            }
+            if (rec) found.push(rec);
+          }
+          if (found.length > 0) {
+            // Force postprocessed snippet language to match UI selection
+            const isArabic = selectedLang === 'ar';
+            const title = isArabic ? 'معلومات موثوقة (المغرب):' : 'Infos vérifiées (Maroc):';
+            const lines = found.map(r => {
+              const price = r.price_mad != null ? (isArabic ? `الثمن التقريبي: ${r.price_mad} درهم` : `prix env.: ${r.price_mad} MAD`) : (isArabic ? 'الثمن غير متوفر' : 'prix indisponible');
+              const klass = r.therapeutic_class ? (isArabic ? `— الصنف: ${r.therapeutic_class}` : `— classe: ${r.therapeutic_class}`) : '';
+              return `- ${r.name} — ${price} ${klass}`.trim();
+            });
+            reply += `\n\n${title}\n${lines.join('\n')}`;
+          }
         }
-        if (rec) found.push(rec);
+      } catch (e) {
+        // silent fail, keep original reply
       }
-      if (found.length > 0) {
-        // Force postprocessed snippet language to match UI selection
-        const isArabic = selectedLang === 'ar';
-        const title = isArabic ? 'معلومات موثوقة (المغرب):' : 'Infos vérifiées (Maroc):';
-        const lines = found.map(r => {
-          const price = r.price_mad != null ? (isArabic ? `الثمن التقريبي: ${r.price_mad} درهم` : `prix env.: ${r.price_mad} MAD`) : (isArabic ? 'الثمن غير متوفر' : 'prix indisponible');
-          const klass = r.therapeutic_class ? (isArabic ? `— الصنف: ${r.therapeutic_class}` : `— classe: ${r.therapeutic_class}`) : '';
-          return `- ${r.name} — ${price} ${klass}`.trim();
-        });
-        reply += `\n\n${title}\n${lines.join('\n')}`;
-      }
-    } catch (e) {
-      // silent fail, keep original reply
     }
 
     // Normalize any source mention to CSV, but do NOT append a source line
