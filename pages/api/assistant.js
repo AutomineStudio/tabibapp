@@ -1,6 +1,6 @@
 import { IncomingForm } from "formidable";
 import fs from "fs/promises";
-import { ensureMedicamentsLoaded, findByName, extractMedicineCandidates } from "../../lib/medicaments";
+import { ensureMedicamentsLoaded, findByName, searchLoose, extractMedicineCandidates } from "../../lib/medicaments";
 
 export const config = { api: { bodyParser: false } };
 
@@ -55,7 +55,7 @@ Once the user shares their gender, immediately switch to using the correct prono
 
 📚 DATA SOURCE (MANDATORY)
 All medicine information must be fetched from:
-“medicaments_ma last version - Supabase Snippet Medicaments Table.pdf”.
+"data/Medicaments.csv" - the official Moroccan medicines database.
 This includes:
 
 Medicine name
@@ -64,8 +64,8 @@ Therapeutic class
 
 Retail price in MAD (Moroccan Dirham)
 
-⚠️ If a medicine is not found in the file, clearly say it’s not available in Morocco.
-✅ However, it’s allowed to give a short, general description of the medicine’s typical usage (e.g., "هاد الدواء كيستعمل باش يخفف الألم"), but do not guess the price or confirm its availability in Morocco.
+⚠️ If a medicine is not found in the CSV database, clearly say it's not available in Morocco.
+✅ However, it's allowed to give a short, general description of the medicine's typical usage (e.g., "هاد الدواء كيستعمل باش يخفف الألم"), but do not guess the price or confirm its availability in Morocco.
 
 🩺 SCOPE & LIMITATIONS
 You are not a replacement for in-person medical care. Always include this disclaimer:
@@ -102,7 +102,7 @@ If suitable, suggest an over-the-counter medicine. Include:
 ✅ Side effects
 ✅ Price in MAD (e.g., "ثمنه تقريبا 12 درهم")
 
-⚠️ If the medicine isn’t found in the PDF, say clearly it’s unavailable in Morocco and provide a brief general description only — never guess the price.
+⚠️ If the medicine isn't found in the CSV database, say clearly it's unavailable in Morocco and provide a brief general description only — never guess the price.
 
 Closing:
 
@@ -119,12 +119,12 @@ Example Advice (Darija):
 
     // Build messages for Chat Completions
     const fullMessages = [{ role: 'system', content: systemPrompt }];
-    // Explicit override: ensure prices come from CSV, not PDF
+    // Explicit override: ensure all medicine data comes from CSV
     const csvOverride = (
       'DATA SOURCE OVERRIDE\n' +
-      'Use ONLY the CSV at data/Medicaments.csv for price amounts in MAD. ' +
-      'Ignore any prior instruction to use PDFs for pricing. ' +
-      'If a medicine is not present in the CSV, do NOT guess a price; say the price is unavailable.'
+      'Use ONLY the CSV database at data/Medicaments.csv for ALL medicine information including names, therapeutic classes, and prices in MAD. ' +
+      'This is the ONLY source of truth for Moroccan medicines. ' +
+      'If a medicine is not present in the CSV, do NOT guess any information; say it is not available in Morocco.'
     );
     fullMessages.push({ role: 'system', content: csvOverride });
     // Explicit language override: always use the top-bar language
@@ -142,6 +142,15 @@ Example Advice (Darija):
       ? "IMPORTANT: Réponds uniquement en français. N'utilise pas l'arabe."
       : "مهم: جاوب غير بالدارجة المغربية (العربية الدارجة المغربية). متستعملش الفرنسية إلا غير للمصطلح الطبي بين قوسين.";
     fullMessages.unshift({ role: 'system', content: langGuard });
+    
+    // Add explicit CSV data source instruction
+    const csvDataSource = (
+      'CRITICAL: You have access to a CSV database of Moroccan medicines at data/Medicaments.csv. ' +
+      'When users ask about medicines, you MUST check this database first. ' +
+      'Only provide medicine information that exists in this CSV file. ' +
+      'If a medicine is not in the CSV, clearly state it is not available in Morocco.'
+    );
+    fullMessages.unshift({ role: 'system', content: csvDataSource });
 
     for (let i = 0; i < messages.length - 1; i++) {
       const m = messages[i];
@@ -182,7 +191,13 @@ Example Advice (Darija):
         const candidates = extractMedicineCandidates(latestMessage.content).slice(0, 5);
         const found = [];
         for (const c of candidates) {
-          const rec = await findByName(c);
+          // Try exact match first
+          let rec = await findByName(c);
+          if (!rec) {
+            // If no exact match, try loose search
+            const searchResults = await searchLoose(c, 1);
+            rec = searchResults[0] || null;
+          }
           if (rec) found.push(rec);
         }
         if (found.length > 0) {
@@ -193,6 +208,7 @@ Example Advice (Darija):
           fullMessages.push({ role: 'system', content: lines.join('\n') });
         }
       } catch (e) {
+        console.error('Error injecting medicine data:', e);
         // Fail silently; assistant can proceed without enrichment
       }
     }
@@ -232,7 +248,13 @@ Example Advice (Darija):
       const mentioned = extractMedicineCandidates(reply).slice(0, 6);
       const found = [];
       for (const m of mentioned) {
-        const rec = await findByName(m);
+        // Try exact match first
+        let rec = await findByName(m);
+        if (!rec) {
+          // If no exact match, try loose search
+          const searchResults = await searchLoose(m, 1);
+          rec = searchResults[0] || null;
+        }
         if (rec) found.push(rec);
       }
       if (found.length > 0) {
