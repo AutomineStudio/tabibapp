@@ -412,8 +412,8 @@ export default function Home() {
     e.preventDefault();
     if (!input.trim() && !selectedImage) return;
 
-    const userMessage = { 
-      role: "user", 
+    const userMessage = {
+      role: "user",
       content: input.trim(),
       image: selectedImage ? URL.createObjectURL(selectedImage) : null
     };
@@ -426,27 +426,42 @@ export default function Home() {
 
     try {
       const formData = new FormData();
-      // Only send the latest user message to the API
-      formData.append("messages", JSON.stringify([userMessage]));
+
+      // IMPORTANT: Send FULL conversation history for context
+      // Remove the greeting message and any image URLs (they can't be sent as JSON)
+      const messagesForAPI = newMessages
+        .filter(msg => msg.content !== t.chat.greeting) // Remove greeting
+        .map(msg => ({
+          role: msg.role,
+          content: msg.content
+        }));
+
+      formData.append("messages", JSON.stringify(messagesForAPI));
+
       if (selectedImage) {
         formData.append("image", selectedImage);
       }
+
+      // Send responseId (threadId) for conversation continuity
       if (threadId) {
-        formData.append("threadId", threadId);
+        formData.append("previousResponseId", threadId);
       }
 
-      const res = await fetch("/api/assistant", { 
-        method: "POST", 
-        body: formData 
+      const res = await fetch("/api/assistant", {
+        method: "POST",
+        body: formData
       });
       const data = await res.json();
-      
+
       if (!res.ok) {
         throw new Error(data.result || 'Error sending message');
       }
 
-      if (data.threadId && !threadId) {
-        setThreadId(data.threadId);
+      // Save responseId for conversation continuity
+      if (data.responseId || data.threadId) {
+        const newThreadId = data.responseId || data.threadId;
+        setThreadId(newThreadId);
+        localStorage.setItem('tabib_thread_id', newThreadId);
       }
 
       // Add assistant response to messages
