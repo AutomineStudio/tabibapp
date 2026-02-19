@@ -1,333 +1,436 @@
 import { IncomingForm } from "formidable";
 import fs from "fs/promises";
-import { ensureMedicamentsLoaded, findByName, searchLoose, extractMedicineCandidates } from "../../lib/medicaments";
+import { searchMedicines, formatMedicineForAI } from "../../utils/medicines.js";
 
 export const config = { api: { bodyParser: false } };
 
-// Fast response flow using Chat Completions; no threads/polling
+// Define the medicine search tool for function calling
+const medicineSearchTool = {
+  type: "function",
+  function: {
+    name: "search_medicine_database",
+    description: "Search the Moroccan medicines database. Use broad medical keywords for better results. The search uses OR logic across composition and therapeutic class fields. IMPORTANT: Always include patient age and gender for appropriate recommendations.",
+    parameters: {
+      type: "object",
+      properties: {
+        symptoms: {
+          type: "string",
+          description: "User symptoms in their own words (optional, for reference only)"
+        },
+        condition: {
+          type: "string",
+          description: "Medical condition name (optional, for reference only)"
+        },
+        composition: {
+          type: "string",
+          description: "IMPORTANT: Active ingredient names to search for. Use common drug names: 'paracetamol', 'ibuprofène', 'amoxicilline', 'metformine', 'atorvastatine', etc. Can provide multiple separated by spaces."
+        },
+        therapeuticClass: {
+          type: "string",
+          description: "IMPORTANT: Therapeutic class keywords. Use broad medical terms: 'analgésique', 'antipyrétique', 'anti-inflammatoire', 'antibiotique', 'antidiabétique', 'antihypertenseur', 'antirhumatismal', 'hypolipémiant', etc. Can provide multiple separated by spaces."
+        },
+        patientAge: {
+          type: "number",
+          description: "REQUIRED: Patient's age in years. Used to filter appropriate medicines (pediatric vs adult formulations)."
+        },
+        patientGender: {
+          type: "string",
+          enum: ["homme", "femme", "garçon", "fille"],
+          description: "REQUIRED: Patient's gender. Used for gender-specific recommendations (e.g., pregnancy considerations)."
+        },
+        maxPrice: {
+          type: "number",
+          description: "Maximum price in Moroccan dirhams (optional)"
+        }
+      },
+      required: ["patientAge", "patientGender"]
+    }
+  }
+};
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
+    // Check if API key is available
     if (!process.env.OPENAI_API_KEY) {
-      console.error('OpenAI API key is missing');
-      return res.status(500).json({ result: 'خطأ في الإعداد: مفتاح OpenAI غير موجود.' });
+      console.error("OpenAI API key is missing");
+      return res.status(500).json({ result: "❌ خطأ: مفتاح API مفقود. يرجى التحقق من إعدادات البيئة." });
     }
 
-    const form = new IncomingForm({ maxFileSize: 20 * 1024 * 1024 });
+    const form = new IncomingForm({ maxFileSize: 50 * 1024 * 1024 });
     const { fields, files } = await new Promise((resolve, reject) => {
-      form.parse(req, (err, flds, fls) => (err ? reject(err) : resolve({ fields: flds, files: fls })));
+      form.parse(req, (err, flds, fls) => err ? reject(err) : resolve({ fields: flds, files: fls }));
     });
 
-    const messages = JSON.parse(fields.messages || '[]');
-    const selectedLang = (fields.lang === 'fr') ? 'fr' : 'ar';
+    const messages = JSON.parse(fields.messages || "[]");
+    const previousResponseId = fields.previousResponseId?.[0] || null;
 
-    // Assistant prompt (provided by product): drives language, tone, flow, and constraints
-    const systemPrompt = `
-LANGUAGE & TONE
+    console.log("\n" + "█".repeat(80));
+    console.log("📨 NEW REQUEST RECEIVED");
+    console.log("█".repeat(80));
+    console.log(`📊 Conversation: ${messages.length} message(s) in history`);
+    console.log(`🆔 Response ID: ${previousResponseId || 'null (new conversation)'}`);
+    console.log(`🖼️  Image attached: ${files.image ? 'Yes' : 'No'}`);
 
-Speak ONLY in Moroccan Darija Arabic (العربية الدارجة المغربية) if the user writes in Darija.
+    if (messages.length > 0) {
+      console.log("\n💬 Conversation History:");
+      messages.forEach((msg, i) => {
+        const preview = msg.content.substring(0, 60) + (msg.content.length > 60 ? '...' : '');
+        console.log(`  ${i + 1}. [${msg.role}] ${preview}`);
+      });
+    }
+    console.log("█".repeat(80) + "\n");
 
-Speak ONLY in French if the user writes in French.
+    // Prepare conversation messages for Responses API
+    let conversationMessages = [];
 
-Use a friendly, supportive, and caring tone, like a Moroccan doctor talking to a patient.
-
-Medicine names must always be written in Latin letters (e.g., “Doliprane”, “Amoxicilline”).
-
-Any complex medical term must be followed by the French equivalent in parentheses. Example: التهاب المفاصل (arthrite).
-
-In Darija: Write clearly with proper right-to-left structure.
-
-In French: Write clearly with proper left-to-right structure.
-
-When including a Latin medicine name inside an Arabic sentence, do it in a way that does not break the sentence flow. Keep the integrity of Arabic structure.
-
-👤 GENDER-BASED PRONOUN RULE
-By default, assume the user is male in how you refer to them.
-As part of the triage, ask explicitly about the user's gender:
-
-In Darija: “واش راجل ولا مرا؟”
-
-In French: “Vous êtes un homme ou une femme ?”
-Once the user shares their gender, immediately switch to using the correct pronoun and grammatical structure appropriate for a male (راجل / homme) or female (مرا / femme). Continue using that gender-specific form for the rest of the conversation.
-
-📚 DATA SOURCE (MANDATORY)
-All medicine information must be fetched from:
-"data/Medicaments.csv" - the official Moroccan medicines database.
-This includes:
-
-Medicine name
-
-Therapeutic class
-
-Retail price in MAD (Moroccan Dirham)
-
-⚠️ If a medicine is not found in the CSV database, clearly say it's not available in Morocco.
-✅ However, it's allowed to give a short, general description of the medicine's typical usage (e.g., "هاد الدواء كيستعمل باش يخفف الألم"), but do not guess the price or confirm its availability in Morocco.
-
-🩺 SCOPE & LIMITATIONS
-You are not a replacement for in-person medical care. Always include this disclaimer:
-“أنا مجرد مساعد افتراضي، ماشي طبيب حقيقي؛ إلا كانت الأعراض خطيرة سير لأقرب طبيب أو مستشفى.”
-If the user reports emergency symptoms (e.g., chest pain, severe bleeding, loss of consciousness), advise them immediately to visit the emergency room, and do not attempt remote diagnosis.
-
-🔄 INTERACTION FLOW
-Greeting:
-
-In Darija: "السلام عليكم، آش خبارك؟"
-
-In French: "Bonjour, comment allez-vous ?"
-
-Triage – Ask 3–5 Targeted Questions:
-🔸 Symptoms: What, when, severity.
-🔸 Medical history: Any chronic conditions?
-🔸 Current medication: Taking anything?
-🔸 Allergies: Known allergies to meds or foods?
-🔸 Demographics: Gender + Age.
-🔸 If an image is uploaded, describe it first, then ask follow-up questions related to it.
-
-Assessment
-Give a simple explanation of the possible cause.
-
-In Darija: Medical terms should always be followed by the French equivalent (in parentheses).
-
-In French: Use only French terms.
-
-⚠️ CRITICAL: DO NOT suggest any medicines until you have completed the full triage process and assessment. Only suggest medicines AFTER you have:
-1. Asked all necessary questions
-2. Gathered complete information about symptoms, history, medications, allergies, and demographics
-3. Provided a clear assessment of the possible condition
-
-Advice & Medication (ONLY after complete diagnosis)
-If suitable, suggest an over-the-counter medicine. Include:
-✅ Medicine name (in Latin)
-✅ Dosage
-✅ Frequency
-✅ Side effects
-✅ Price in MAD (e.g., "ثمنه تقريبا 12 درهم")
-
-⚠️ If the medicine isn't found in the CSV database, say clearly it's unavailable in Morocco and provide a brief general description only — never guess the price.
-
-Closing:
-
-If male: “نتمنى ليك الشفاء العاجل!”
-
-If female: “نتمنى ليكِ الشفاء العاجل!”
-
-🔖 STYLE EXAMPLES
-Example Question (Darija):
-“عفاك قول ليا شحال فاش بديتي تحس بالحمى؟ شحال وصلات الحرارة؟ شنو جنسك؟ واش راجل ولا مرا؟ وشحال فعمرك؟ واش خديتي شي دواء بحال Doliprane؟ وعندك شي حساسية؟”
-
-Example Advice (Darija):
-“يقدر يكون عندك نزلة برد بسيطة. تقدر تاخذ Doliprane 500 mg، قرص واحد كل 6 ساعات (ما تفوتش 4 أقراص فالنهار). ثمنه تقريبا 12 درهم. ولكن أنا مجرد مساعد افتراضي، ماشي طبيب حقيقي؛ إلا بقات الحرارة فوق 39° أو كان عندك ضيق فالتنفس، ضروري تمشي عند الطبيب. نتمنى ليك الشفاء العاجل!”`;
-
-    // Build messages for Chat Completions
-    const fullMessages = [{ role: 'system', content: systemPrompt }];
-    // Explicit override: ensure all medicine data comes from CSV
-    const csvOverride = (
-      'DATA SOURCE OVERRIDE\n' +
-      'Use ONLY the CSV database at data/Medicaments.csv for ALL medicine information including names, therapeutic classes, and prices in MAD. ' +
-      'This is the ONLY source of truth for Moroccan medicines. ' +
-      'If a medicine is not present in the CSV, do NOT guess any information; say it is not available in Morocco.'
-    );
-    fullMessages.push({ role: 'system', content: csvOverride });
-    // Explicit language override: always use the top-bar language
-    const langOverride = selectedLang === 'fr'
-      ? (
-        'LANGUAGE OVERRIDE\n' +
-        "Réponds UNIQUEMENT en français. Ignore toute instruction précédente qui te demande d\'utiliser la langue de l\'utilisateur ou de changer de langue. Toutes tes réponses doivent être en français."
-      ) : (
-        'LANGUAGE OVERRIDE\n' +
-        "جاوب غير بالدّارجة المغربية. نْسَى أي تعليمات قبل من هادي كتقول تجاوب بلغة المستخدم ولا تبدّل اللغة. جميع الأجوبة خاصها تكون بالدّارجة."
-      );
-    fullMessages.push({ role: 'system', content: langOverride });
-    // Enforce answer language based on UI selection
-    const langGuard = selectedLang === 'fr'
-      ? "IMPORTANT: Réponds uniquement en français. N'utilise pas l'arabe."
-      : "مهم: جاوب غير بالدارجة المغربية (العربية الدارجة المغربية). متستعملش الفرنسية إلا غير للمصطلح الطبي بين قوسين.";
-    fullMessages.unshift({ role: 'system', content: langGuard });
-    
-    // Add explicit CSV data source instruction
-    const csvDataSource = (
-      'CRITICAL: You have access to a CSV database of Moroccan medicines at data/Medicaments.csv. ' +
-      'When users ask about medicines, you MUST check this database first. ' +
-      'Only provide medicine information that exists in this CSV file. ' +
-      'If a medicine is not in the CSV, clearly state it is not available in Morocco.'
-    );
-    fullMessages.unshift({ role: 'system', content: csvDataSource });
-    
-    // Add conversation flow control
-    const conversationFlow = (
-      'CONVERSATION FLOW CONTROL: ' +
-      '1. Start with greeting and ask about symptoms ' +
-      '2. Ask follow-up questions about medical history, current medications, allergies, demographics ' +
-      '3. Provide assessment of possible condition ' +
-      '4. ONLY THEN suggest medicines from the CSV database ' +
-      'DO NOT suggest medicines in the first few exchanges. Focus on gathering information first.'
-    );
-    fullMessages.unshift({ role: 'system', content: conversationFlow });
-
-    for (let i = 0; i < messages.length - 1; i++) {
-      const m = messages[i];
-      if (!m) continue;
-      fullMessages.push({ role: m.role, content: m.content });
+    // Add conversation history
+    if (messages.length > 0) {
+      conversationMessages = messages.map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'assistant',
+        content: msg.content
+      }));
     }
 
-    const latestMessage = messages[messages.length - 1];
-    if (latestMessage) {
-      if (files.image) {
-        try {
-          const buffer = await fs.readFile(files.image.filepath);
-          const base64Image = buffer.toString('base64');
-          await fs.unlink(files.image.filepath).catch(() => {});
-          fullMessages.push({
-            role: 'user',
-            content: [
-              { type: 'text', text: latestMessage.content || '' },
-              { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${base64Image}` } },
-            ],
-          });
-        } catch (error) {
-          console.error('Image processing error:', error);
-          if (files.image?.filepath) {
-            await fs.unlink(files.image.filepath).catch(() => {});
-          }
-          return res.status(500).json({ result: 'حدث خطأ أثناء معالجة الصورة' });
-        }
-      } else {
-        fullMessages.push(latestMessage);
-      }
-    }
-
-    // Inject verified medicine info into context if present AND conversation has progressed
-    // Only inject medicine data if this is not the first exchange and user is asking about specific medicines
-    const isFirstExchange = messages.length <= 1;
-    const isAskingAboutMedicine = latestMessage?.content && (
-      latestMessage.content.toLowerCase().includes('medicine') ||
-      latestMessage.content.toLowerCase().includes('medication') ||
-      latestMessage.content.toLowerCase().includes('دواء') ||
-      latestMessage.content.toLowerCase().includes('médicament') ||
-      extractMedicineCandidates(latestMessage.content).length > 0
-    );
-    
-    if (latestMessage?.content && !isFirstExchange && isAskingAboutMedicine) {
+    // Handle image upload if present
+    if (files.image) {
       try {
-        await ensureMedicamentsLoaded();
-        const candidates = extractMedicineCandidates(latestMessage.content).slice(0, 5);
-        const found = [];
-        for (const c of candidates) {
-          // Try exact match first
-          let rec = await findByName(c);
-          if (!rec) {
-            // If no exact match, try loose search
-            const searchResults = await searchLoose(c, 1);
-            rec = searchResults[0] || null;
-          }
-          if (rec) found.push(rec);
-        }
-        if (found.length > 0) {
-          const lines = [
-            'بيانات موثوقة لأدوية في المغرب (للاستعمال كمصدر فقط):',
-            ...found.map(r => `- ${r.name}: ${r.therapeutic_class || '—'}${r.price_mad != null ? ` — السعر التقريبي: ${r.price_mad} درهم` : ''}`)
-          ];
-          fullMessages.push({ role: 'system', content: lines.join('\n') });
-        }
-      } catch (e) {
-        console.error('Error injecting medicine data:', e);
-        // Fail silently; assistant can proceed without enrichment
-      }
-    }
+        const buffer = await fs.readFile(files.image[0].filepath);
+        const base64Image = buffer.toString('base64');
+        const mimeType = files.image[0].mimetype || 'image/jpeg';
 
-    // Configurable, faster defaults
-    const hasImage = !!files.image;
-    const defaultModel = hasImage ? 'gpt-4.1-mini' : 'gpt-4.1-mini';
-    const model = process.env.OPENAI_MODEL || defaultModel;
-    const max_tokens = Number(process.env.OPENAI_MAX_TOKENS || 700);
-    const temperature = Number(process.env.OPENAI_TEMPERATURE || 0.5);
-    const top_p = Number(process.env.OPENAI_TOP_P || 0.9);
-    const frequency_penalty = Number(process.env.OPENAI_FREQUENCY_PENALTY || 0.1);
-    const presence_penalty = Number(process.env.OPENAI_PRESENCE_PENALTY || 0.0);
-
-    const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-        Connection: 'keep-alive',
-      },
-      body: JSON.stringify({ model, messages: fullMessages, max_tokens, temperature, top_p, frequency_penalty, presence_penalty }),
-    });
-
-    const data = await openaiRes.json();
-    if (!openaiRes.ok) {
-      console.error('OpenAI API Error:', { status: openaiRes.status, statusText: openaiRes.statusText, error: data?.error });
-      return res.status(500).json({ result: `خطأ من المزود: ${data?.error?.message || 'Unknown error'}` });
-    }
-
-    let reply = data?.choices?.[0]?.message?.content || 'عذراً، لم أتمكن من توليد رد في الوقت الحالي.';
-
-    // Postprocess: only append medicine info if diagnosis is complete AND medicines are being recommended
-    if (!isFirstExchange) {
-      try {
-        // Check if the assistant is actually recommending medicines (not just asking questions)
-        const isAskingQuestions = reply.includes('؟') || reply.includes('?') || 
-                                 reply.includes('واش') || reply.includes('شحال') || 
-                                 reply.includes('شنو') || reply.includes('وعندك') ||
-                                 reply.includes('comment') || reply.includes('quand') ||
-                                 reply.includes('avez-vous') || reply.includes('prenez-vous');
-        
-        const isRecommendingMedicine = reply.toLowerCase().includes('تقدر تاخذ') || 
-                                      reply.toLowerCase().includes('recommande') ||
-                                      reply.toLowerCase().includes('suggest') ||
-                                      reply.toLowerCase().includes('prendre') ||
-                                      reply.toLowerCase().includes('mg') ||
-                                      reply.toLowerCase().includes('قرص') ||
-                                      reply.toLowerCase().includes('comprimé');
-        
-        // Only show medicine data if assistant is recommending medicines, not asking questions
-        if (!isAskingQuestions && isRecommendingMedicine) {
-          await ensureMedicamentsLoaded();
-          // Extract candidates from the reply itself (assistant's suggestions)
-          const mentioned = extractMedicineCandidates(reply).slice(0, 6);
-          const found = [];
-          for (const m of mentioned) {
-            // Try exact match first
-            let rec = await findByName(m);
-            if (!rec) {
-              // If no exact match, try loose search
-              const searchResults = await searchLoose(m, 1);
-              rec = searchResults[0] || null;
+        // Add image to the latest user message
+        if (conversationMessages.length > 0 && conversationMessages[conversationMessages.length - 1].role === 'user') {
+          const lastMessage = conversationMessages[conversationMessages.length - 1];
+          lastMessage.content = [
+            { type: "text", text: lastMessage.content },
+            {
+              type: "image_url",
+              image_url: {
+                url: `data:${mimeType};base64,${base64Image}`
+              }
             }
-            if (rec) found.push(rec);
-          }
-          if (found.length > 0) {
-            // Force postprocessed snippet language to match UI selection
-            const isArabic = selectedLang === 'ar';
-            const title = isArabic ? 'معلومات موثوقة (المغرب):' : 'Infos vérifiées (Maroc):';
-            const lines = found.map(r => {
-              const price = r.price_mad != null ? (isArabic ? `الثمن التقريبي: ${r.price_mad} درهم` : `prix env.: ${r.price_mad} MAD`) : (isArabic ? 'الثمن غير متوفر' : 'prix indisponible');
-              const klass = r.therapeutic_class ? (isArabic ? `— الصنف: ${r.therapeutic_class}` : `— classe: ${r.therapeutic_class}`) : '';
-              return `- ${r.name} — ${price} ${klass}`.trim();
-            });
-            reply += `\n\n${title}\n${lines.join('\n')}`;
-          }
+          ];
         }
-      } catch (e) {
-        // silent fail, keep original reply
+
+        // Clean up temp file
+        await fs.unlink(files.image[0].filepath).catch(console.error);
+      } catch (error) {
+        console.error("Image processing error:", error);
+        if (files.image?.[0]?.filepath) {
+          await fs.unlink(files.image[0].filepath).catch(console.error);
+        }
       }
     }
 
-    // Normalize any source mention to CSV, but do NOT append a source line
-    try {
-      reply = reply
-        .replace(/medicaments?_ma[^\n]*pdf/gi, 'data/Medicaments.csv')
-        .replace(/PDF database/gi, 'CSV dataset');
-    } catch {}
+    // Create the system prompt for the medical assistant
+    const systemPrompt = `Tu es un médecin virtuel marocain spécialisé dans les consultations médicales. Tu dois répondre dans la MÊME LANGUE que le patient utilise.
 
-    return res.status(200).json({ result: reply });
+**TRÈS IMPORTANT - Détection de la langue:**
+- Si le patient parle en FRANÇAIS → Réponds en FRANÇAIS
+- Si le patient parle en ARABE (Darija) → Réponds en ARABE (Darija)
+- Si le patient parle en ARABE STANDARD → Réponds en ARABE STANDARD
+- ADAPTE-TOI TOUJOURS à la langue du patient
+
+**Ta mission principale:**
+1. Écouter attentivement les symptômes du patient
+2. **TOUJOURS demander ces informations ESSENTIELLES avant de rechercher des médicaments:**
+   - **ÂGE** (obligatoire - posologies pédiatriques vs adultes différentes)
+   - **SEXE/GENRE** (obligatoire - grossesse, allaitement, hormones)
+   - Allergies connues
+   - Médicaments actuels (interactions)
+   - Durée des symptômes
+3. **Traduire les symptômes en termes médicaux** pour la recherche:
+   - Mal de tête / Céphalée → composition: "paracétamol, ibuprofène" OU therapeuticClass: "analgésique, antipyrétique"
+   - Fièvre → composition: "paracétamol" OU therapeuticClass: "antipyrétique"
+   - Douleurs articulaires → composition: "ibuprofène" OU therapeuticClass: "anti-inflammatoire, antirhumatismal"
+   - Diabète → composition: "metformine, glibenclamide" OU therapeuticClass: "antidiabétique, hypoglycémiant"
+   - Hypertension → composition: "amlodipine, enalapril" OU therapeuticClass: "antihypertenseur"
+   - Infection / Antibiotique → composition: "amoxicilline" OU therapeuticClass: "antibiotique, anti-infectieux"
+   - Toux → composition: "dextrométhorphane" OU therapeuticClass: "antitussif, expectorant, mucolytique"
+   - Allergie → composition: "cétirizine, loratadine" OU therapeuticClass: "antihistaminique, antiallergique"
+   - Douleur / Analgésie → composition: "paracétamol, ibuprofène, tramadol" OU therapeuticClass: "analgésique, antalgique"
+   - Infection urinaire → composition: "nitrofurantoïne" OU therapeuticClass: "antibiotique, quinolone, anti-infectieux urinaire"
+   - Diarrhée → composition: "lopéramide" OU therapeuticClass: "antidiarrhéique"
+   - Constipation → therapeuticClass: "laxatif"
+   - Brûlures d'estomac → composition: "oméprazole" OU therapeuticClass: "antiacide, inhibiteur pompe protons"
+   - Cholestérol → composition: "atorvastatine, simvastatine" OU therapeuticClass: "hypolipémiant, statine"
+4. Rechercher dans la base de données avec des **mots-clés médicaux larges**
+5. Fournir des conseils médicaux généraux et des instructions d'utilisation
+
+**Règles importantes pour éviter les répétitions:**
+- LIS ATTENTIVEMENT l'historique de la conversation
+- NE REPOSE PAS une question si le patient a déjà répondu
+- Si le patient a donné des informations, UTILISE-LES directement
+- Ne demande QUE les informations essentielles manquantes
+- **IMPORTANT: NE CHERCHE PAS de médicaments sans connaître l'âge ET le sexe du patient**
+- Si tu as l'âge, le sexe, et les symptômes, PASSE DIRECTEMENT à la recherche
+
+**DÉTECTION DE NOUVELLE DEMANDE DANS LA MÊME CONVERSATION:**
+- Si le patient demande des médicaments pour UN NOUVEAU CAS/SYMPTÔME différent:
+  * EXEMPLE: Après avoir discuté de douleurs articulaires, il demande "et pour le mal de tête?"
+  * EXEMPLE: "Mon fils a de la fièvre" (nouveau patient = nouveau cas)
+  * EXEMPLE: "Et si j'ai une infection urinaire?" (nouveau symptôme = nouveau cas)
+- **ALORS:** VÉRIFIE l'historique pour l'âge et le sexe:
+  * Si l'âge et le sexe ont déjà été fournis dans la conversation ET qu'il s'agit du même patient → UTILISE CES INFOS et RECHERCHE IMMÉDIATEMENT
+  * Si c'est un NOUVEAU patient différent (ex: "mon fils", "ma fille", "mon père") → DEMANDE l'âge et sexe de cette nouvelle personne
+  * Si l'âge/sexe n'ont jamais été donnés → DEMANDE-LES d'abord
+
+**STRATÉGIE DE RECHERCHE INTELLIGENTE - TRÈS IMPORTANT:**
+
+Quand tu reçois les résultats d'une recherche de médicaments:
+
+1. **CROSS-EXAMINE** les résultats avec la demande du patient:
+   - Les médicaments trouvés correspondent-ils VRAIMENT aux symptômes?
+   - La classe thérapeutique est-elle appropriée?
+   - Les indications mentionnent-elles les symptômes du patient?
+
+2. **Si les résultats ne correspondent PAS bien** (0 résultats OU résultats non pertinents):
+   - **NE DIS PAS "désolé"** ou "je ne trouve pas"
+   - **CHERCHE AVEC D'AUTRES MOTS-CLÉS** (maximum 3 itérations)
+   - Essaie des alternatives médicales:
+     * Exemple: "mal de tête" → essaie "paracétamol", "ibuprofène", "analgésique", "céphalée", "migraine"
+     * Exemple: "infection urinaire" → essaie "antibiotique", "cystite", "infection urinaire", "quinolone", "nitrofurantoïne"
+     * Exemple: "toux" → essaie "antitussif", "expectorant", "mucolytique", "bronchodilatateur"
+   - Élargis ou affine les termes de recherche
+   - Essaie composition ET classe thérapeutique séparément
+
+3. **ITÉRATION AUTOMATIQUE:**
+   - Recherche 1: Termes spécifiques (composition précise + classe thérapeutique)
+   - Recherche 2 (si échec): Termes plus larges (seulement classe thérapeutique élargie)
+   - Recherche 3 (si échec): Synonymes médicaux et termes alternatifs
+   - Après 3 tentatives: Explique que tu n'as pas trouvé dans la base marocaine et conseille consultation
+
+4. **ATTITUDE PROFESSIONNELLE:**
+   - Sois CONFIANT et PROACTIF
+   - Ne t'excuse PAS excessivement
+   - Montre ton expertise en cherchant intelligemment
+   - Si le patient conteste tes résultats, AFFINE ta recherche au lieu de t'excuser
+
+**Directives importantes:**
+- Sois empathique et rassurant avec le patient
+- **TOUJOURS inclure patientAge et patientGender dans search_medicine_database**
+- Utilise la fonction search_medicine_database quand tu as l'âge et le sexe du patient
+- **Présente TOUTES les variantes disponibles** (dosages, présentations, quantités différentes)
+  Exemple: "PARACETAMOL est disponible en:
+  - 500 mg boîte de 20 (15 dhs)
+  - 1000 mg boîte de 8 (25 dhs)
+  - 500 mg boîte de 50 (30 dhs)"
+- Mentionne toujours: le nom commercial, TOUS les dosages disponibles, les prix, et le mode d'emploi
+- Adapte les recommandations à l'âge (posologies pédiatriques différentes)
+- Pour les femmes en âge de procréer, mentionne les précautions grossesse/allaitement si pertinent
+- Avertis des effets secondaires possibles
+- Dans les cas graves, conseille de consulter un médecin immédiatement
+
+**Cas d'urgence (conseille d'appeler le 141 pour l'ambulance):**
+- Douleur thoracique ou difficulté respiratoire
+- Saignement sévère
+- Perte de conscience
+- Fièvre très élevée (plus de 40°C)
+- Symptômes d'allergie sévère
+
+**Informations importantes:**
+- Cette consultation ne remplace pas un médecin
+- Les médicaments marqués "Tableau A" nécessitent une ordonnance
+- Mentionne toujours l'importance de consulter le pharmacien pour vérifier la disponibilité
+
+**RAPPEL: Réponds TOUJOURS dans la langue utilisée par le patient!**`;
+
+    // Prepare the Chat Completions API request with function calling
+    const requestBody = {
+      model: "gpt-4o", // Use GPT-4o for best results with function calling
+      messages: [
+        { role: "system", content: systemPrompt },
+        ...conversationMessages
+      ],
+      tools: [medicineSearchTool],
+      tool_choice: "auto", // Let the model decide when to call the function
+      temperature: 0.7,
+      max_tokens: 2000
+    };
+
+    // Note: Chat Completions API doesn't use previous_response_id
+    // Conversation continuity is maintained through the messages array
+
+    console.log("Calling Chat Completions API with", conversationMessages.length, "messages...");
+
+    // Call OpenAI Chat Completions API with function calling
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(requestBody)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("Chat Completions API failed:", {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorData
+      });
+
+      if (response.status === 401) {
+        throw new Error('مفتاح API غير صالح أو منتهي الصلاحية');
+      } else if (response.status === 429) {
+        throw new Error('تم تجاوز حد الطلبات. يرجى المحاولة لاحقاً');
+      } else if (response.status === 500) {
+        throw new Error('خطأ في خادم OpenAI. يرجى المحاولة لاحقاً');
+      } else {
+        throw new Error(`فشل في الاتصال بالخدمة: ${response.status}`);
+      }
+    }
+
+    const responseData = await response.json();
+    const assistantMessage = responseData.choices[0].message;
+
+    console.log("\n" + "🤖 AI RESPONSE RECEIVED");
+    console.log(`⏱️  Finish reason: ${responseData.choices[0].finish_reason}`);
+    console.log(`🔧 Tool calls requested: ${assistantMessage.tool_calls ? 'Yes' : 'No'}`);
+
+    // Check if the model wants to call a function
+    if (assistantMessage.tool_calls && assistantMessage.tool_calls.length > 0) {
+      console.log("Function call requested:", assistantMessage.tool_calls[0].function.name);
+
+      const toolCall = assistantMessage.tool_calls[0];
+      const functionName = toolCall.function.name;
+      const functionArgs = JSON.parse(toolCall.function.arguments);
+
+      let functionResult = null;
+
+      // Execute the medicine search function
+      if (functionName === "search_medicine_database") {
+        console.log("\n" + "=".repeat(80));
+        console.log("🔍 MEDICINE SEARCH FUNCTION CALLED");
+        console.log("=".repeat(80));
+        console.log("📋 Search Parameters:");
+        console.log(JSON.stringify(functionArgs, null, 2));
+        console.log("-".repeat(80));
+
+        try {
+          const searchParams = {
+            symptoms: functionArgs.symptoms || '',
+            condition: functionArgs.condition || '',
+            composition: functionArgs.composition || '',
+            therapeuticClass: functionArgs.therapeuticClass || '',
+            patientAge: functionArgs.patientAge || null,
+            patientGender: functionArgs.patientGender || null,
+            maxPrice: functionArgs.maxPrice || null,
+            limit: 20 // Increased to show all variants
+          };
+
+          console.log(`👤 Patient info: ${searchParams.patientAge} ans, ${searchParams.patientGender}`);
+
+          const medicines = await searchMedicines(searchParams);
+
+          console.log(`\n✅ SEARCH RESULTS: Found ${medicines.length} medicine(s)\n`);
+
+          if (medicines.length > 0) {
+            console.log("📦 Results (including all variants):");
+
+            // Group by base medicine name for display
+            const grouped = {};
+            medicines.forEach(med => {
+              const baseName = (med.nom_commercial || '').split(/\d/)[0].trim();
+              if (!grouped[baseName]) grouped[baseName] = [];
+              grouped[baseName].push(med);
+            });
+
+            Object.entries(grouped).forEach(([baseName, variants]) => {
+              console.log(`\n${baseName}: ${variants.length} variant(s)`);
+              variants.forEach((med, i) => {
+                console.log(`  ${i + 1}. ${med.nom_commercial}`);
+                console.log(`     - Dosage: ${med.dosage}`);
+                console.log(`     - Presentation: ${med.presentation}`);
+                console.log(`     - Price: ${med.ppv}`);
+                console.log(`     - Score: ${med.relevance_score}`);
+              });
+            });
+
+            functionResult = medicines.map(med => formatMedicineForAI(med)).join('\n\n---\n\n');
+
+            console.log(`\n📤 Formatted ${medicines.length} medicine(s) (all variants) for AI response`);
+          } else {
+            console.log("❌ No medicines found matching the criteria");
+            functionResult = "لم يتم العثور على أدوية مطابقة في قاعدة البيانات. يرجى تجربة معايير بحث مختلفة أو استشارة الصيدلي.";
+          }
+        } catch (error) {
+          console.error("\n❌ MEDICINE SEARCH ERROR:", error);
+          functionResult = "حدث خطأ أثناء البحث في قاعدة البيانات. يرجى المحاولة مرة أخرى.";
+        }
+
+        console.log("=".repeat(80) + "\n");
+      }
+
+      // Make a second API call with the function result
+      console.log("Sending function result back to API...");
+
+      const secondRequest = {
+        model: "gpt-4o",
+        messages: [
+          { role: "system", content: systemPrompt },
+          ...conversationMessages,
+          assistantMessage, // Include the assistant's function call
+          {
+            role: "tool",
+            tool_call_id: toolCall.id,
+            content: functionResult
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 2000
+      };
+
+      const secondResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(secondRequest)
+      });
+
+      if (!secondResponse.ok) {
+        throw new Error('فشل في الحصول على الرد النهائي من الخدمة');
+      }
+
+      const finalResponseData = await secondResponse.json();
+      const finalMessage = finalResponseData.choices[0].message;
+
+      console.log("\n✅ FINAL AI RESPONSE (with medicine recommendations)");
+      const responsePreview = finalMessage.content.substring(0, 100) + '...';
+      console.log(`📝 Response preview: ${responsePreview}`);
+      console.log(`🆔 Response ID: ${finalResponseData.id}`);
+      console.log("█".repeat(80) + "\n");
+
+      // Return the final response
+      return res.status(200).json({
+        result: finalMessage.content,
+        responseId: finalResponseData.id,
+        threadId: finalResponseData.id // For backward compatibility with frontend
+      });
+    }
+
+    // No function call needed, return the direct response
+    console.log("\n✅ DIRECT AI RESPONSE (no medicine search needed)");
+    const responsePreview = assistantMessage.content.substring(0, 100) + '...';
+    console.log(`📝 Response preview: ${responsePreview}`);
+    console.log(`🆔 Response ID: ${responseData.id}`);
+    console.log("█".repeat(80) + "\n");
+
+    return res.status(200).json({
+      result: assistantMessage.content,
+      responseId: responseData.id,
+      threadId: responseData.id // For backward compatibility with frontend
+    });
+
   } catch (err) {
-    console.error('API error:', err);
-    return res.status(500).json({ result: 'حدث خطأ غير متوقع في الخادم.' });
+    console.error("API error:", err);
+    res.status(500).json({ result: `❌ خطأ في الخادم الداخلي: ${err.message}` });
   }
 }

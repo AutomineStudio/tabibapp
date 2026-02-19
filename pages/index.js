@@ -412,8 +412,8 @@ export default function Home() {
     e.preventDefault();
     if (!input.trim() && !selectedImage) return;
 
-    const userMessage = { 
-      role: "user", 
+    const userMessage = {
+      role: "user",
       content: input.trim(),
       image: selectedImage ? URL.createObjectURL(selectedImage) : null
     };
@@ -426,32 +426,42 @@ export default function Home() {
 
     try {
       const formData = new FormData();
-      // Send recent conversation history for continuity (last 10 messages)
-      const history = [...messages, userMessage]
-        .map(m => ({ role: m.role, content: m.content }))
-        .slice(-10);
-      formData.append("messages", JSON.stringify(history));
+
+      // IMPORTANT: Send FULL conversation history for context
+      // Remove the greeting message and any image URLs (they can't be sent as JSON)
+      const messagesForAPI = newMessages
+        .filter(msg => msg.content !== t.chat.greeting) // Remove greeting
+        .map(msg => ({
+          role: msg.role,
+          content: msg.content
+        }));
+
+      formData.append("messages", JSON.stringify(messagesForAPI));
+
       if (selectedImage) {
         formData.append("image", selectedImage);
       }
-      // Send selected UI language to enforce answer language server-side
-      formData.append("lang", language);
+
+      // Send responseId (threadId) for conversation continuity
       if (threadId) {
-        formData.append("threadId", threadId);
+        formData.append("previousResponseId", threadId);
       }
 
-      const res = await fetch("/api/assistant", { 
-        method: "POST", 
-        body: formData 
+      const res = await fetch("/api/assistant", {
+        method: "POST",
+        body: formData
       });
       const data = await res.json();
-      
+
       if (!res.ok) {
         throw new Error(data.result || 'Error sending message');
       }
 
-      if (data.threadId && !threadId) {
-        setThreadId(data.threadId);
+      // Save responseId for conversation continuity
+      if (data.responseId || data.threadId) {
+        const newThreadId = data.responseId || data.threadId;
+        setThreadId(newThreadId);
+        localStorage.setItem('tabib_thread_id', newThreadId);
       }
 
       // Add assistant response to messages
@@ -478,40 +488,17 @@ export default function Home() {
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
-    if (!file) return;
-    if (!file.type.startsWith('image/')) {
-      alert('يرجى اختيار ملف صورة صالح');
-      return;
+    if (file) {
+      if (file.type.startsWith('image/')) {
+        if (file.size <= 20 * 1024 * 1024) {
+          setSelectedImage(file);
+        } else {
+          alert('الصورة كبيرة جداً. الحد الأقصى هو 20 ميغابايت');
+        }
+      } else {
+        alert('يرجى اختيار ملف صورة صالح');
+      }
     }
-
-    const maxDim = 1280;
-    const quality = 0.75;
-    const reader = new FileReader();
-    const img = new Image();
-
-    reader.onload = () => {
-      img.onload = () => {
-        let { width, height } = img;
-        const scale = Math.min(1, width > height ? maxDim / width : maxDim / height);
-        const canvas = document.createElement('canvas');
-        canvas.width = Math.round(width * scale);
-        canvas.height = Math.round(height * scale);
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        const outType = file.type === 'image/png' ? 'image/jpeg' : (file.type || 'image/jpeg');
-        canvas.toBlob((blob) => {
-          if (!blob) {
-            setSelectedImage(file);
-            return;
-          }
-          const optimized = new File([blob], file.name.replace(/\.(png|jpg|jpeg|webp)$/i, '.jpg'), { type: outType });
-          setSelectedImage(optimized);
-        }, outType, quality);
-      };
-      img.src = reader.result;
-    };
-    reader.readAsDataURL(file);
   };
 
   const scrollToSection = (sectionId) => {
