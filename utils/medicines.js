@@ -7,8 +7,8 @@ export async function loadMedicines() {
   if (medicinesCache) return medicinesCache;
 
   try {
-    // Load from the pretty JSON file in tabib/data directory
-    const filePath = path.join(process.cwd(), 'tabib', 'data', 'morocco_medicines_pretty.json');
+    // Load from the pretty JSON file in data directory (fallback: tabib/data for repo layout)
+    const filePath = path.join(process.cwd(), 'data', 'morocco_medicines_pretty.json');
     const fileContent = await fs.promises.readFile(filePath, 'utf-8');
     const medicines = JSON.parse(fileContent);
 

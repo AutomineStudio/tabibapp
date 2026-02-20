@@ -7,6 +7,7 @@ const translations = {
     subtitle: "المساعد الطبي الذكي",
     nav: {
       chat: "المحادثة",
+      pharmacie: "صيدلية الحراسة",
       features: "المميزات",
       reviews: "التقييمات",
       about: "عن التطبيق"
@@ -29,6 +30,16 @@ const translations = {
       addImage: "إضافة صورة",
       imageSelected: "تم اختيار الصورة",
       send: "إرسال"
+    },
+    pharmacie: {
+      title: "صيدلية الحراسة",
+      subtitle: "صيدليات مفتوحة ليلاً وعطل نهاية الأسبوع",
+      chooseCity: "اختر مدينتك",
+      loading: "جاري التحميل...",
+      error: "تعذر تحميل القائمة. حاول لاحقاً أو زر الموقع المصدر.",
+      noResults: "لا توجد صيدليات حراسة لهذه المدينة.",
+      call: "اتصال",
+      directions: "مسار"
     },
     features: {
       title: "مميزات طبيبك",
@@ -93,6 +104,7 @@ const translations = {
     subtitle: "Smart Medical Assistant",
     nav: {
       chat: "Chat",
+      pharmacie: "On-duty Pharmacy",
       features: "Features",
       reviews: "Reviews",
       about: "About"
@@ -115,6 +127,16 @@ const translations = {
       addImage: "Add Image",
       imageSelected: "Image Selected",
       send: "Send"
+    },
+    pharmacie: {
+      title: "On-duty Pharmacy",
+      subtitle: "Pharmacies open at night and on weekends",
+      chooseCity: "Choose your city",
+      loading: "Loading...",
+      error: "Could not load the list. Try again or visit the source.",
+      noResults: "No on-duty pharmacies for this city.",
+      call: "Call",
+      directions: "Directions"
     },
     features: {
       title: "Your Doctor's Features",
@@ -179,6 +201,7 @@ const translations = {
     subtitle: "Assistant Médical Intelligent",
     nav: {
       chat: "Chat",
+      pharmacie: "Pharmacie de garde",
       features: "Fonctionnalités",
       reviews: "Avis",
       about: "À propos"
@@ -201,6 +224,16 @@ const translations = {
       addImage: "Ajouter Image",
       imageSelected: "Image Sélectionnée",
       send: "Envoyer"
+    },
+    pharmacie: {
+      title: "Pharmacie de garde",
+      subtitle: "Pharmacies ouvertes la nuit et le week-end",
+      chooseCity: "Choisissez votre ville",
+      loading: "Chargement...",
+      error: "Impossible de charger la liste. Réessayez ou consultez le site source.",
+      noResults: "Aucune pharmacie de garde pour cette ville.",
+      call: "Appeler",
+      directions: "Itinéraire"
     },
     features: {
       title: "Fonctionnalités de Votre Médecin",
@@ -262,6 +295,25 @@ const translations = {
   }
 };
 
+const PHARMACIE_CITIES = [
+  { slug: "agadir", label: "Agadir" }, { slug: "casablanca", label: "Casablanca" }, { slug: "rabat", label: "Rabat" },
+  { slug: "marrakech", label: "Marrakech" }, { slug: "fes", label: "Fès" }, { slug: "tanger", label: "Tanger" },
+  { slug: "meknes", label: "Meknès" }, { slug: "sale", label: "Salé" }, { slug: "temara", label: "Témara" },
+  { slug: "kenitra", label: "Kénitra" }, { slug: "oujda", label: "Oujda" }, { slug: "nador", label: "Nador" },
+  { slug: "el-jadida", label: "El Jadida" }, { slug: "safi", label: "Safi" }, { slug: "tetouan", label: "Tétouan" },
+  { slug: "khouribga", label: "Khouribga" }, { slug: "settat", label: "Settat" }, { slug: "beni-mellal", label: "Béni Mellal" },
+  { slug: "mohammedia", label: "Mohammedia" }, { slug: "chefchaouen", label: "Chefchaouen" }, { slug: "larache", label: "Larache" },
+  { slug: "errachidia", label: "Errachidia" }, { slug: "ouarzazate", label: "Ouarzazate" }, { slug: "essaouira", label: "Essaouira" },
+  { slug: "taza", label: "Taza" }, { slug: "ifrane", label: "Ifrane" }, { slug: "al-hoceima", label: "Al Hoceima" },
+  { slug: "laayoune", label: "Laâyoune" }, { slug: "guelmim", label: "Guelmim" }, { slug: "dakhla", label: "Dakhla" },
+  { slug: "khemisset", label: "Khémisset" }, { slug: "sidi-kacem", label: "Sidi Kacem" }, { slug: "sidi-slimane", label: "Sidi Slimane" },
+  { slug: "taounate", label: "Taounate" }, { slug: "sefrou", label: "Sefrou" }, { slug: "boulemane", label: "Boulemane" },
+  { slug: "azilal", label: "Azilal" }, { slug: "benslimane", label: "Benslimane" }, { slug: "figuig", label: "Figuig" },
+  { slug: "chichaoua", label: "Chichaoua" }, { slug: "taroudannt", label: "Taroudannt" }, { slug: "tiznit", label: "Tiznit" },
+  { slug: "tan-tan", label: "Tan Tan" }, { slug: "tata", label: "Tata" }, { slug: "boujdour", label: "Boujdour" },
+  { slug: "es-semara", label: "Es Semara" }, { slug: "al-kelaa-des-sraghna", label: "Al kelaa des Sraghna" }, { slug: "khenifra", label: "Khénifra" }
+];
+
 export default function Home() {
   const [messages, setMessages] = useState([
     { role: "assistant", content: "سلام! أنا الطبيب ديالك. شنو هي الأعراض لي كتحس بيهم؟" }
@@ -275,6 +327,10 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("chat");
   const [language, setLanguage] = useState("ar");
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [pharmacieCity, setPharmacieCity] = useState("");
+  const [pharmacieData, setPharmacieData] = useState(null);
+  const [pharmacieLoading, setPharmacieLoading] = useState(false);
+  const [pharmacieError, setPharmacieError] = useState(null);
   const bottomRef = useRef(null);
   const fileInputRef = useRef(null);
   const messagesContainerRef = useRef(null);
@@ -293,6 +349,7 @@ export default function Home() {
   useEffect(() => {
     const pathToSection = {
       '/chat': 'chat',
+      '/pharmacie': 'pharmacie',
       '/features': 'features',
       '/reviews': 'reviews',
       '/about': 'about',
@@ -407,6 +464,30 @@ export default function Home() {
     setSelectedImagePreviewUrl(url);
     return () => URL.revokeObjectURL(url);
   }, [selectedImage]);
+
+  useEffect(() => {
+    if (!pharmacieCity) {
+      setPharmacieData(null);
+      setPharmacieError(null);
+      return;
+    }
+    setPharmacieLoading(true);
+    setPharmacieError(null);
+    fetch(`/api/pharmacie-garde?city=${encodeURIComponent(pharmacieCity)}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(res.status === 502 ? "Source unavailable" : "Request failed");
+        return res.json();
+      })
+      .then((data) => {
+        setPharmacieData(data);
+        setPharmacieError(null);
+      })
+      .catch((err) => {
+        setPharmacieData(null);
+        setPharmacieError(err.message || "Error");
+      })
+      .finally(() => setPharmacieLoading(false));
+  }, [pharmacieCity]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -544,6 +625,12 @@ export default function Home() {
                 className={`text-sm font-medium transition-colors ${activeSection === 'chat' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
               >
                 {t.nav.chat}
+              </button>
+              <button 
+                onClick={() => scrollToSection('pharmacie')}
+                className={`text-sm font-medium transition-colors ${activeSection === 'pharmacie' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
+              >
+                {t.nav.pharmacie}
               </button>
               <button 
                 onClick={() => scrollToSection('features')}
@@ -911,6 +998,66 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Pharmacie de garde Section */}
+      <section id="pharmacie" className="py-12" style={{ background: 'linear-gradient(180deg, #fff 0%, #f0fdf4 100%)' }}>
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-gray-800 mb-2">{t.pharmacie.title}</h3>
+            <p className="text-gray-600">{t.pharmacie.subtitle}</p>
+          </div>
+          <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
+            <label className="block text-sm font-medium text-gray-700 mb-2" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.chooseCity}</label>
+            <select
+              value={pharmacieCity}
+              onChange={(e) => setPharmacieCity(e.target.value)}
+              className="w-full max-w-xs p-3 rounded-xl border border-gray-200 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent mb-6"
+              dir={language === "fr" ? "ltr" : "rtl"}
+            >
+              <option value="">—</option>
+              {PHARMACIE_CITIES.map((c) => (
+                <option key={c.slug} value={c.slug}>{c.label}</option>
+              ))}
+            </select>
+            {pharmacieLoading && (
+              <p className="text-gray-500 py-4" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.loading}</p>
+            )}
+            {pharmacieError && !pharmacieLoading && (
+              <p className="text-red-600 py-4" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.error}</p>
+            )}
+            {pharmacieData && !pharmacieLoading && !pharmacieError && (
+              <>
+                {pharmacieData.pharmacies.length === 0 ? (
+                  <p className="text-gray-600 py-4" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.noResults}</p>
+                ) : (
+                  <ul className="space-y-4 mb-6">
+                    {pharmacieData.pharmacies.map((ph, i) => (
+                      <li key={i} className="p-4 rounded-xl border border-gray-200 bg-gray-50/50 hover:bg-gray-50">
+                        {ph.name && <p className="font-semibold text-gray-900 mb-1" dir="ltr">{ph.name}</p>}
+                        <p className="text-gray-700 mb-2" dir="ltr">{ph.address}</p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {ph.phone && (
+                            <a href={`tel:${ph.phone.replace(/\D/g, "")}`} className="inline-flex items-center gap-1 text-sm text-emerald-700 hover:underline">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                              {t.pharmacie.call} {ph.phone}
+                            </a>
+                          )}
+                          {ph.mapsUrl && (
+                            <a href={ph.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm text-blue-600 hover:underline">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                              {t.pharmacie.directions}
+                            </a>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section id="features" className="py-16" style={{ background: 'linear-gradient(180deg, #f3fcf4 0%, #fff 100%)' }}>
         <div className="max-w-6xl mx-auto px-4">
@@ -1102,6 +1249,7 @@ export default function Home() {
               <h5 className="font-semibold mb-4">{t.footer.quickLinks}</h5>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li><button onClick={() => scrollToSection('chat')} className="hover:text-white transition-colors">{t.nav.chat}</button></li>
+                <li><button onClick={() => scrollToSection('pharmacie')} className="hover:text-white transition-colors">{t.nav.pharmacie}</button></li>
                 <li><button onClick={() => scrollToSection('features')} className="hover:text-white transition-colors">{t.nav.features}</button></li>
                 <li><button onClick={() => scrollToSection('reviews')} className="hover:text-white transition-colors">{t.nav.reviews}</button></li>
                 <li><button onClick={() => scrollToSection('about')} className="hover:text-white transition-colors">{t.nav.about}</button></li>
