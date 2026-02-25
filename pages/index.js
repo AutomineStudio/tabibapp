@@ -15,6 +15,7 @@ const translations = {
     nav: {
       chat: "المحادثة",
       pharmacie: "صيدلية الحراسة",
+      medicament: "الدواء",
       features: "المميزات",
       reviews: "التقييمات",
       about: "عن التطبيق"
@@ -57,6 +58,17 @@ const translations = {
       distanceLabel: "المسافة",
       useLocationToSort: "استخدم موقعك لترتيب الصيدليات حسب المسافة",
       sortedByDistance: "مرتبة حسب المسافة"
+    },
+    medicament: {
+      title: "الدواء",
+      subtitle: "ابحث عن الدواء بالاسم. المصدر: قاعدة الأدوية المغربية.",
+      namePlaceholder: "اسم الدواء...",
+      search: "بحث",
+      loading: "جاري التحميل...",
+      error: "تعذر التحميل. حاول لاحقاً.",
+      noResults: "لا توجد نتائج.",
+      ppv: "السعر",
+      lab: "المختبر"
     },
     features: {
       title: "مميزات طبيبك",
@@ -122,6 +134,7 @@ const translations = {
     nav: {
       chat: "Chat",
       pharmacie: "On-duty Pharmacy",
+      medicament: "Medicament",
       features: "Features",
       reviews: "Reviews",
       about: "About"
@@ -164,6 +177,17 @@ const translations = {
       distanceLabel: "Distance",
       useLocationToSort: "Use your location to sort by distance",
       sortedByDistance: "Sorted by distance"
+    },
+    medicament: {
+      title: "Medicament",
+      subtitle: "Search by medicine name. Source: Morocco medicines database.",
+      namePlaceholder: "Medicine name...",
+      search: "Search",
+      loading: "Loading...",
+      error: "Failed to load. Try again later.",
+      noResults: "No results.",
+      ppv: "Price",
+      lab: "Laboratory"
     },
     features: {
       title: "Your Doctor's Features",
@@ -229,6 +253,7 @@ const translations = {
     nav: {
       chat: "Chat",
       pharmacie: "Pharmacie de garde",
+      medicament: "Médicament",
       features: "Fonctionnalités",
       reviews: "Avis",
       about: "À propos"
@@ -271,6 +296,17 @@ const translations = {
       distanceLabel: "Distance",
       useLocationToSort: "Utilisez votre position pour trier par distance",
       sortedByDistance: "Tri par distance"
+    },
+    medicament: {
+      title: "Médicament",
+      subtitle: "Recherchez un médicament par nom.",
+      namePlaceholder: "Nom du médicament...",
+      search: "Rechercher",
+      loading: "Chargement...",
+      error: "Impossible de charger. Réessayez plus tard.",
+      noResults: "Aucun résultat.",
+      ppv: "Prix",
+      lab: "Laboratoire"
     },
     features: {
       title: "Fonctionnalités de Votre Médecin",
@@ -408,6 +444,10 @@ export default function Home() {
   const [locationError, setLocationError] = useState(null);
   const [locationRequested, setLocationRequested] = useState(false);
   const [pharmacieSectionMounted, setPharmacieSectionMounted] = useState(false);
+  const [medicamentName, setMedicamentName] = useState("");
+  const [medicamentData, setMedicamentData] = useState(null);
+  const [medicamentLoading, setMedicamentLoading] = useState(false);
+  const [medicamentError, setMedicamentError] = useState(null);
   const bottomRef = useRef(null);
   const fileInputRef = useRef(null);
   const messagesContainerRef = useRef(null);
@@ -427,6 +467,7 @@ export default function Home() {
     const pathToSection = {
       '/chat': 'chat',
       '/pharmacie': 'pharmacie',
+      '/medicament': 'medicament',
       '/features': 'features',
       '/reviews': 'reviews',
       '/about': 'about',
@@ -545,6 +586,25 @@ export default function Home() {
   useEffect(() => {
     if (activeSection === "pharmacie") setPharmacieSectionMounted(true);
   }, [activeSection]);
+
+  const searchMedicaments = () => {
+    setMedicamentLoading(true);
+    setMedicamentError(null);
+    const params = new URLSearchParams();
+    if (medicamentName.trim()) params.set("name", medicamentName.trim());
+    params.set("limit", "80");
+    fetch(`/api/medicament?${params.toString()}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setMedicamentData(Array.isArray(data.medicaments) ? data.medicaments : []);
+        setMedicamentError(data.error || null);
+      })
+      .catch((err) => {
+        setMedicamentError(err.message || "Error");
+        setMedicamentData(null);
+      })
+      .finally(() => setMedicamentLoading(false));
+  };
 
   // Request location only on button click (user gesture) so the browser shows the permission prompt
   const requestLocationForPharmacie = () => {
@@ -835,6 +895,12 @@ export default function Home() {
                 className={`text-sm font-medium transition-colors ${activeSection === 'pharmacie' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
               >
                 {t.nav.pharmacie}
+              </button>
+              <button 
+                onClick={() => scrollToSection('medicament')}
+                className={`text-sm font-medium transition-colors ${activeSection === 'medicament' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
+              >
+                {t.nav.medicament}
               </button>
               <button 
                 onClick={() => scrollToSection('features')}
@@ -1304,6 +1370,62 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Médicament Section - source: morocco_medicines_pretty.json, search by name */}
+      <section id="medicament" className="py-12" style={{ background: "linear-gradient(180deg, #f0fdf4 0%, #fff 100%)" }}>
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-gray-800 mb-2">{t.medicament.title}</h3>
+            <p className="text-gray-600" dir={language === "fr" ? "ltr" : "rtl"}>{t.medicament.subtitle}</p>
+          </div>
+          <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
+            <div className="flex flex-wrap gap-3 mb-6" dir="ltr">
+              <input
+                type="text"
+                value={medicamentName}
+                onChange={(e) => setMedicamentName(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && searchMedicaments()}
+                placeholder={t.medicament.namePlaceholder}
+                className="flex-1 min-w-[200px] p-3 rounded-xl border border-gray-200 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              />
+              <button
+                type="button"
+                onClick={searchMedicaments}
+                disabled={medicamentLoading}
+                className="px-5 py-3 rounded-xl font-medium text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors"
+              >
+                {medicamentLoading ? t.medicament.loading : t.medicament.search}
+              </button>
+            </div>
+            {medicamentError && !medicamentLoading && (
+              <p className="text-red-600 py-4" dir={language === "fr" ? "ltr" : "rtl"}>{t.medicament.error}</p>
+            )}
+            {medicamentData !== null && !medicamentLoading && (
+              <>
+                {medicamentData.length === 0 ? (
+                  <p className="text-gray-600 py-4" dir={language === "fr" ? "ltr" : "rtl"}>{t.medicament.noResults}</p>
+                ) : (
+                  <ul className="space-y-3 max-h-[28rem] overflow-y-auto">
+                    {medicamentData.map((med, i) => (
+                      <li key={i} className="p-4 rounded-xl border border-gray-200 bg-gray-50/50 hover:bg-gray-50">
+                        <p className="font-semibold text-gray-900" dir="ltr">{med.nom_commercial}</p>
+                        {(med.presentation || med.dosage) && (
+                          <p className="text-sm text-gray-600 mt-1" dir="ltr">{[med.dosage, med.presentation].filter(Boolean).join(" · ")}</p>
+                        )}
+                        <div className="flex flex-wrap gap-3 mt-2 text-sm">
+                          {med.ppv && <span className="text-emerald-700 font-medium" dir="ltr">{t.medicament.ppv}: {med.ppv}</span>}
+                          {med.distributeur && <span className="text-gray-600" dir="ltr">{t.medicament.lab}: {med.distributeur}</span>}
+                        </div>
+                        {med.composition && <p className="text-xs text-gray-500 mt-1" dir="ltr">{med.composition}</p>}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section id="features" className="py-16" style={{ background: 'linear-gradient(180deg, #f3fcf4 0%, #fff 100%)' }}>
         <div className="max-w-6xl mx-auto px-4">
@@ -1496,6 +1618,7 @@ export default function Home() {
               <ul className="space-y-2 text-sm text-gray-300">
                 <li><button onClick={() => scrollToSection('chat')} className="hover:text-white transition-colors">{t.nav.chat}</button></li>
                 <li><button onClick={() => scrollToSection('pharmacie')} className="hover:text-white transition-colors">{t.nav.pharmacie}</button></li>
+                <li><button onClick={() => scrollToSection('medicament')} className="hover:text-white transition-colors">{t.nav.medicament}</button></li>
                 <li><button onClick={() => scrollToSection('features')} className="hover:text-white transition-colors">{t.nav.features}</button></li>
                 <li><button onClick={() => scrollToSection('reviews')} className="hover:text-white transition-colors">{t.nav.reviews}</button></li>
                 <li><button onClick={() => scrollToSection('about')} className="hover:text-white transition-colors">{t.nav.about}</button></li>
