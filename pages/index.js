@@ -1,4 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Fragment } from "react";
+
+// Parse text and return segments: **...** becomes bold (asterisks removed)
+function parseBoldSegments(text) {
+  if (typeof text !== "string") return [{ bold: false, text: String(text) }];
+  const parts = text.split("**");
+  return parts.map((t, i) => ({ bold: i % 2 === 1, text: t }));
+}
 
 // Language translations
 const translations = {
@@ -7,6 +14,7 @@ const translations = {
     subtitle: "المساعد الطبي الذكي",
     nav: {
       chat: "المحادثة",
+      pharmacie: "صيدلية الحراسة",
       features: "المميزات",
       reviews: "التقييمات",
       about: "عن التطبيق"
@@ -29,6 +37,26 @@ const translations = {
       addImage: "إضافة صورة",
       imageSelected: "تم اختيار الصورة",
       send: "إرسال"
+    },
+    pharmacie: {
+      title: "صيدلية الحراسة",
+      subtitle: "صيدليات مفتوحة ليلاً وعطل نهاية الأسبوع",
+      chooseCity: "اختر مدينتك",
+      loading: "جاري التحميل...",
+      loadingLocation: "جاري الحصول على موقعك...",
+      allowLocation: "السماح بالموقع لعرض أقرب 10 صيدليات",
+      locationDenied: "تم رفض الموقع. فعّله من إعدادات المتصفح لعرض أقرب الصيدليات.",
+      useMyLocation: "استخدام موقعي - أقرب 10 صيدليات",
+      orChooseCity: "أو اختر مدينة",
+      nearestTitle: "أقرب 10 صيدليات من موقعك",
+      error: "تعذر تحميل القائمة. حاول لاحقاً أو زر الموقع المصدر.",
+      noResults: "لا توجد صيدليات حراسة قريبة.",
+      call: "اتصال",
+      directions: "مسار",
+      distance: "{{km}} كم",
+      distanceLabel: "المسافة",
+      useLocationToSort: "استخدم موقعك لترتيب الصيدليات حسب المسافة",
+      sortedByDistance: "مرتبة حسب المسافة"
     },
     features: {
       title: "مميزات طبيبك",
@@ -93,6 +121,7 @@ const translations = {
     subtitle: "Smart Medical Assistant",
     nav: {
       chat: "Chat",
+      pharmacie: "On-duty Pharmacy",
       features: "Features",
       reviews: "Reviews",
       about: "About"
@@ -115,6 +144,26 @@ const translations = {
       addImage: "Add Image",
       imageSelected: "Image Selected",
       send: "Send"
+    },
+    pharmacie: {
+      title: "On-duty Pharmacy",
+      subtitle: "Pharmacies open at night and on weekends",
+      chooseCity: "Choose your city",
+      loading: "Loading...",
+      loadingLocation: "Getting your location...",
+      allowLocation: "Allow location to see the 10 nearest pharmacies",
+      locationDenied: "Location was denied. Enable it in your browser to see the nearest pharmacies.",
+      useMyLocation: "Use my location – 10 nearest pharmacies",
+      orChooseCity: "Or choose a city",
+      nearestTitle: "10 nearest pharmacies from your location",
+      error: "Could not load the list. Try again or visit the source.",
+      noResults: "No on-duty pharmacies nearby.",
+      call: "Call",
+      directions: "Directions",
+      distance: "{{km}} km",
+      distanceLabel: "Distance",
+      useLocationToSort: "Use your location to sort by distance",
+      sortedByDistance: "Sorted by distance"
     },
     features: {
       title: "Your Doctor's Features",
@@ -179,6 +228,7 @@ const translations = {
     subtitle: "Assistant Médical Intelligent",
     nav: {
       chat: "Chat",
+      pharmacie: "Pharmacie de garde",
       features: "Fonctionnalités",
       reviews: "Avis",
       about: "À propos"
@@ -201,6 +251,26 @@ const translations = {
       addImage: "Ajouter Image",
       imageSelected: "Image Sélectionnée",
       send: "Envoyer"
+    },
+    pharmacie: {
+      title: "Pharmacie de garde",
+      subtitle: "Pharmacies ouvertes la nuit et le week-end",
+      chooseCity: "Choisissez votre ville",
+      loading: "Chargement...",
+      loadingLocation: "Obtention de votre position...",
+      allowLocation: "Autorisez l'accès à votre position pour afficher les 10 pharmacies les plus proches",
+      locationDenied: "L'accès à la position a été refusé. Activez-la dans les paramètres du navigateur pour voir les pharmacies à proximité.",
+      useMyLocation: "Utiliser ma position – 10 pharmacies les plus proches",
+      orChooseCity: "Ou choisir une ville",
+      nearestTitle: "10 pharmacies les plus proches de chez vous",
+      error: "Impossible de charger la liste. Réessayez ou consultez le site source.",
+      noResults: "Aucune pharmacie de garde à proximité.",
+      call: "Appeler",
+      directions: "Itinéraire",
+      distance: "{{km}} km",
+      distanceLabel: "Distance",
+      useLocationToSort: "Utilisez votre position pour trier par distance",
+      sortedByDistance: "Tri par distance"
     },
     features: {
       title: "Fonctionnalités de Votre Médecin",
@@ -262,6 +332,61 @@ const translations = {
   }
 };
 
+const CITIES_FOR_NEARBY = [
+  "casablanca", "rabat", "marrakech", "fes", "agadir", "tanger", "meknes", "sale", "kenitra", "oujda"
+];
+
+const PHARMACIE_CITIES = [
+  { slug: "agadir", label: "Agadir" },
+  { slug: "al-hoceima", label: "Al Hoceima" },
+  { slug: "al-kelaa-des-sraghna", label: "Al kelaa des Sraghna" },
+  { slug: "azilal", label: "Azilal" },
+  { slug: "beni-mellal", label: "Béni Mellal" },
+  { slug: "benslimane", label: "Benslimane" },
+  { slug: "boujdour", label: "Boujdour" },
+  { slug: "boulemane", label: "Boulemane" },
+  { slug: "casablanca", label: "Casablanca" },
+  { slug: "chefchaouen", label: "Chefchaouen" },
+  { slug: "chichaoua", label: "Chichaoua" },
+  { slug: "dakhla", label: "Dakhla" },
+  { slug: "el-jadida", label: "El Jadida" },
+  { slug: "errachidia", label: "Errachidia" },
+  { slug: "es-semara", label: "Es Semara" },
+  { slug: "essaouira", label: "Essaouira" },
+  { slug: "fes", label: "Fès" },
+  { slug: "figuig", label: "Figuig" },
+  { slug: "guelmim", label: "Guelmim" },
+  { slug: "ifrane", label: "Ifrane" },
+  { slug: "kenitra", label: "Kénitra" },
+  { slug: "khemisset", label: "Khémisset" },
+  { slug: "khenifra", label: "Khénifra" },
+  { slug: "khouribga", label: "Khouribga" },
+  { slug: "laayoune", label: "Laâyoune" },
+  { slug: "larache", label: "Larache" },
+  { slug: "marrakech", label: "Marrakech" },
+  { slug: "meknes", label: "Meknès" },
+  { slug: "mohammedia", label: "Mohammedia" },
+  { slug: "nador", label: "Nador" },
+  { slug: "ouarzazate", label: "Ouarzazate" },
+  { slug: "oujda", label: "Oujda" },
+  { slug: "rabat", label: "Rabat" },
+  { slug: "safi", label: "Safi" },
+  { slug: "sale", label: "Salé" },
+  { slug: "sefrou", label: "Sefrou" },
+  { slug: "settat", label: "Settat" },
+  { slug: "sidi-kacem", label: "Sidi Kacem" },
+  { slug: "sidi-slimane", label: "Sidi Slimane" },
+  { slug: "tan-tan", label: "Tan Tan" },
+  { slug: "tanger", label: "Tanger" },
+  { slug: "taounate", label: "Taounate" },
+  { slug: "taroudannt", label: "Taroudannt" },
+  { slug: "tata", label: "Tata" },
+  { slug: "taza", label: "Taza" },
+  { slug: "temara", label: "Témara" },
+  { slug: "tetouan", label: "Tétouan" },
+  { slug: "tiznit", label: "Tiznit" }
+];
+
 export default function Home() {
   const [messages, setMessages] = useState([
     { role: "assistant", content: "سلام! أنا الطبيب ديالك. شنو هي الأعراض لي كتحس بيهم؟" }
@@ -275,6 +400,14 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("chat");
   const [language, setLanguage] = useState("ar");
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [pharmacieData, setPharmacieData] = useState(null);
+  const [pharmacieLoading, setPharmacieLoading] = useState(false);
+  const [pharmacieError, setPharmacieError] = useState(null);
+  const [pharmacieCity, setPharmacieCity] = useState("");
+  const [userLocation, setUserLocation] = useState(null);
+  const [locationError, setLocationError] = useState(null);
+  const [locationRequested, setLocationRequested] = useState(false);
+  const [pharmacieSectionMounted, setPharmacieSectionMounted] = useState(false);
   const bottomRef = useRef(null);
   const fileInputRef = useRef(null);
   const messagesContainerRef = useRef(null);
@@ -293,6 +426,7 @@ export default function Home() {
   useEffect(() => {
     const pathToSection = {
       '/chat': 'chat',
+      '/pharmacie': 'pharmacie',
       '/features': 'features',
       '/reviews': 'reviews',
       '/about': 'about',
@@ -408,12 +542,163 @@ export default function Home() {
     return () => URL.revokeObjectURL(url);
   }, [selectedImage]);
 
+  useEffect(() => {
+    if (activeSection === "pharmacie") setPharmacieSectionMounted(true);
+  }, [activeSection]);
+
+  // Request location only on button click (user gesture) so the browser shows the permission prompt
+  const requestLocationForPharmacie = () => {
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      setLocationError(true);
+      return;
+    }
+    setLocationError(null);
+    setLocationRequested(true);
+    setPharmacieCity(""); // switch to "nearby" mode
+    navigator.geolocation.getCurrentPosition(
+      (pos) => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+      () => setLocationError(true),
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+    );
+  };
+
+  // Fetch pharmacies from multiple cities when we have user location; merge, sort by distance, top 10
+  useEffect(() => {
+    if (!userLocation) {
+      if (locationError) setPharmacieData(null);
+      return;
+    }
+    let cancelled = false;
+    setPharmacieLoading(true);
+    setPharmacieError(null);
+    Promise.all(
+      CITIES_FOR_NEARBY.map((city) =>
+        fetch(`/api/pharmacie-garde?city=${encodeURIComponent(city)}`).then((res) =>
+          res.ok ? res.json() : { pharmacies: [] }
+        )
+      )
+    )
+      .then((results) => {
+        if (cancelled) return;
+        const seen = new Set();
+        const merged = [];
+        for (const data of results) {
+          if (!data.pharmacies || !Array.isArray(data.pharmacies)) continue;
+          for (const p of data.pharmacies) {
+            const key = (p.phone || "").replace(/\D/g, "") || `${(p.name || "").slice(0, 30)}-${(p.address || "").slice(0, 30)}`;
+            if (seen.has(key)) continue;
+            seen.add(key);
+            merged.push(p);
+          }
+        }
+        const getDistanceKm = (lat1, lng1, lat2, lng2) => {
+          const R = 6371;
+          const dLat = (lat2 - lat1) * Math.PI / 180;
+          const dLng = (lng2 - lng1) * Math.PI / 180;
+          const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          return R * c;
+        };
+        const withDistance = merged.map((p) => {
+          const km = p.lat != null && p.lng != null
+            ? getDistanceKm(userLocation.lat, userLocation.lng, p.lat, p.lng)
+            : null;
+          return { ...p, distanceKm: km };
+        });
+        const sorted = withDistance.sort((a, b) => {
+          if (a.distanceKm == null && b.distanceKm == null) return 0;
+          if (a.distanceKm == null) return 1;
+          if (b.distanceKm == null) return -1;
+          return a.distanceKm - b.distanceKm;
+        });
+        const top10 = sorted.slice(0, 10);
+        setPharmacieData({ pharmacies: top10, userCoords: userLocation });
+        setPharmacieError(null);
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setPharmacieData(null);
+          setPharmacieError(err.message || "Error");
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setPharmacieLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [userLocation]);
+
+  // Fallback: fetch by city when user selects a city (and no location or they want city list)
+  useEffect(() => {
+    if (!pharmacieCity) {
+      if (!userLocation) setPharmacieData(null);
+      return;
+    }
+    let cancelled = false;
+    setPharmacieLoading(true);
+    setPharmacieError(null);
+    fetch(`/api/pharmacie-garde?city=${encodeURIComponent(pharmacieCity)}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(res.status === 502 ? "Source unavailable" : "Request failed");
+        return res.json();
+      })
+      .then((data) => {
+        if (cancelled) return;
+        const list = data.pharmacies || [];
+        const getDistanceKm = (lat1, lng1, lat2, lng2) => {
+          const R = 6371;
+          const dLat = (lat2 - lat1) * Math.PI / 180;
+          const dLng = (lng2 - lng1) * Math.PI / 180;
+          const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          return R * c;
+        };
+        const withDistance = userLocation
+          ? list.map((p) => {
+              const km = p.lat != null && p.lng != null
+                ? getDistanceKm(userLocation.lat, userLocation.lng, p.lat, p.lng)
+                : null;
+              return { ...p, distanceKm: km };
+            }).sort((a, b) => {
+              if (a.distanceKm == null && b.distanceKm == null) return 0;
+              if (a.distanceKm == null) return 1;
+              if (b.distanceKm == null) return -1;
+              return a.distanceKm - b.distanceKm;
+            })
+          : list.map((p) => ({ ...p, distanceKm: null }));
+        setPharmacieData({ pharmacies: withDistance, userCoords: userLocation || undefined });
+        setPharmacieError(null);
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setPharmacieData(null);
+          setPharmacieError(err.message || "Error");
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setPharmacieLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [pharmacieCity, userLocation]);
+
+  // Pharmacies are already sorted by distance and limited to top 10 (with distanceKm) from the fetch effect
+  const sortedPharmacies = pharmacieData?.pharmacies ?? [];
+  const userCoords = pharmacieData?.userCoords || userLocation;
+
+  const getDistanceKm = (lat1, lng1, lat2, lng2) => {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+
   const sendMessage = async (e) => {
     e.preventDefault();
     if (!input.trim() && !selectedImage) return;
 
-    const userMessage = { 
-      role: "user", 
+    const userMessage = {
+      role: "user",
       content: input.trim(),
       image: selectedImage ? URL.createObjectURL(selectedImage) : null
     };
@@ -426,27 +711,42 @@ export default function Home() {
 
     try {
       const formData = new FormData();
-      // Only send the latest user message to the API
-      formData.append("messages", JSON.stringify([userMessage]));
+
+      // IMPORTANT: Send FULL conversation history for context
+      // Remove the greeting message and any image URLs (they can't be sent as JSON)
+      const messagesForAPI = newMessages
+        .filter(msg => msg.content !== t.chat.greeting) // Remove greeting
+        .map(msg => ({
+          role: msg.role,
+          content: msg.content
+        }));
+
+      formData.append("messages", JSON.stringify(messagesForAPI));
+
       if (selectedImage) {
         formData.append("image", selectedImage);
       }
+
+      // Send responseId (threadId) for conversation continuity
       if (threadId) {
-        formData.append("threadId", threadId);
+        formData.append("previousResponseId", threadId);
       }
 
-      const res = await fetch("/api/assistant", { 
-        method: "POST", 
-        body: formData 
+      const res = await fetch("/api/assistant", {
+        method: "POST",
+        body: formData
       });
       const data = await res.json();
-      
+
       if (!res.ok) {
         throw new Error(data.result || 'Error sending message');
       }
 
-      if (data.threadId && !threadId) {
-        setThreadId(data.threadId);
+      // Save responseId for conversation continuity
+      if (data.responseId || data.threadId) {
+        const newThreadId = data.responseId || data.threadId;
+        setThreadId(newThreadId);
+        localStorage.setItem('tabib_thread_id', newThreadId);
       }
 
       // Add assistant response to messages
@@ -529,6 +829,12 @@ export default function Home() {
                 className={`text-sm font-medium transition-colors ${activeSection === 'chat' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
               >
                 {t.nav.chat}
+              </button>
+              <button 
+                onClick={() => scrollToSection('pharmacie')}
+                className={`text-sm font-medium transition-colors ${activeSection === 'pharmacie' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
+              >
+                {t.nav.pharmacie}
               </button>
               <button 
                 onClick={() => scrollToSection('features')}
@@ -748,7 +1054,15 @@ export default function Home() {
                       style={m.role === "user" ? { backgroundColor: '#f5f5f5' } : m.role === "assistant" ? { backgroundColor: '#eaffea' } : {}}
                       dir={language === 'fr' ? 'ltr' : 'rtl'}
                     >
-                      <pre className="whitespace-pre-wrap font-sans text-[15px] leading-relaxed">{m.content}</pre>
+                      <pre className="whitespace-pre-wrap font-sans text-[15px] leading-relaxed">
+                        {parseBoldSegments(m.content).map((seg, j) =>
+                          seg.bold ? (
+                            <strong key={j}>{seg.text}</strong>
+                          ) : (
+                            <Fragment key={j}>{seg.text}</Fragment>
+                          )
+                        )}
+                      </pre>
                       {m.image && (
                         <img 
                           src={m.image} 
@@ -892,6 +1206,100 @@ export default function Home() {
                 </button>
               </form>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pharmacie de garde Section */}
+      <section id="pharmacie" className="py-12" style={{ background: 'linear-gradient(180deg, #fff 0%, #f0fdf4 100%)' }}>
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-gray-800 mb-2">{t.pharmacie.title}</h3>
+            <p className="text-gray-600">{t.pharmacie.subtitle}</p>
+            <p className="text-sm text-gray-500 mt-1" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.nearestTitle}</p>
+          </div>
+          <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
+            {/* Primary: button to use location (user gesture so browser shows permission) */}
+            <div className="mb-4" dir={language === "fr" ? "ltr" : "rtl"}>
+              <button
+                type="button"
+                onClick={requestLocationForPharmacie}
+                disabled={pharmacieLoading}
+                className="w-full sm:w-auto px-5 py-3 rounded-xl font-medium text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors"
+              >
+                {t.pharmacie.useMyLocation}
+              </button>
+            </div>
+            <p className="text-sm text-gray-500 mb-2" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.orChooseCity}</p>
+            <select
+              value={pharmacieCity}
+              onChange={(e) => {
+                setPharmacieCity(e.target.value);
+                if (!e.target.value) setPharmacieData(null);
+              }}
+              className="w-full max-w-xs p-3 rounded-xl border border-gray-200 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent mb-6"
+              dir={language === "fr" ? "ltr" : "rtl"}
+            >
+              <option value="">—</option>
+              {PHARMACIE_CITIES.map((c) => (
+                <option key={c.slug} value={c.slug}>{c.label}</option>
+              ))}
+            </select>
+            {locationRequested && !userLocation && !locationError && (
+              <p className="text-gray-500 py-2" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.loadingLocation}</p>
+            )}
+            {locationError && !userLocation && (
+              <p className="text-amber-700 py-2" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.locationDenied}</p>
+            )}
+            {pharmacieLoading && (
+              <p className="text-gray-500 py-4" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.loading}</p>
+            )}
+            {pharmacieError && !pharmacieLoading && (
+              <p className="text-red-600 py-4" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.error}</p>
+            )}
+            {pharmacieData && !pharmacieLoading && !pharmacieError && (
+              <>
+                {sortedPharmacies.length === 0 ? (
+                  <p className="text-gray-600 py-4" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.noResults}</p>
+                ) : (
+                  <ul className="space-y-4 mb-6">
+                    {sortedPharmacies.map((ph, i) => {
+                      const distKm = userCoords && ph.lat != null && ph.lng != null
+                        ? getDistanceKm(userCoords.lat, userCoords.lng, ph.lat, ph.lng)
+                        : (ph.distanceKm ?? null);
+                      return (
+                      <li key={i} className="p-4 rounded-xl border border-gray-200 bg-gray-50/50 hover:bg-gray-50">
+                        <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+                          {ph.name && <p className="font-semibold text-gray-900" dir="ltr">{ph.name}</p>}
+                          {userCoords && (
+                            <span className="text-sm text-emerald-700 font-medium shrink-0" dir="ltr" title={t.pharmacie.distanceLabel}>
+                              {t.pharmacie.distanceLabel}: {distKm != null
+                                ? t.pharmacie.distance.replace("{{km}}", distKm < 1 ? distKm.toFixed(2) : distKm.toFixed(1))
+                                : "—"}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-gray-700 mb-2" dir="ltr">{ph.address}</p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {ph.phone && (
+                            <a href={`tel:${ph.phone.replace(/\D/g, "")}`} className="inline-flex items-center gap-1 text-sm text-emerald-700 hover:underline">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                              {t.pharmacie.call} {ph.phone}
+                            </a>
+                          )}
+                          {ph.mapsUrl && (
+                            <a href={ph.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm text-blue-600 hover:underline">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                              {t.pharmacie.directions}
+                            </a>
+                          )}
+                        </div>
+                      </li>
+                    ); })}
+                  </ul>
+                )}
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -1087,6 +1495,7 @@ export default function Home() {
               <h5 className="font-semibold mb-4">{t.footer.quickLinks}</h5>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li><button onClick={() => scrollToSection('chat')} className="hover:text-white transition-colors">{t.nav.chat}</button></li>
+                <li><button onClick={() => scrollToSection('pharmacie')} className="hover:text-white transition-colors">{t.nav.pharmacie}</button></li>
                 <li><button onClick={() => scrollToSection('features')} className="hover:text-white transition-colors">{t.nav.features}</button></li>
                 <li><button onClick={() => scrollToSection('reviews')} className="hover:text-white transition-colors">{t.nav.reviews}</button></li>
                 <li><button onClick={() => scrollToSection('about')} className="hover:text-white transition-colors">{t.nav.about}</button></li>

@@ -1,0 +1,13 @@
+
+    // Strip loading/filler phrases\n    try {\n      reply = reply\n        .replace(medicaments?_ma[^\n]*pdf/gi, 'data/morocco_medicines.jsonl')
+        .replace(/PDF database/gi, 'JSONL dataset')
+        // Remove French loading/filler lines
+        .replace(/\b(Un instant|Veuillez patienter|Je cherche|Je vais v[ée]rifier[^\n]*|Patientez)\b[\s\S]*?(?=\n|$)/gi, '')
+        // Remove Arabic loading/filler lines
+        .replace(/\b(لحظة|من فضلك انتظر|كنقلب|غادي نتحقق|غادي نفحص)\b[\s\S]*?(?=\n|$)/g, '')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+    } catch {}
+
+    return res.status(200).json({ result: reply });
+  } catch (err) {
