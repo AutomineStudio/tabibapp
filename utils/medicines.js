@@ -8,7 +8,7 @@ export async function loadMedicines() {
 
   try {
     // Load from the pretty JSON file in tabib/data directory
-    const filePath = path.join(process.cwd(), 'data', 'morocco_medicines_pretty.json');
+    const filePath = path.join(process.cwd(), 'tabib', 'data', 'morocco_medicines_pretty.json');
     const fileContent = await fs.promises.readFile(filePath, 'utf-8');
     const medicines = JSON.parse(fileContent);
 
@@ -62,7 +62,7 @@ export async function searchMedicines({
   // Filter medicines based on criteria
   const results = medicines.filter(med => {
     // Only return commercialized medicines
-    if (med.statut !== 'Commercialis├⌐') {
+    if (med.statut !== 'Commercialisé') {
       return false;
     }
 
@@ -123,8 +123,8 @@ export async function searchMedicines({
               !indicationsLower.includes('enfant') &&
               !indicationsLower.includes('adolescent')) {
             // Adult-only medicine, check if explicitly excludes children
-            if (indicationsLower.includes('contre-indiqu├⌐') ||
-                indicationsLower.includes('d├⌐conseill├⌐')) {
+            if (indicationsLower.includes('contre-indiqué') ||
+                indicationsLower.includes('déconseillé')) {
               return false; // Skip this medicine for children
             }
           }
@@ -146,10 +146,10 @@ export async function searchMedicines({
       if (isPregnant || isBreastfeeding) {
         const indicationsLower = medIndications.toLowerCase();
         const contreindicationsKeywords = [
-          'contre-indiqu├⌐',
-          'contre indiqu├⌐',
+          'contre-indiqué',
+          'contre indiqué',
           'contreindiqu',
-          'd├⌐conseill├⌐',
+          'déconseillé',
           'interdit',
           'ne doit pas',
           'ne pas utiliser',
@@ -224,6 +224,17 @@ export async function searchMedicines({
               }
             }
           }
+        }
+      }
+
+      // Gender-based considerations
+      if (patientGender !== null) {
+        const isFemale = patientGender === 'femme' || patientGender === 'fille';
+
+        // Check for pregnancy/breastfeeding warnings (for adult females)
+        if (isFemale && patientAge >= 18) {
+          // Note: We don't filter out, but the AI will see these warnings
+          // in the indications and can advise accordingly
         }
       }
     }
@@ -321,7 +332,7 @@ export async function getMedicinesByTherapeuticClass(therapeuticClass, limit = 1
   return medicines
     .filter(med =>
       (med.classe_therapeutique || '').toLowerCase().includes(searchTerm) &&
-      med.statut === 'Commercialis├⌐'
+      med.statut === 'Commercialisé'
     )
     .slice(0, limit);
 }
@@ -332,19 +343,19 @@ export async function getMedicinesByTherapeuticClass(therapeuticClass, limit = 1
 export function formatMedicineInfo(medicine) {
   if (!medicine) return null;
 
-  const presentation = medicine.presentation || '╪║┘è╪▒ ┘à╪¡╪»╪»';
-  const dosage = medicine.dosage || '╪║┘è╪▒ ┘à╪¡╪»╪»';
-  const composition = medicine.composition || '╪║┘è╪▒ ┘à╪¡╪»╪»';
-  const therapeuticClass = medicine.classe_therapeutique || '╪║┘è╪▒ ┘à╪¡╪»╪»';
-  const price = medicine.ppv || '╪║┘è╪▒ ┘à╪¬┘ê┘ü╪▒';
-  const hospitalPrice = medicine.prix_hospitalier || '╪║┘è╪▒ ┘à╪¬┘ê┘ü╪▒';
-  const distributor = medicine.distributeur || '╪║┘è╪▒ ┘à╪¡╪»╪»';
-  const tableau = medicine.tableau || '╪║┘è╪▒ ┘à╪¡╪»╪»';
+  const presentation = medicine.presentation || 'غير محدد';
+  const dosage = medicine.dosage || 'غير محدد';
+  const composition = medicine.composition || 'غير محدد';
+  const therapeuticClass = medicine.classe_therapeutique || 'غير محدد';
+  const price = medicine.ppv || 'غير متوفر';
+  const hospitalPrice = medicine.prix_hospitalier || 'غير متوفر';
+  const distributor = medicine.distributeur || 'غير محدد';
+  const tableau = medicine.tableau || 'غير محدد';
 
   // Extract clean indications (remove website footer)
-  let indications = medicine.indications || '╪║┘è╪▒ ┘à╪¡╪»╪»';
-  if (indications.includes('Ajout├⌐ le:')) {
-    indications = indications.split('Ajout├⌐ le:')[0].trim();
+  let indications = medicine.indications || 'غير محدد';
+  if (indications.includes('Ajouté le:')) {
+    indications = indications.split('Ajouté le:')[0].trim();
   }
 
   // Truncate long indications
@@ -376,17 +387,17 @@ export function formatMedicineForAI(medicine) {
 
   // Extract clean indications
   let indications = medicine.indications || '';
-  if (indications.includes('Ajout├⌐ le:')) {
-    indications = indications.split('Ajout├⌐ le:')[0].trim();
+  if (indications.includes('Ajouté le:')) {
+    indications = indications.split('Ajouté le:')[0].trim();
   }
 
   return `**${medicine.nom_commercial}**
 - Composition: ${medicine.composition}
-- Classe th├⌐rapeutique: ${medicine.classe_therapeutique}
+- Classe thérapeutique: ${medicine.classe_therapeutique}
 - Dosage: ${medicine.dosage}
-- Pr├⌐sentation: ${medicine.presentation || 'Non sp├⌐cifi├⌐'}
+- Présentation: ${medicine.presentation || 'Non spécifié'}
 - Prix public: ${medicine.ppv}
 - Prix hospitalier: ${medicine.prix_hospitalier || 'N/A'}
-- Tableau: ${medicine.tableau}${medicine.tableau === 'A' ? ' (n├⌐cessite ordonnance)' : ''}
+- Tableau: ${medicine.tableau}${medicine.tableau === 'A' ? ' (nécessite ordonnance)' : ''}
 - Indications: ${indications.substring(0, 300)}${indications.length > 300 ? '...' : ''}`;
-} 
+}
