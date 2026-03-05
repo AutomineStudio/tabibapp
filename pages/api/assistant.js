@@ -143,7 +143,31 @@ export default async function handler(req, res) {
    - Allergies connues
    - Médicaments actuels (interactions)
    - Durée des symptômes
-3. **Traduire les symptômes en termes médicaux** pour la recherche:
+3. **RÈGLES DE COMPORTEMENT DIAGNOSTIQUE**
+   - Si l'utilisateur fournit le nom d'une maladie :
+     * Ne pas la confirmer immédiatement
+     * Demander d'abord les symptômes
+     * Vérifier que les symptômes correspondent réellement à la maladie mentionnée
+     * Si les symptômes ne correspondent pas :
+       - Expliquer pourquoi
+       - Proposer une condition plus probable
+   - Si l'utilisateur fournit uniquement des symptômes :
+     * Poser des questions de suivi pour le diagnostic
+     * Après l'évaluation, fournir :
+       - Le nom de la maladie la plus probable
+       - Une explication courte et claire de la condition
+   - Règle de suggestion des médicaments :
+     * Ne pas proposer de médicaments automatiquement après le diagnostic
+     * Proposer des médicaments uniquement si l'utilisateur demande explicitement un traitement
+     * Si l'utilisateur ne demande pas de médicaments, conclure le diagnostic par la question suivante :
+       « Souhaitez-vous que je vous suggère des options de traitement pour cette condition ? »
+   - **RESTRICTIONS ABSOLUES :**
+     * Ne jamais sauter les questions de triage
+     * Ne jamais passer directement aux médicaments
+     * Ne jamais confirmer une maladie sans vérification des symptômes
+     * Ne jamais proposer de traitement sans avoir complété l'évaluation
+
+4. **Traduire les symptômes en termes médicaux** pour la recherche:
    - Mal de tête / Céphalée → composition: "paracétamol, ibuprofène" OU therapeuticClass: "analgésique, antipyrétique"
    - Fièvre → composition: "paracétamol" OU therapeuticClass: "antipyrétique"
    - Douleurs articulaires → composition: "ibuprofène" OU therapeuticClass: "anti-inflammatoire, antirhumatismal"
@@ -158,8 +182,8 @@ export default async function handler(req, res) {
    - Constipation → therapeuticClass: "laxatif"
    - Brûlures d'estomac → composition: "oméprazole" OU therapeuticClass: "antiacide, inhibiteur pompe protons"
    - Cholestérol → composition: "atorvastatine, simvastatine" OU therapeuticClass: "hypolipémiant, statine"
-4. Rechercher dans la base de données avec des **mots-clés médicaux larges**
-5. Fournir des conseils médicaux généraux et des instructions d'utilisation
+5. Rechercher dans la base de données avec des **mots-clés médicaux larges**
+6. Fournir des conseils médicaux généraux et des instructions d'utilisation
 
 **Règles importantes pour éviter les répétitions:**
 - LIS ATTENTIVEMENT l'historique de la conversation
@@ -295,96 +319,160 @@ Quand tu reçois les résultats d'une recherche de médicaments:
 
     // Check if the model wants to call a function
     if (assistantMessage.tool_calls && assistantMessage.tool_calls.length > 0) {
-      console.log("Function call requested:", assistantMessage.tool_calls[0].function.name);
+      console.log(`Function call requested: ${assistantMessage.tool_calls.length} tool call(s)`);
+      assistantMessage.tool_calls.forEach((tc, idx) => {
+        console.log(`  ${idx + 1}. ${tc.function.name} (id: ${tc.id})`);
+      });
 
-      const toolCall = assistantMessage.tool_calls[0];
-      const functionName = toolCall.function.name;
-      const functionArgs = JSON.parse(toolCall.function.arguments);
+      // Process all tool calls - we only support search_medicine_database
+      const toolCallResults = [];
+      
+      for (const toolCall of assistantMessage.tool_calls) {
+        const functionName = toolCall.function.name;
+        const functionArgs = JSON.parse(toolCall.function.arguments);
 
-      let functionResult = null;
+        let functionResult = null;
 
-      // Execute the medicine search function
-      if (functionName === "search_medicine_database") {
-        console.log("\n" + "=".repeat(80));
-        console.log("🔍 MEDICINE SEARCH FUNCTION CALLED");
-        console.log("=".repeat(80));
-        console.log("📋 Search Parameters:");
-        console.log(JSON.stringify(functionArgs, null, 2));
-        console.log("-".repeat(80));
+        // Execute the medicine search function
+        if (functionName === "search_medicine_database") {
+          console.log("\n" + "=".repeat(80));
+          console.log(`🔍 MEDICINE SEARCH FUNCTION CALLED (tool_call_id: ${toolCall.id})`);
+          console.log("=".repeat(80));
+          console.log("📋 Search Parameters:");
+          console.log(JSON.stringify(functionArgs, null, 2));
+          console.log("-".repeat(80));
 
-        try {
-          const searchParams = {
-            symptoms: functionArgs.symptoms || '',
-            condition: functionArgs.condition || '',
-            composition: functionArgs.composition || '',
-            therapeuticClass: functionArgs.therapeuticClass || '',
-            patientAge: functionArgs.patientAge || null,
-            patientGender: functionArgs.patientGender || null,
-            maxPrice: functionArgs.maxPrice || null,
-            limit: 20 // Increased to show all variants
-          };
+          try {
+            const searchParams = {
+              symptoms: functionArgs.symptoms || '',
+              condition: functionArgs.condition || '',
+              composition: functionArgs.composition || '',
+              therapeuticClass: functionArgs.therapeuticClass || '',
+              patientAge: functionArgs.patientAge || null,
+              patientGender: functionArgs.patientGender || null,
+              maxPrice: functionArgs.maxPrice || null,
+              limit: 20 // Increased to show all variants
+            };
 
-          console.log(`👤 Patient info: ${searchParams.patientAge} ans, ${searchParams.patientGender}`);
+            console.log(`👤 Patient info: ${searchParams.patientAge} ans, ${searchParams.patientGender}`);
 
-          const medicines = await searchMedicines(searchParams);
+            const medicines = await searchMedicines(searchParams);
 
-          console.log(`\n✅ SEARCH RESULTS: Found ${medicines.length} medicine(s)\n`);
+            console.log(`\n✅ SEARCH RESULTS: Found ${medicines.length} medicine(s)\n`);
 
-          if (medicines.length > 0) {
-            console.log("📦 Results (including all variants):");
+            if (medicines.length > 0) {
+              console.log("📦 Results (including all variants):");
 
-            // Group by base medicine name for display
-            const grouped = {};
-            medicines.forEach(med => {
-              const baseName = (med.nom_commercial || '').split(/\d/)[0].trim();
-              if (!grouped[baseName]) grouped[baseName] = [];
-              grouped[baseName].push(med);
-            });
-
-            Object.entries(grouped).forEach(([baseName, variants]) => {
-              console.log(`\n${baseName}: ${variants.length} variant(s)`);
-              variants.forEach((med, i) => {
-                console.log(`  ${i + 1}. ${med.nom_commercial}`);
-                console.log(`     - Dosage: ${med.dosage}`);
-                console.log(`     - Presentation: ${med.presentation}`);
-                console.log(`     - Price: ${med.ppv}`);
-                console.log(`     - Score: ${med.relevance_score}`);
+              // Group by base medicine name for display
+              const grouped = {};
+              medicines.forEach(med => {
+                const baseName = (med.nom_commercial || '').split(/\d/)[0].trim();
+                if (!grouped[baseName]) grouped[baseName] = [];
+                grouped[baseName].push(med);
               });
-            });
 
-            functionResult = medicines.map(med => formatMedicineForAI(med)).join('\n\n---\n\n');
+              Object.entries(grouped).forEach(([baseName, variants]) => {
+                console.log(`\n${baseName}: ${variants.length} variant(s)`);
+                variants.forEach((med, i) => {
+                  console.log(`  ${i + 1}. ${med.nom_commercial}`);
+                  console.log(`     - Dosage: ${med.dosage}`);
+                  console.log(`     - Presentation: ${med.presentation}`);
+                  console.log(`     - Price: ${med.ppv}`);
+                  console.log(`     - Score: ${med.relevance_score}`);
+                });
+              });
 
-            console.log(`\n📤 Formatted ${medicines.length} medicine(s) (all variants) for AI response`);
-          } else {
-            console.log("❌ No medicines found matching the criteria");
-            functionResult = "لم يتم العثور على أدوية مطابقة في قاعدة البيانات. يرجى تجربة معايير بحث مختلفة أو استشارة الصيدلي.";
+              functionResult = medicines.map(med => formatMedicineForAI(med)).join('\n\n---\n\n');
+
+              console.log(`\n📤 Formatted ${medicines.length} medicine(s) (all variants) for AI response`);
+            } else {
+              console.log("❌ No medicines found matching the criteria");
+              functionResult = "لم يتم العثور على أدوية مطابقة في قاعدة البيانات. يرجى تجربة معايير بحث مختلفة أو استشارة الصيدلي.";
+            }
+          } catch (error) {
+            console.error("\n❌ MEDICINE SEARCH ERROR:", error);
+            functionResult = "حدث خطأ أثناء البحث في قاعدة البيانات. يرجى المحاولة مرة أخرى.";
           }
-        } catch (error) {
-          console.error("\n❌ MEDICINE SEARCH ERROR:", error);
-          functionResult = "حدث خطأ أثناء البحث في قاعدة البيانات. يرجى المحاولة مرة أخرى.";
+
+          console.log("=".repeat(80) + "\n");
+        } else {
+          // Unknown function
+          console.warn(`⚠️  Unknown function: ${functionName}`);
+          functionResult = `دالة غير معروفة: ${functionName}`;
         }
 
-        console.log("=".repeat(80) + "\n");
+        // Validate and limit functionResult size
+        if (!functionResult || typeof functionResult !== 'string') {
+          console.error("❌ Invalid functionResult:", typeof functionResult);
+          functionResult = "حدث خطأ أثناء معالجة نتائج البحث.";
+        }
+        
+        // Limit functionResult size to avoid token limits (keep last 10000 chars if too long)
+        if (functionResult.length > 10000) {
+          console.warn(`⚠️  Function result too long (${functionResult.length} chars), truncating to last 10000 chars`);
+          functionResult = functionResult.substring(functionResult.length - 10000);
+        }
+
+        // Store the result for this tool_call
+        toolCallResults.push({
+          tool_call_id: toolCall.id,
+          content: functionResult
+        });
       }
 
-      // Make a second API call with the function result
-      console.log("Sending function result back to API...");
+      // Make a second API call with all function results
+      console.log("Sending function results back to API...");
+      console.log(`📊 Second request will have ${conversationMessages.length + 2 + toolCallResults.length} messages (system + ${conversationMessages.length} history + assistant + ${toolCallResults.length} tool response(s))`);
+
+      // Validate and clean assistantMessage
+      const cleanedAssistantMessage = {
+        role: assistantMessage.role || 'assistant',
+        content: assistantMessage.content || null,
+        tool_calls: assistantMessage.tool_calls || null
+      };
+
+      // Create tool response messages for each tool_call
+      const toolMessages = toolCallResults.map(result => ({
+        role: "tool",
+        tool_call_id: result.tool_call_id,
+        content: result.content
+      }));
 
       const secondRequest = {
         model: "gpt-4o",
         messages: [
           { role: "system", content: systemPrompt },
           ...conversationMessages,
-          assistantMessage, // Include the assistant's function call
-          {
-            role: "tool",
-            tool_call_id: toolCall.id,
-            content: functionResult
-          }
+          cleanedAssistantMessage, // Include the assistant's function call(s)
+          ...toolMessages // Include all tool responses
         ],
+        tools: [medicineSearchTool], // Include tools in case another function call is needed
+        tool_choice: "auto",
         temperature: 0.7,
         max_tokens: 2000
       };
+
+      console.log("🔍 Second request structure:");
+      console.log(`  - Model: ${secondRequest.model}`);
+      console.log(`  - Messages count: ${secondRequest.messages.length}`);
+      console.log(`  - Tools included: ${secondRequest.tools ? 'Yes' : 'No'}`);
+      console.log(`  - Last message role: ${secondRequest.messages[secondRequest.messages.length - 1].role}`);
+      console.log(`  - Tool responses count: ${toolMessages.length}`);
+      console.log(`  - Total tool result length: ${toolCallResults.reduce((sum, r) => sum + r.content.length, 0)} chars`);
+      console.log(`  - Assistant message has tool_calls: ${cleanedAssistantMessage.tool_calls ? 'Yes' : 'No'}`);
+      if (cleanedAssistantMessage.tool_calls) {
+        console.log(`  - Tool calls count: ${cleanedAssistantMessage.tool_calls.length}`);
+      }
+
+      // Validate JSON serialization
+      let requestBody;
+      try {
+        requestBody = JSON.stringify(secondRequest);
+        console.log(`  - Request body size: ${requestBody.length} bytes`);
+      } catch (jsonError) {
+        console.error("❌ JSON serialization error:", jsonError);
+        throw new Error(`خطأ في تحضير الطلب: ${jsonError.message}`);
+      }
 
       const secondResponse = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
@@ -392,11 +480,26 @@ Quand tu reçois les résultats d'une recherche de médicaments:
           "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(secondRequest)
+        body: requestBody
       });
 
       if (!secondResponse.ok) {
-        throw new Error('فشل في الحصول على الرد النهائي من الخدمة');
+        const errorData = await secondResponse.text();
+        console.error("Second API call failed:", {
+          status: secondResponse.status,
+          statusText: secondResponse.statusText,
+          error: errorData
+        });
+
+        if (secondResponse.status === 401) {
+          throw new Error('مفتاح API غير صالح أو منتهي الصلاحية');
+        } else if (secondResponse.status === 429) {
+          throw new Error('تم تجاوز حد الطلبات. يرجى المحاولة لاحقاً');
+        } else if (secondResponse.status === 500) {
+          throw new Error('خطأ في خادم OpenAI. يرجى المحاولة لاحقاً');
+        } else {
+          throw new Error(`فشل في الحصول على الرد النهائي من الخدمة: ${secondResponse.status} - ${errorData.substring(0, 200)}`);
+        }
       }
 
       const finalResponseData = await secondResponse.json();
