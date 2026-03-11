@@ -68,6 +68,22 @@ export default async function handler(req, res) {
     const messages = JSON.parse(fields.messages || "[]");
     const previousResponseId = fields.previousResponseId?.[0] || null;
 
+    // Parse patient info (formidable may send as string or array)
+    let patientInfo = null;
+    try {
+      let raw = fields.patientInfo;
+      if (Array.isArray(raw)) raw = raw[0];
+      if (typeof raw === "string" && raw) {
+        patientInfo = JSON.parse(raw);
+        if (patientInfo && typeof patientInfo !== "object") patientInfo = null;
+      }
+    } catch (e) {
+      // ignore
+    }
+    if (patientInfo && patientInfo.age != null && patientInfo.sex) {
+      console.log("📋 Patient info: age=" + patientInfo.age + ", sex=" + patientInfo.sex);
+    }
+
     console.log("\n" + "█".repeat(80));
     console.log("📨 NEW REQUEST RECEIVED");
     console.log("█".repeat(80));
@@ -127,7 +143,7 @@ export default async function handler(req, res) {
     }
 
     // Create the system prompt for the medical assistant
-    const systemPrompt = `Tu es un médecin virtuel marocain spécialisé dans les consultations médicales. Tu dois répondre dans la MÊME LANGUE que le patient utilise.
+    let systemPrompt = `Tu es un médecin virtuel marocain spécialisé dans les consultations médicales. Tu dois répondre dans la MÊME LANGUE que le patient utilise.
 
 **TRÈS IMPORTANT - Détection de la langue:**
 - Si le patient parle en FRANÇAIS → Réponds en FRANÇAIS
@@ -262,6 +278,24 @@ Quand tu reçois les résultats d'une recherche de médicaments:
 - Mentionne toujours l'importance de consulter le pharmacien pour vérifier la disponibilité
 
 **RAPPEL: Réponds TOUJOURS dans la langue utilisée par le patient!**`;
+
+    // Prepend patient info block when provided (do not modify the original prompt below)
+    if (patientInfo && String(patientInfo.age || "").trim() !== "" && patientInfo.sex) {
+      const sexLabel = patientInfo.sex === "female" ? "Femme" : "Homme";
+      const allergies = (patientInfo.allergies && String(patientInfo.allergies).trim()) ? String(patientInfo.allergies).trim() : "non précisé";
+      const conditions = (patientInfo.medicalCondition && String(patientInfo.medicalCondition).trim()) ? String(patientInfo.medicalCondition).trim() : "non précisé";
+      const patientBlock = `**INFORMATIONS PATIENT (déjà renseignées - NE PAS REDEMANDER):**
+- Âge: ${patientInfo.age} ans
+- Sexe: ${sexLabel}
+- Allergies: ${allergies}
+- Affection(s) / pathologie(s) connue(s): ${conditions}
+
+Utilise ces informations pour toutes les recherches de médicaments et recommandations. Ne redemande jamais l'âge, le sexe, les allergies ni les pathologies déjà indiquées ci-dessus.
+
+---
+`;
+      systemPrompt = patientBlock + systemPrompt;
+    }
 
     // Prepare the Chat Completions API request with function calling
     const requestBody = {

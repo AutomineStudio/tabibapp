@@ -50,7 +50,23 @@ const translations = {
       placeholder: "اكتب أعراضك هنا...",
       addImage: "إضافة صورة",
       imageSelected: "تم اختيار الصورة",
-      send: "إرسال"
+      send: "إرسال",
+      editInfo: "تعديل معلوماتي"
+    },
+    patientForm: {
+      title: "معلوماتك العامة",
+      subtitle: "أدخل معلوماتك قبل بدء المحادثة. الطبيب سيأخذها بعين الاعتبار ولن يطلبها مرة أخرى.",
+      age: "العمر (بالسنوات)",
+      agePlaceholder: "مثال: 25",
+      sex: "الجنس",
+      sexMale: "ذكر",
+      sexFemale: "أنثى",
+      allergies: "الحساسية (إن وجدت)",
+      allergiesPlaceholder: "مثال: بنيسيلين، غبار... أو اترك فارغاً",
+      medicalCondition: "أمراض أو حالات طبية معروفة",
+      medicalConditionPlaceholder: "مثال: سكري، ضغط... أو اترك فارغاً",
+      startConversation: "بدء المحادثة",
+      requiredField: "العمر والجنس مطلوبان"
     },
     pharmacie: {
       title: "صيدلية الحراسة",
@@ -171,7 +187,23 @@ const translations = {
       placeholder: "Write your symptoms here...",
       addImage: "Add Image",
       imageSelected: "Image Selected",
-      send: "Send"
+      send: "Send",
+      editInfo: "Edit my information"
+    },
+    patientForm: {
+      title: "Your General Information",
+      subtitle: "Enter your details before starting. The doctor will use them and will not ask again.",
+      age: "Age (years)",
+      agePlaceholder: "e.g. 25",
+      sex: "Sex",
+      sexMale: "Male",
+      sexFemale: "Female",
+      allergies: "Allergies (if any)",
+      allergiesPlaceholder: "e.g. penicillin, dust... or leave blank",
+      medicalCondition: "Known medical conditions",
+      medicalConditionPlaceholder: "e.g. diabetes, hypertension... or leave blank",
+      startConversation: "Start the conversation",
+      requiredField: "Age and sex are required"
     },
     pharmacie: {
       title: "On-duty Pharmacy",
@@ -292,7 +324,23 @@ const translations = {
       placeholder: "Écrivez vos symptômes ici...",
       addImage: "Ajouter Image",
       imageSelected: "Image Sélectionnée",
-      send: "Envoyer"
+      send: "Envoyer",
+      editInfo: "Modifier mes informations"
+    },
+    patientForm: {
+      title: "Vos informations générales",
+      subtitle: "Renseignez ces informations avant de commencer. Le médecin en tiendra compte et ne les redemandera pas.",
+      age: "Âge (années)",
+      agePlaceholder: "ex. 25",
+      sex: "Sexe",
+      sexMale: "Homme",
+      sexFemale: "Femme",
+      allergies: "Allergies (le cas échéant)",
+      allergiesPlaceholder: "ex. pénicilline, poussière... ou laisser vide",
+      medicalCondition: "Affections ou pathologies connues",
+      medicalConditionPlaceholder: "ex. diabète, hypertension... ou laisser vide",
+      startConversation: "Commencer la conversation",
+      requiredField: "L'âge et le sexe sont requis"
     },
     pharmacie: {
       title: "Pharmacie de garde",
@@ -456,6 +504,14 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("chat");
   const [language, setLanguage] = useState("ar");
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [patientInfoSubmitted, setPatientInfoSubmitted] = useState(false);
+  const [patientInfo, setPatientInfo] = useState({
+    age: "",
+    sex: "",
+    allergies: "",
+    medicalCondition: ""
+  });
+  const [patientFormError, setPatientFormError] = useState(null);
   const [pharmacieData, setPharmacieData] = useState(null);
   const [pharmacieLoading, setPharmacieLoading] = useState(false);
   const [pharmacieError, setPharmacieError] = useState(null);
@@ -878,6 +934,7 @@ export default function Home() {
         }));
 
       formData.append("messages", JSON.stringify(messagesForAPI));
+      formData.append("patientInfo", JSON.stringify(patientInfo));
 
       if (selectedImage) {
         formData.append("image", selectedImage);
@@ -955,6 +1012,23 @@ export default function Home() {
   };
 
   // Add this function to clear the thread and reset the chat
+  const handlePatientFormSubmit = (e) => {
+    e.preventDefault();
+    setPatientFormError(null);
+    const age = String(patientInfo.age || "").trim();
+    const sex = String(patientInfo.sex || "").trim();
+    if (!age || !sex) {
+      setPatientFormError(t.patientForm.requiredField);
+      return;
+    }
+    const numAge = parseInt(age, 10);
+    if (isNaN(numAge) || numAge < 1 || numAge > 120) {
+      setPatientFormError(t.patientForm.requiredField);
+      return;
+    }
+    setPatientInfoSubmitted(true);
+  };
+
   const handleNewChat = () => {
     localStorage.removeItem('tabib_thread_id');
     setThreadId(null);
@@ -1196,15 +1270,102 @@ export default function Home() {
           <div className="text-center mb-8">
             <h3 className="text-3xl font-bold text-gray-800 mb-4">{t.chat.title}</h3>
             <p className="text-gray-600">{t.chat.subtitle}</p>
-            <button
-              onClick={handleNewChat}
-              className="mt-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg text-sm font-medium transition-colors"
-            >
-              {t.chat.newChat}
-            </button>
+            <div className="mt-4 flex flex-wrap justify-center gap-2">
+              {patientInfoSubmitted && (
+                <button
+                  type="button"
+                  onClick={() => setPatientInfoSubmitted(false)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition-colors border border-gray-200"
+                >
+                  {t.chat.editInfo}
+                </button>
+              )}
+              <button
+                onClick={handleNewChat}
+                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg text-sm font-medium transition-colors"
+              >
+                {t.chat.newChat}
+              </button>
+            </div>
           </div>
           
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            {!patientInfoSubmitted ? (
+              /* Patient info form before starting conversation */
+              <div className="p-6 md:p-8">
+                <h4 className="text-xl font-semibold text-gray-800 mb-1">{t.patientForm.title}</h4>
+                <p className="text-gray-600 text-sm mb-6">{t.patientForm.subtitle}</p>
+                <form onSubmit={handlePatientFormSubmit} className="space-y-4 max-w-lg">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.patientForm.age} *</label>
+                    <input
+                      type="number"
+                      min={1}
+                      max={120}
+                      value={patientInfo.age}
+                      onChange={(e) => setPatientInfo((prev) => ({ ...prev, age: e.target.value }))}
+                      placeholder={t.patientForm.agePlaceholder}
+                      className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t.patientForm.sex} *</label>
+                    <div className="flex gap-4">
+                      <label className="inline-flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="sex"
+                          checked={patientInfo.sex === "male"}
+                          onChange={() => setPatientInfo((prev) => ({ ...prev, sex: "male" }))}
+                          className="text-emerald-600 focus:ring-emerald-500"
+                        />
+                        <span>{t.patientForm.sexMale}</span>
+                      </label>
+                      <label className="inline-flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="sex"
+                          checked={patientInfo.sex === "female"}
+                          onChange={() => setPatientInfo((prev) => ({ ...prev, sex: "female" }))}
+                          className="text-emerald-600 focus:ring-emerald-500"
+                        />
+                        <span>{t.patientForm.sexFemale}</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.patientForm.allergies}</label>
+                    <input
+                      type="text"
+                      value={patientInfo.allergies}
+                      onChange={(e) => setPatientInfo((prev) => ({ ...prev, allergies: e.target.value }))}
+                      placeholder={t.patientForm.allergiesPlaceholder}
+                      className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.patientForm.medicalCondition}</label>
+                    <input
+                      type="text"
+                      value={patientInfo.medicalCondition}
+                      onChange={(e) => setPatientInfo((prev) => ({ ...prev, medicalCondition: e.target.value }))}
+                      placeholder={t.patientForm.medicalConditionPlaceholder}
+                      className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    />
+                  </div>
+                  {patientFormError && (
+                    <p className="text-red-600 text-sm">{patientFormError}</p>
+                  )}
+                  <button
+                    type="submit"
+                    className="w-full sm:w-auto px-6 py-3 rounded-xl font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors"
+                  >
+                    {t.patientForm.startConversation}
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <>
             {/* Messages Container */}
             <div className="h-96 overflow-y-auto p-6" ref={messagesContainerRef}>
               <div className="flex flex-col space-y-3">
@@ -1368,6 +1529,8 @@ export default function Home() {
                 </button>
               </form>
             </div>
+              </>
+            )}
           </div>
         </div>
       </section>
