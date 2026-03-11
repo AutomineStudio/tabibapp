@@ -7,6 +7,19 @@ function parseBoldSegments(text) {
   return parts.map((t, i) => ({ bold: i % 2 === 1, text: t }));
 }
 
+// Format Moroccan phone: +212XXXXXXXXX or 0212... → 0X XX XX XX XX
+function formatMoroccanPhone(raw) {
+  if (!raw) return raw;
+  let digits = raw.replace(/\D/g, "");
+  if (digits.startsWith("212")) digits = "0" + digits.slice(3);
+  else if (digits.startsWith("00212")) digits = "0" + digits.slice(5);
+  else if (!digits.startsWith("0")) digits = "0" + digits;
+  if (digits.length === 10) {
+    return `${digits.slice(0, 2)} ${digits.slice(2, 4)} ${digits.slice(4, 6)} ${digits.slice(6, 8)} ${digits.slice(8, 10)}`;
+  }
+  return digits;
+}
+
 // Language translations
 const translations = {
   ar: {
@@ -44,9 +57,11 @@ const translations = {
       subtitle: "صيدليات مفتوحة ليلاً وعطل نهاية الأسبوع",
       chooseCity: "اختر مدينتك",
       loading: "جاري التحميل...",
+      seekingPharmacies: "جاري البحث عن أقرب الصيدليات",
       loadingLocation: "جاري الحصول على موقعك...",
       allowLocation: "السماح بالموقع لعرض أقرب 10 صيدليات",
       locationDenied: "تم رفض الموقع. فعّله من إعدادات المتصفح لعرض أقرب الصيدليات.",
+      locationTimeout: "استغرقت عملية تحديد الموقع وقتاً طويلاً. حاول مرة أخرى.",
       useMyLocation: "استخدام موقعي - أقرب 10 صيدليات",
       orChooseCity: "أو اختر مدينة",
       nearestTitle: "أقرب 10 صيدليات من موقعك",
@@ -163,9 +178,11 @@ const translations = {
       subtitle: "Pharmacies open at night and on weekends",
       chooseCity: "Choose your city",
       loading: "Loading...",
+      seekingPharmacies: "Searching for nearby pharmacies",
       loadingLocation: "Getting your location...",
       allowLocation: "Allow location to see the 10 nearest pharmacies",
       locationDenied: "Location was denied. Enable it in your browser to see the nearest pharmacies.",
+      locationTimeout: "Getting location took too long. Please try again.",
       useMyLocation: "Use my location – 10 nearest pharmacies",
       orChooseCity: "Or choose a city",
       nearestTitle: "10 nearest pharmacies from your location",
@@ -282,9 +299,11 @@ const translations = {
       subtitle: "Pharmacies ouvertes la nuit et le week-end",
       chooseCity: "Choisissez votre ville",
       loading: "Chargement...",
+      seekingPharmacies: "Recherche des pharmacies à proximité",
       loadingLocation: "Obtention de votre position...",
       allowLocation: "Autorisez l'accès à votre position pour afficher les 10 pharmacies les plus proches",
       locationDenied: "L'accès à la position a été refusé. Activez-la dans les paramètres du navigateur pour voir les pharmacies à proximité.",
+      locationTimeout: "La localisation a pris trop de temps. Veuillez réessayer.",
       useMyLocation: "Utiliser ma position – 10 pharmacies les plus proches",
       orChooseCity: "Ou choisir une ville",
       nearestTitle: "10 pharmacies les plus proches de chez vous",
@@ -371,6 +390,7 @@ const translations = {
 const CITIES_FOR_NEARBY = [
   "casablanca", "rabat", "marrakech", "fes", "agadir", "tanger", "meknes", "sale", "kenitra", "oujda"
 ];
+const PHARMACIE_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 const PHARMACIE_CITIES = [
   { slug: "agadir", label: "Agadir" },
@@ -451,6 +471,24 @@ export default function Home() {
   const bottomRef = useRef(null);
   const fileInputRef = useRef(null);
   const messagesContainerRef = useRef(null);
+  const pharmacieCacheRef = useRef(Object.create(null)); // { [citySlug]: { pharmacies, ts } }
+  const locationErrorTimeoutRef = useRef(null);
+
+  // Prefetch pharmacie data for nearby cities in the background on page load
+  useEffect(() => {
+    const cache = pharmacieCacheRef.current;
+    const isFresh = (entry) => entry && (Date.now() - entry.ts) < PHARMACIE_CACHE_TTL_MS;
+    CITIES_FOR_NEARBY.forEach((city) => {
+      if (isFresh(cache[city])) return;
+      fetch(`/api/pharmacie-garde?city=${encodeURIComponent(city)}`)
+        .then((res) => (res.ok ? res.json() : { pharmacies: [] }))
+        .then((data) => {
+          const list = data.pharmacies && Array.isArray(data.pharmacies) ? data.pharmacies : [];
+          cache[city] = { pharmacies: list, ts: Date.now() };
+        })
+        .catch(() => {});
+    });
+  }, []);
 
   // Smooth scroll with header offset
   const scrollElementWithOffset = (el) => {
@@ -502,15 +540,13 @@ export default function Home() {
     return () => window.removeEventListener('popstate', applyPathOrQuery);
   }, []);
 
-  const t = translations[language];
+  const t = translations[language] ?? translations.ar;
 
-  // When language changes, translate the initial assistant greeting
+  // When language changes, translate the initial assistant greeting so it always matches selected language
   useEffect(() => {
-    // Only adjust if it's the initial greeting (single assistant message, no thread yet)
     if (
       messages.length === 1 &&
       messages[0]?.role === 'assistant' &&
-      (!threadId) &&
       [
         translations.ar.chat.greeting,
         translations.en.chat.greeting,
@@ -529,7 +565,7 @@ export default function Home() {
     
     // Load saved language preference
     const savedLanguage = localStorage.getItem('tabib_language');
-    if (savedLanguage && ['ar', 'fr'].includes(savedLanguage)) {
+    if (savedLanguage && ['ar', 'en', 'fr'].includes(savedLanguage)) {
       setLanguage(savedLanguage);
     }
   }, []);
@@ -609,16 +645,45 @@ export default function Home() {
   // Request location only on button click (user gesture) so the browser shows the permission prompt
   const requestLocationForPharmacie = () => {
     if (typeof navigator === "undefined" || !navigator.geolocation) {
-      setLocationError(true);
+      setLocationError("denied");
       return;
     }
+    if (locationErrorTimeoutRef.current) {
+      clearTimeout(locationErrorTimeoutRef.current);
+      locationErrorTimeoutRef.current = null;
+    }
     setLocationError(null);
+    setPharmacieError(null);
+    setPharmacieData(null);
     setLocationRequested(true);
     setPharmacieCity(""); // switch to "nearby" mode
+
+    let resolved = false;
+
     navigator.geolocation.getCurrentPosition(
-      (pos) => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-      () => setLocationError(true),
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+      (pos) => {
+        resolved = true;
+        if (locationErrorTimeoutRef.current) {
+          clearTimeout(locationErrorTimeoutRef.current);
+          locationErrorTimeoutRef.current = null;
+        }
+        setLocationError(null);
+        setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+      },
+      () => {
+        // NEVER set error here — some browsers (Chrome) fire error then success.
+        // Instead, schedule a delayed check. If success hasn't arrived after 8s, show error.
+        if (!resolved) {
+          locationErrorTimeoutRef.current = setTimeout(() => {
+            locationErrorTimeoutRef.current = null;
+            if (!resolved) {
+              setLocationError("denied");
+              setLocationRequested(false);
+            }
+          }, 8000);
+        }
+      },
+      { enableHighAccuracy: false, timeout: 30000, maximumAge: 300000 }
     );
   };
 
@@ -628,58 +693,75 @@ export default function Home() {
       if (locationError) setPharmacieData(null);
       return;
     }
+    const cache = pharmacieCacheRef.current;
+    const isFresh = (entry) => entry && (Date.now() - entry.ts) < PHARMACIE_CACHE_TTL_MS;
+    const getDistanceKm = (lat1, lng1, lat2, lng2) => {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLng = (lng2 - lng1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    };
+    const mergeAndSort = (results) => {
+      const seen = new Set();
+      const merged = [];
+      for (const data of results) {
+        if (!data.pharmacies || !Array.isArray(data.pharmacies)) continue;
+        for (const p of data.pharmacies) {
+          const key = (p.phone || "").replace(/\D/g, "") || `${(p.name || "").slice(0, 30)}-${(p.address || "").slice(0, 30)}`;
+          if (seen.has(key)) continue;
+          seen.add(key);
+          merged.push(p);
+        }
+      }
+      const withDistance = merged.map((p) => {
+        const km = p.lat != null && p.lng != null
+          ? getDistanceKm(userLocation.lat, userLocation.lng, p.lat, p.lng)
+          : null;
+        return { ...p, distanceKm: km };
+      });
+      const sorted = withDistance.sort((a, b) => {
+        if (a.distanceKm == null && b.distanceKm == null) return 0;
+        if (a.distanceKm == null) return 1;
+        if (b.distanceKm == null) return -1;
+        return a.distanceKm - b.distanceKm;
+      });
+      return sorted.slice(0, 10);
+    };
+
+    setLocationRequested(false); // location obtained, clear the "waiting" flag
+
+    // If all cities are cached and fresh, use instant (no loading)
+    const allCached = CITIES_FOR_NEARBY.every((city) => isFresh(cache[city]));
+    if (allCached) {
+      const results = CITIES_FOR_NEARBY.map((city) => ({ pharmacies: cache[city].pharmacies }));
+      setPharmacieData({ pharmacies: mergeAndSort(results), userCoords: userLocation });
+      setPharmacieError(null);
+      return;
+    }
+
     let cancelled = false;
     setPharmacieLoading(true);
     setPharmacieError(null);
-    Promise.all(
-      CITIES_FOR_NEARBY.map((city) =>
-        fetch(`/api/pharmacie-garde?city=${encodeURIComponent(city)}`).then((res) =>
-          res.ok ? res.json() : { pharmacies: [] }
-        )
-      )
-    )
-      .then((results) => {
-        if (cancelled) return;
-        const seen = new Set();
-        const merged = [];
-        for (const data of results) {
-          if (!data.pharmacies || !Array.isArray(data.pharmacies)) continue;
-          for (const p of data.pharmacies) {
-            const key = (p.phone || "").replace(/\D/g, "") || `${(p.name || "").slice(0, 30)}-${(p.address || "").slice(0, 30)}`;
-            if (seen.has(key)) continue;
-            seen.add(key);
-            merged.push(p);
-          }
-        }
-        const getDistanceKm = (lat1, lng1, lat2, lng2) => {
-          const R = 6371;
-          const dLat = (lat2 - lat1) * Math.PI / 180;
-          const dLng = (lng2 - lng1) * Math.PI / 180;
-          const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-          return R * c;
-        };
-        const withDistance = merged.map((p) => {
-          const km = p.lat != null && p.lng != null
-            ? getDistanceKm(userLocation.lat, userLocation.lng, p.lat, p.lng)
-            : null;
-          return { ...p, distanceKm: km };
-        });
-        const sorted = withDistance.sort((a, b) => {
-          if (a.distanceKm == null && b.distanceKm == null) return 0;
-          if (a.distanceKm == null) return 1;
-          if (b.distanceKm == null) return -1;
-          return a.distanceKm - b.distanceKm;
-        });
-        const top10 = sorted.slice(0, 10);
-        setPharmacieData({ pharmacies: top10, userCoords: userLocation });
-        setPharmacieError(null);
+    Promise.allSettled(
+      CITIES_FOR_NEARBY.map((city) => {
+        if (isFresh(cache[city])) return Promise.resolve({ pharmacies: cache[city].pharmacies });
+        return fetch(`/api/pharmacie-garde?city=${encodeURIComponent(city)}`)
+          .then((res) => (res.ok ? res.json() : { pharmacies: [] }))
+          .then((data) => {
+            const list = data.pharmacies && Array.isArray(data.pharmacies) ? data.pharmacies : [];
+            cache[city] = { pharmacies: list, ts: Date.now() };
+            return { pharmacies: list };
+          });
       })
-      .catch((err) => {
-        if (!cancelled) {
-          setPharmacieData(null);
-          setPharmacieError(err.message || "Error");
-        }
+    )
+      .then((outcomes) => {
+        if (cancelled) return;
+        const results = outcomes.map((o) => (o.status === "fulfilled" ? o.value : { pharmacies: [] }));
+        const merged = mergeAndSort(results);
+        setPharmacieData({ pharmacies: merged, userCoords: userLocation });
+        setPharmacieError(merged.length === 0 ? "Could not load the list." : null);
       })
       .finally(() => {
         if (!cancelled) setPharmacieLoading(false);
@@ -693,6 +775,41 @@ export default function Home() {
       if (!userLocation) setPharmacieData(null);
       return;
     }
+    const cache = pharmacieCacheRef.current;
+    const isFresh = (entry) => entry && (Date.now() - entry.ts) < PHARMACIE_CACHE_TTL_MS;
+    const getDistanceKm = (lat1, lng1, lat2, lng2) => {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLng = (lng2 - lng1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    };
+    const applyList = (list) => {
+      const withDistance = userLocation
+        ? list.map((p) => {
+            const km = p.lat != null && p.lng != null
+              ? getDistanceKm(userLocation.lat, userLocation.lng, p.lat, p.lng)
+              : null;
+            return { ...p, distanceKm: km };
+          }).sort((a, b) => {
+            if (a.distanceKm == null && b.distanceKm == null) return 0;
+            if (a.distanceKm == null) return 1;
+            if (b.distanceKm == null) return -1;
+            return a.distanceKm - b.distanceKm;
+          })
+        : list.map((p) => ({ ...p, distanceKm: null }));
+      setPharmacieData({ pharmacies: withDistance, userCoords: userLocation || undefined });
+      setPharmacieError(null);
+    };
+
+    // Use cache if available and fresh
+    const entry = cache[pharmacieCity];
+    if (isFresh(entry)) {
+      applyList(entry.pharmacies);
+      return;
+    }
+
     let cancelled = false;
     setPharmacieLoading(true);
     setPharmacieError(null);
@@ -704,29 +821,8 @@ export default function Home() {
       .then((data) => {
         if (cancelled) return;
         const list = data.pharmacies || [];
-        const getDistanceKm = (lat1, lng1, lat2, lng2) => {
-          const R = 6371;
-          const dLat = (lat2 - lat1) * Math.PI / 180;
-          const dLng = (lng2 - lng1) * Math.PI / 180;
-          const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-          return R * c;
-        };
-        const withDistance = userLocation
-          ? list.map((p) => {
-              const km = p.lat != null && p.lng != null
-                ? getDistanceKm(userLocation.lat, userLocation.lng, p.lat, p.lng)
-                : null;
-              return { ...p, distanceKm: km };
-            }).sort((a, b) => {
-              if (a.distanceKm == null && b.distanceKm == null) return 0;
-              if (a.distanceKm == null) return 1;
-              if (b.distanceKm == null) return -1;
-              return a.distanceKm - b.distanceKm;
-            })
-          : list.map((p) => ({ ...p, distanceKm: null }));
-        setPharmacieData({ pharmacies: withDistance, userCoords: userLocation || undefined });
-        setPharmacieError(null);
+        cache[pharmacieCity] = { pharmacies: list, ts: Date.now() };
+        applyList(list);
       })
       .catch((err) => {
         if (!cancelled) {
@@ -1286,44 +1382,93 @@ export default function Home() {
           </div>
           <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
             {/* Primary: button to use location (user gesture so browser shows permission) */}
-            <div className="mb-4" dir={language === "fr" ? "ltr" : "rtl"}>
+            <div className="flex flex-col items-center mb-4" dir={language === "fr" ? "ltr" : "rtl"}>
               <button
                 type="button"
                 onClick={requestLocationForPharmacie}
-                disabled={pharmacieLoading}
-                className="w-full sm:w-auto px-5 py-3 rounded-xl font-medium text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors"
+                disabled={pharmacieLoading || (locationRequested && !userLocation)}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all shadow-md hover:shadow-lg"
               >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
                 {t.pharmacie.useMyLocation}
               </button>
             </div>
-            <p className="text-sm text-gray-500 mb-2" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.orChooseCity}</p>
-            <select
-              value={pharmacieCity}
-              onChange={(e) => {
-                setPharmacieCity(e.target.value);
-                if (!e.target.value) setPharmacieData(null);
-              }}
-              className="w-full max-w-xs p-3 rounded-xl border border-gray-200 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent mb-6"
-              dir={language === "fr" ? "ltr" : "rtl"}
-            >
+            <div className="flex flex-col items-center mb-6">
+              <p className="text-sm text-gray-500 mb-2" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.orChooseCity}</p>
+              <select
+                value={pharmacieCity}
+                onChange={(e) => {
+                  setPharmacieCity(e.target.value);
+                  if (!e.target.value) setPharmacieData(null);
+                }}
+                className="w-full max-w-xs p-3 rounded-xl border border-gray-200 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                dir={language === "fr" ? "ltr" : "rtl"}
+              >
               <option value="">—</option>
               {PHARMACIE_CITIES.map((c) => (
                 <option key={c.slug} value={c.slug}>{c.label}</option>
               ))}
-            </select>
+              </select>
+            </div>
             {locationRequested && !userLocation && !locationError && (
-              <p className="text-gray-500 py-2" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.loadingLocation}</p>
+              <div className="flex items-center gap-3 py-3 text-gray-600" dir={language === "fr" ? "ltr" : "rtl"}>
+                <div className="relative flex h-10 w-10 items-center justify-center">
+                  <span className="absolute inline-flex h-10 w-10 animate-pharmacie-ping rounded-full bg-emerald-200 opacity-70" />
+                  <svg className="relative h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <p>{t.pharmacie.loadingLocation}</p>
+                <span className="flex gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pharmacie-bounce" style={{ animationDelay: "0ms" }} />
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pharmacie-bounce" style={{ animationDelay: "200ms" }} />
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pharmacie-bounce" style={{ animationDelay: "400ms" }} />
+                </span>
+              </div>
             )}
-            {locationError && !userLocation && (
-              <p className="text-amber-700 py-2" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.locationDenied}</p>
+            {locationError && !userLocation && !locationRequested && !pharmacieLoading && (
+              <p className="text-amber-700 py-2" dir={language === "fr" ? "ltr" : "rtl"}>
+                {locationError === "timeout" ? t.pharmacie.locationTimeout : t.pharmacie.locationDenied}
+              </p>
             )}
             {pharmacieLoading && (
-              <p className="text-gray-500 py-4" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.loading}</p>
+              <div className="py-8 px-4" dir={language === "fr" ? "ltr" : "rtl"}>
+                <div className="flex flex-col items-center justify-center mb-6">
+                  <div className="relative inline-flex">
+                    <span className="absolute inline-flex h-14 w-14 animate-pharmacie-ping rounded-full bg-emerald-300 opacity-70" />
+                    <span className="relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100">
+                      <svg className="h-7 w-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </span>
+                  </div>
+                  <p className="mt-4 text-lg font-medium text-gray-700">{t.pharmacie.seekingPharmacies}</p>
+                  <div className="mt-2 flex gap-1">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pharmacie-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pharmacie-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pharmacie-bounce" style={{ animationDelay: "300ms" }} />
+                  </div>
+                </div>
+                <div className="space-y-4 max-w-xl mx-auto">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="p-4 rounded-xl border border-gray-200 bg-gray-50/80 animate-pharmacie-pulse">
+                      <div className="h-5 bg-gray-200 rounded w-3/4 mb-3 opacity-80" />
+                      <div className="h-4 bg-gray-200 rounded w-full mb-2 opacity-80" />
+                      <div className="h-4 bg-gray-200 rounded w-1/2 opacity-80" />
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
-            {pharmacieError && !pharmacieLoading && (
+            {pharmacieError && !pharmacieLoading && !(locationRequested && !userLocation) && (
               <p className="text-red-600 py-4" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.error}</p>
             )}
-            {pharmacieData && !pharmacieLoading && !pharmacieError && (
+            {pharmacieData && !pharmacieLoading && !pharmacieError && !(locationRequested && !userLocation) && (
               <>
                 {sortedPharmacies.length === 0 ? (
                   <p className="text-gray-600 py-4" dir={language === "fr" ? "ltr" : "rtl"}>{t.pharmacie.noResults}</p>
@@ -1346,15 +1491,23 @@ export default function Home() {
                           )}
                         </div>
                         <p className="text-gray-700 mb-2" dir="ltr">{ph.address}</p>
-                        <div className="flex flex-wrap gap-2 mt-2">
+                        <div className="flex flex-wrap gap-3 mt-3">
                           {ph.phone && (
-                            <a href={`tel:${ph.phone.replace(/\D/g, "")}`} className="inline-flex items-center gap-1 text-sm text-emerald-700 hover:underline">
+                            <a
+                              href={`tel:${ph.phone.replace(/\D/g, "")}`}
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 transition-colors shadow-sm"
+                            >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                              {t.pharmacie.call} {ph.phone}
+                              <>{t.pharmacie.call}{' '}<span dir="ltr">{formatMoroccanPhone(ph.phone)}</span></>
                             </a>
                           )}
                           {ph.mapsUrl && (
-                            <a href={ph.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm text-blue-600 hover:underline">
+                            <a
+                              href={ph.mapsUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-sm"
+                            >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                               {t.pharmacie.directions}
                             </a>
