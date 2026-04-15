@@ -30,7 +30,6 @@ const translations = {
       pharmacie: "صيدلية الحراسة",
       medicament: "الدواء",
       features: "المميزات",
-      reviews: "التقييمات",
       about: "عن التطبيق"
     },
     hero: {
@@ -65,8 +64,10 @@ const translations = {
       allergiesPlaceholder: "مثال: بنيسيلين، غبار... أو اترك فارغاً",
       medicalCondition: "أمراض أو حالات طبية معروفة",
       medicalConditionPlaceholder: "مثال: سكري، ضغط... أو اترك فارغاً",
+      consentLabel: "أوافق أن هذا الشات بوت للاستشارة والمعلومات فقط، ولا يُعتبر بديلاً عن الطبيب المختص.",
       startConversation: "بدء المحادثة",
-      requiredField: "العمر والجنس مطلوبان"
+      requiredField: "العمر والجنس مطلوبان",
+      consentRequired: "يجب الموافقة على التنبيه قبل بدء المحادثة"
     },
     pharmacie: {
       title: "صيدلية الحراسة",
@@ -117,10 +118,6 @@ const translations = {
         desc: "معلوماتك الطبية محمية بخصوصية تامة ولا يتم حفظها أو مشاركتها"
       }
     },
-    reviews: {
-      title: "آراء المستخدمين",
-      subtitle: "ماذا يقول الناس عن طبيبك"
-    },
     about: {
       title: "عن Tabib.info",
       subtitle: "تعرف على المزيد عن تطبيقنا",
@@ -167,7 +164,6 @@ const translations = {
       pharmacie: "On-duty Pharmacy",
       medicament: "Medicament",
       features: "Features",
-      reviews: "Reviews",
       about: "About"
     },
     hero: {
@@ -202,8 +198,10 @@ const translations = {
       allergiesPlaceholder: "e.g. penicillin, dust... or leave blank",
       medicalCondition: "Known medical conditions",
       medicalConditionPlaceholder: "e.g. diabetes, hypertension... or leave blank",
+      consentLabel: "I understand this chatbot is for consultation and informational purposes only, and is not a substitute for a medical professional.",
       startConversation: "Start the conversation",
-      requiredField: "Age and sex are required"
+      requiredField: "Age and sex are required",
+      consentRequired: "You must accept the notice before starting the conversation"
     },
     pharmacie: {
       title: "On-duty Pharmacy",
@@ -254,10 +252,6 @@ const translations = {
         desc: "Your medical information is protected with complete privacy and is not saved or shared"
       }
     },
-    reviews: {
-      title: "User Reviews",
-      subtitle: "What people say about your doctor"
-    },
     about: {
       title: "About Tabib.info",
       subtitle: "Learn more about our app",
@@ -304,7 +298,6 @@ const translations = {
       pharmacie: "Pharmacie de garde",
       medicament: "Médicament",
       features: "Fonctionnalités",
-      reviews: "Avis",
       about: "À propos"
     },
     hero: {
@@ -339,8 +332,10 @@ const translations = {
       allergiesPlaceholder: "ex. pénicilline, poussière... ou laisser vide",
       medicalCondition: "Affections ou pathologies connues",
       medicalConditionPlaceholder: "ex. diabète, hypertension... ou laisser vide",
+      consentLabel: "Je comprends que ce chatbot est uniquement destiné à la consultation et à l'information, et ne remplace pas un professionnel de santé.",
       startConversation: "Commencer la conversation",
-      requiredField: "L'âge et le sexe sont requis"
+      requiredField: "L'âge et le sexe sont requis",
+      consentRequired: "Vous devez accepter l'avertissement avant de démarrer la conversation"
     },
     pharmacie: {
       title: "Pharmacie de garde",
@@ -390,10 +385,6 @@ const translations = {
         title: "Confidentialité Totale",
         desc: "Vos informations médicales sont protégées avec une confidentialité totale et ne sont pas sauvegardées ou partagées"
       }
-    },
-    reviews: {
-      title: "Avis des Utilisateurs",
-      subtitle: "Ce que disent les gens de votre médecin"
     },
     about: {
       title: "À Propos de Tabib.info",
@@ -512,6 +503,7 @@ export default function Home() {
     medicalCondition: ""
   });
   const [patientFormError, setPatientFormError] = useState(null);
+  const [patientConsentChecked, setPatientConsentChecked] = useState(false);
   const [pharmacieData, setPharmacieData] = useState(null);
   const [pharmacieLoading, setPharmacieLoading] = useState(false);
   const [pharmacieError, setPharmacieError] = useState(null);
@@ -563,7 +555,6 @@ export default function Home() {
       '/pharmacie': 'pharmacie',
       '/medicament': 'medicament',
       '/features': 'features',
-      '/reviews': 'reviews',
       '/about': 'about',
     };
 
@@ -1026,6 +1017,10 @@ export default function Home() {
       setPatientFormError(t.patientForm.requiredField);
       return;
     }
+    if (!patientConsentChecked) {
+      setPatientFormError(t.patientForm.consentRequired);
+      return;
+    }
     setPatientInfoSubmitted(true);
   };
 
@@ -1077,12 +1072,6 @@ export default function Home() {
                 className={`text-sm font-medium transition-colors ${activeSection === 'features' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
               >
                 {t.nav.features}
-              </button>
-              <button 
-                onClick={() => scrollToSection('reviews')}
-                className={`text-sm font-medium transition-colors ${activeSection === 'reviews' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
-              >
-                {t.nav.reviews}
               </button>
               <button 
                 onClick={() => scrollToSection('about')}
@@ -1353,12 +1342,22 @@ export default function Home() {
                       className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                     />
                   </div>
+                  <label className="flex items-start gap-2 cursor-pointer text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      checked={patientConsentChecked}
+                      onChange={(e) => setPatientConsentChecked(e.target.checked)}
+                      className="mt-0.5 h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                    />
+                    <span>{t.patientForm.consentLabel}</span>
+                  </label>
                   {patientFormError && (
                     <p className="text-red-600 text-sm">{patientFormError}</p>
                   )}
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors"
+                    disabled={!patientConsentChecked}
+                    className="w-full sm:w-auto px-6 py-3 rounded-xl font-medium text-white bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-300 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors"
                   >
                     {t.patientForm.startConversation}
                   </button>
@@ -1784,69 +1783,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Reviews Section */}
-      <section id="reviews" className="py-16" style={{ background: 'linear-gradient(180deg, #f3fcf4 0%, #fff 100%)' }}>
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-800 mb-4">{t.reviews.title}</h3>
-            <p className="text-gray-600">{t.reviews.subtitle}</p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-2xl shadow-lg">
-              <div className="flex items-center mb-4">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" className="w-12 h-12 rounded-full object-cover mr-3" alt="أمين المرابط" />
-                <div>
-                  <h5 className="font-semibold text-gray-800">أمين المرابط</h5>
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => (
-                      <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <p className="text-gray-600">"طبيبك ساعدني كثيراً عندما كنت أعاني من ألم في البطن. التشخيص كان دقيقاً والنصائح مفيدة جداً."</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-2xl shadow-lg">
-              <div className="flex items-center mb-4">
-                <img src="https://randomuser.me/api/portraits/women/44.jpg" className="w-12 h-12 rounded-full object-cover mr-3" alt="فاطمة العلوي" />
-                <div>
-                  <h5 className="font-semibold text-gray-800">فاطمة العلوي</h5>
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => (
-                      <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <p className="text-gray-600">"ميزة تحليل الصور ممتازة! أرسلت صورة لطفح جلدي وحصلت على تشخيص سريع ودقيق."</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-2xl shadow-lg">
-              <div className="flex items-center mb-4">
-                <img src="https://randomuser.me/api/portraits/men/65.jpg" className="w-12 h-12 rounded-full object-cover mr-3" alt="رضا فشتالي" />
-                <div>
-                  <h5 className="font-semibold text-gray-800">رضا فشتالي</h5>
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => (
-                      <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <p className="text-gray-600">"سهولة الاستخدام والخصوصية المطلقة جعلتني أثق في التطبيق. أنصح الجميع بتجربته."</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* About Section */}
       <section id="about" className="py-16" style={{ background: '#fff' }}>
         <div className="max-w-6xl mx-auto px-4">
@@ -1862,19 +1798,9 @@ export default function Home() {
                 {t.about.vision.desc1}
               </p>
               <p className="text-gray-600 mb-6">
-                <span style={{ color: '#111', fontWeight: 'bold' }}>Tabib.info</span> {t.about.vision.desc2}
+                {t.about.vision.desc2}
               </p>
               
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">+10K</div>
-                  <div className="text-sm text-gray-600">{t.about.stats.users}</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600 mb-2">+50K</div>
-                  <div className="text-sm text-gray-600">{t.about.stats.consultations}</div>
-                </div>
-              </div>
             </div>
             
             <div className="bg-white p-8 rounded-2xl shadow-lg">
@@ -1936,7 +1862,6 @@ export default function Home() {
                 <li><button onClick={() => scrollToSection('pharmacie')} className="hover:text-white transition-colors">{t.nav.pharmacie}</button></li>
                 <li><button onClick={() => scrollToSection('medicament')} className="hover:text-white transition-colors">{t.nav.medicament}</button></li>
                 <li><button onClick={() => scrollToSection('features')} className="hover:text-white transition-colors">{t.nav.features}</button></li>
-                <li><button onClick={() => scrollToSection('reviews')} className="hover:text-white transition-colors">{t.nav.reviews}</button></li>
                 <li><button onClick={() => scrollToSection('about')} className="hover:text-white transition-colors">{t.nav.about}</button></li>
               </ul>
             </div>
@@ -1944,7 +1869,7 @@ export default function Home() {
             <div>
               <h5 className="font-semibold mb-4">{t.footer.contact}</h5>
               <ul className="space-y-2 text-sm text-gray-300">
-                <li>البريد الإلكتروني: contact@tabib.info</li>
+                <li>automyracontact@gmail.com</li>
               </ul>
             </div>
             
