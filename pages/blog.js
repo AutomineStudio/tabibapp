@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from "next/head";
 import { useEffect, useMemo, useState } from "react";
 import { blogArticles } from "../data/blogArticles";
 
@@ -37,6 +38,22 @@ export default function BlogPage() {
 
   return (
     <div dir={isFr ? "ltr" : "rtl"} className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <Head>
+        <title>{isFr ? "Blog Sante | Tabib.info" : "المدونة الصحية | Tabib.info"}</title>
+        <meta
+          name="description"
+          content={
+            isFr
+              ? "Articles de sante, prevention et conseils pratiques en francais et en arabe."
+              : "مقالات صحية عن الوقاية ونمط الحياة السليم بالفرنسية والعربية."
+          }
+        />
+        <meta
+          name="keywords"
+          content={isFr ? "blog sante, prevention, conseils sante, bien-etre" : "مدونة صحية, وقاية, نصائح صحية, صحة"}
+        />
+        <link rel="canonical" href="https://tabib.info/blog" />
+      </Head>
       <header className="fixed top-0 left-0 right-0 bg-white shadow-lg z-50">
         <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
