@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, Fragment } from "react";
+import { blogArticles } from "../data/blogArticles";
 
 // Parse text and return segments: **...** becomes bold (asterisks removed)
 function parseBoldSegments(text) {
@@ -29,7 +30,7 @@ const translations = {
       chat: "المحادثة",
       pharmacie: "صيدلية الحراسة",
       medicament: "الدواء",
-      features: "المميزات",
+      blog: "المدونة",
       about: "عن التطبيق"
     },
     hero: {
@@ -146,6 +147,13 @@ const translations = {
         }
       }
     },
+    blogPreview: {
+      title: "من المدونة الصحية",
+      subtitle: "نصائح ومقالات مختارة من أحدث المحتوى",
+      previous: "السابق",
+      next: "التالي",
+      readMore: "قراءة المقال"
+    },
     footer: {
       quickLinks: "روابط سريعة",
       contact: "معلومات الاتصال",
@@ -163,7 +171,7 @@ const translations = {
       chat: "Chat",
       pharmacie: "On-duty Pharmacy",
       medicament: "Medicament",
-      features: "Features",
+      blog: "Blog",
       about: "About"
     },
     hero: {
@@ -280,6 +288,13 @@ const translations = {
         }
       }
     },
+    blogPreview: {
+      title: "From the Health Blog",
+      subtitle: "Selected tips and articles from the latest content",
+      previous: "Previous",
+      next: "Next",
+      readMore: "Read article"
+    },
     footer: {
       quickLinks: "Quick Links",
       contact: "Contact Info",
@@ -297,7 +312,7 @@ const translations = {
       chat: "Chat",
       pharmacie: "Pharmacie de garde",
       medicament: "Médicament",
-      features: "Fonctionnalités",
+      blog: "Blog",
       about: "À propos"
     },
     hero: {
@@ -414,6 +429,13 @@ const translations = {
         }
       }
     },
+    blogPreview: {
+      title: "Du Blog Santé",
+      subtitle: "Conseils et articles sélectionnés parmi les plus récents",
+      previous: "Précédent",
+      next: "Suivant",
+      readMore: "Lire l'article"
+    },
     footer: {
       quickLinks: "Liens Rapides",
       contact: "Informations de Contact",
@@ -516,6 +538,7 @@ export default function Home() {
   const [medicamentData, setMedicamentData] = useState(null);
   const [medicamentLoading, setMedicamentLoading] = useState(false);
   const [medicamentError, setMedicamentError] = useState(null);
+  const [blogPreviewIndex, setBlogPreviewIndex] = useState(0);
   const bottomRef = useRef(null);
   const fileInputRef = useRef(null);
   const messagesContainerRef = useRef(null);
@@ -554,7 +577,6 @@ export default function Home() {
       '/chat': 'chat',
       '/pharmacie': 'pharmacie',
       '/medicament': 'medicament',
-      '/features': 'features',
       '/about': 'about',
     };
 
@@ -588,7 +610,24 @@ export default function Home() {
   }, []);
 
   const t = translations[language] ?? translations.ar;
+  const blogLang = language === "fr" ? "fr" : "ar";
+  const featuredBlogArticles = blogArticles.slice(0, 5);
+  const blogPreviewGroupSize = 3;
+  const visibleBlogPreviewArticles =
+    featuredBlogArticles.length === 0
+      ? []
+      : Array.from(
+          { length: Math.min(blogPreviewGroupSize, featuredBlogArticles.length) },
+          (_, i) => featuredBlogArticles[(blogPreviewIndex + i) % featuredBlogArticles.length]
+        );
 
+  useEffect(() => {
+    if (featuredBlogArticles.length <= 1) return;
+    const intervalId = setInterval(() => {
+      setBlogPreviewIndex((prev) => (prev + blogPreviewGroupSize) % featuredBlogArticles.length);
+    }, 5000);
+    return () => clearInterval(intervalId);
+  }, [featuredBlogArticles.length, blogPreviewGroupSize]);
   // When language changes, translate the initial assistant greeting so it always matches selected language
   useEffect(() => {
     if (
@@ -1067,12 +1106,9 @@ export default function Home() {
               >
                 {t.nav.medicament}
               </button>
-              <button 
-                onClick={() => scrollToSection('features')}
-                className={`text-sm font-medium transition-colors ${activeSection === 'features' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
-              >
-                {t.nav.features}
-              </button>
+              <a href="/blog" className="text-sm font-medium text-gray-600 hover:text-black transition-colors">
+                {t.nav.blog}
+              </a>
               <button 
                 onClick={() => scrollToSection('about')}
                 className={`text-sm font-medium transition-colors ${activeSection === 'about' ? 'text-black' : 'text-gray-600 hover:text-black'}`}
@@ -1741,48 +1777,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-16" style={{ background: 'linear-gradient(180deg, #f3fcf4 0%, #fff 100%)' }}>
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold mb-4" style={{ color: '#e11d48' }}>{t.features.title}</h3>
-            <p className="text-gray-600">{t.features.subtitle}</p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h4 className="text-xl font-semibold text-gray-800 mb-3">{t.features.instant.title}</h4>
-              <p className="text-gray-600">{t.features.instant.desc}</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4 4L20 6" />
-                </svg>
-              </div>
-              <h4 className="text-xl font-semibold text-gray-800 mb-3">{t.features.images.title}</h4>
-              <p className="text-gray-600">{t.features.images.desc}</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h4 className="text-xl font-semibold text-gray-800 mb-3">{t.features.privacy.title}</h4>
-              <p className="text-gray-600">{t.features.privacy.desc}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* About Section */}
       <section id="about" className="py-16" style={{ background: '#fff' }}>
         <div className="max-w-6xl mx-auto px-4">
@@ -1841,6 +1835,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Blog Preview Section */}
+      <section className="py-16" style={{ background: "linear-gradient(180deg, #eef2ff 0%, #e0f2fe 100%)" }}>
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <h3 className="text-3xl font-bold mb-3" style={{ color: "#e11d48" }}>{t.blogPreview.title}</h3>
+            <p className="text-gray-600">{t.blogPreview.subtitle}</p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            {visibleBlogPreviewArticles.length > 0 && (
+              <div className="grid md:grid-cols-3 gap-6">
+                {visibleBlogPreviewArticles.map((article) => (
+                  <article key={article.slug} className="bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden">
+                    <img
+                      src={article.image}
+                      alt={article.title[blogLang]}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="p-5">
+                      <p className="text-xs text-gray-500 mb-2" dir="ltr">{article.date}</p>
+                      <h4 className="text-xl font-semibold text-gray-800 mb-3">{article.title[blogLang]}</h4>
+                      <p className="text-gray-600 mb-5">{article.excerpt[blogLang]}</p>
+                      <a
+                        href={`/blog/${article.slug}`}
+                        className="inline-flex items-center px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+                      >
+                        {t.blogPreview.readMore}
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
         <div className="max-w-6xl mx-auto px-4">
@@ -1861,7 +1893,7 @@ export default function Home() {
                 <li><button onClick={() => scrollToSection('chat')} className="hover:text-white transition-colors">{t.nav.chat}</button></li>
                 <li><button onClick={() => scrollToSection('pharmacie')} className="hover:text-white transition-colors">{t.nav.pharmacie}</button></li>
                 <li><button onClick={() => scrollToSection('medicament')} className="hover:text-white transition-colors">{t.nav.medicament}</button></li>
-                <li><button onClick={() => scrollToSection('features')} className="hover:text-white transition-colors">{t.nav.features}</button></li>
+                <li><a href="/blog" className="hover:text-white transition-colors">{t.nav.blog}</a></li>
                 <li><button onClick={() => scrollToSection('about')} className="hover:text-white transition-colors">{t.nav.about}</button></li>
               </ul>
             </div>
