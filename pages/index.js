@@ -56,6 +56,12 @@ const translations = {
     patientForm: {
       title: "معلوماتك العامة",
       subtitle: "أدخل معلوماتك قبل بدء المحادثة. الطبيب سيأخذها بعين الاعتبار ولن يطلبها مرة أخرى.",
+      name: "الاسم",
+      namePlaceholder: "مثال: ياسين العلوي",
+      email: "البريد الإلكتروني",
+      emailPlaceholder: "example@email.com",
+      phone: "رقم الهاتف",
+      phonePlaceholder: "06XXXXXXXX",
       age: "العمر (بالسنوات)",
       agePlaceholder: "مثال: 25",
       sex: "الجنس",
@@ -65,10 +71,15 @@ const translations = {
       allergiesPlaceholder: "مثال: بنيسيلين، غبار... أو اترك فارغاً",
       medicalCondition: "أمراض أو حالات طبية معروفة",
       medicalConditionPlaceholder: "مثال: سكري، ضغط... أو اترك فارغاً",
-      consentLabel: "أوافق أن هذا الشات بوت للاستشارة والمعلومات فقط، ولا يُعتبر بديلاً عن الطبيب المختص.",
+      rememberProfile: "احفظ معلوماتي على هذا الجهاز للاستعمال لاحقاً",
+      clearSavedProfile: "حذف المعلومات المحفوظة",
+      consentLabel: "أفهم أنه عند تفعيل خيار الحفظ سيتم تخزين بياناتي على هذا الجهاز، وأُقِرّ بأن هذا الشات بوت للاستشارة والمعلومات فقط ولا يُعتبر بديلاً عن الطبيب المختص.",
       startConversation: "بدء المحادثة",
       requiredField: "العمر والجنس مطلوبان",
-      consentRequired: "يجب الموافقة على التنبيه قبل بدء المحادثة"
+      consentRequired: "يجب الموافقة على التنبيه قبل بدء المحادثة",
+      invalidEmail: "يرجى إدخال بريد إلكتروني صحيح",
+      invalidPhone: "يرجى إدخال رقم هاتف صحيح (9 أرقام على الأقل)",
+      optional: "اختياري"
     },
     pharmacie: {
       title: "صيدلية الحراسة",
@@ -197,6 +208,12 @@ const translations = {
     patientForm: {
       title: "Your General Information",
       subtitle: "Enter your details before starting. The doctor will use them and will not ask again.",
+      name: "Full name",
+      namePlaceholder: "e.g. Yassine Alaoui",
+      email: "Email",
+      emailPlaceholder: "example@email.com",
+      phone: "Phone number",
+      phonePlaceholder: "e.g. 0612345678",
       age: "Age (years)",
       agePlaceholder: "e.g. 25",
       sex: "Sex",
@@ -206,10 +223,15 @@ const translations = {
       allergiesPlaceholder: "e.g. penicillin, dust... or leave blank",
       medicalCondition: "Known medical conditions",
       medicalConditionPlaceholder: "e.g. diabetes, hypertension... or leave blank",
-      consentLabel: "I understand this chatbot is for consultation and informational purposes only, and is not a substitute for a medical professional.",
+      rememberProfile: "Save my information on this device for next time",
+      clearSavedProfile: "Delete saved profile",
+      consentLabel: "I understand that if save is enabled my data will be stored on this device, and this chatbot is for consultation and informational purposes only, and is not a substitute for a medical professional.",
       startConversation: "Start the conversation",
       requiredField: "Age and sex are required",
-      consentRequired: "You must accept the notice before starting the conversation"
+      consentRequired: "You must accept the notice before starting the conversation",
+      invalidEmail: "Please enter a valid email address",
+      invalidPhone: "Please enter a valid phone number (at least 9 digits)",
+      optional: "Optional"
     },
     pharmacie: {
       title: "On-duty Pharmacy",
@@ -338,6 +360,12 @@ const translations = {
     patientForm: {
       title: "Vos informations générales",
       subtitle: "Renseignez ces informations avant de commencer. Le médecin en tiendra compte et ne les redemandera pas.",
+      name: "Nom complet",
+      namePlaceholder: "ex. Yassine Alaoui",
+      email: "E-mail",
+      emailPlaceholder: "example@email.com",
+      phone: "Numéro de téléphone",
+      phonePlaceholder: "ex. 0612345678",
       age: "Âge (années)",
       agePlaceholder: "ex. 25",
       sex: "Sexe",
@@ -347,10 +375,15 @@ const translations = {
       allergiesPlaceholder: "ex. pénicilline, poussière... ou laisser vide",
       medicalCondition: "Affections ou pathologies connues",
       medicalConditionPlaceholder: "ex. diabète, hypertension... ou laisser vide",
-      consentLabel: "Je comprends que ce chatbot est uniquement destiné à la consultation et à l'information, et ne remplace pas un professionnel de santé.",
+      rememberProfile: "Enregistrer mes informations sur cet appareil pour la prochaine fois",
+      clearSavedProfile: "Supprimer le profil enregistré",
+      consentLabel: "Je comprends que si l'enregistrement est activé, mes données seront stockées sur cet appareil, et que ce chatbot est uniquement destiné à la consultation et à l'information, sans remplacer un professionnel de santé.",
       startConversation: "Commencer la conversation",
       requiredField: "L'âge et le sexe sont requis",
-      consentRequired: "Vous devez accepter l'avertissement avant de démarrer la conversation"
+      consentRequired: "Vous devez accepter l'avertissement avant de démarrer la conversation",
+      invalidEmail: "Veuillez saisir une adresse e-mail valide",
+      invalidPhone: "Veuillez saisir un numéro de téléphone valide (au moins 9 chiffres)",
+      optional: "Optionnel"
     },
     pharmacie: {
       title: "Pharmacie de garde",
@@ -505,6 +538,7 @@ const PHARMACIE_CITIES = [
 ];
 
 export default function Home() {
+  const SAVED_PATIENT_INFO_KEY = "tabib_saved_patient_info_v1";
   const [messages, setMessages] = useState([
     { role: "assistant", content: "سلام! أنا الطبيب ديالك. شنو هي الأعراض لي كتحس بيهم؟" }
   ]);
@@ -519,6 +553,9 @@ export default function Home() {
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [patientInfoSubmitted, setPatientInfoSubmitted] = useState(false);
   const [patientInfo, setPatientInfo] = useState({
+    name: "",
+    email: "",
+    phone: "",
     age: "",
     sex: "",
     allergies: "",
@@ -526,6 +563,7 @@ export default function Home() {
   });
   const [patientFormError, setPatientFormError] = useState(null);
   const [patientConsentChecked, setPatientConsentChecked] = useState(false);
+  const [rememberPatientProfile, setRememberPatientProfile] = useState(false);
   const [pharmacieData, setPharmacieData] = useState(null);
   const [pharmacieLoading, setPharmacieLoading] = useState(false);
   const [pharmacieError, setPharmacieError] = useState(null);
@@ -653,6 +691,31 @@ export default function Home() {
     const savedLanguage = localStorage.getItem('tabib_language');
     if (savedLanguage && ['ar', 'en', 'fr'].includes(savedLanguage)) {
       setLanguage(savedLanguage);
+    }
+
+    const savedProfileRaw = localStorage.getItem(SAVED_PATIENT_INFO_KEY);
+    if (savedProfileRaw) {
+      try {
+        const parsed = JSON.parse(savedProfileRaw);
+        const expiresAt = Number(parsed?.expiresAt || 0);
+        if (expiresAt && Date.now() > expiresAt) {
+          localStorage.removeItem(SAVED_PATIENT_INFO_KEY);
+        } else if (parsed?.data) {
+          setPatientInfo((prev) => ({
+            ...prev,
+            name: String(parsed.data.name || ""),
+            email: String(parsed.data.email || ""),
+            phone: String(parsed.data.phone || ""),
+            age: String(parsed.data.age || ""),
+            sex: String(parsed.data.sex || ""),
+            allergies: String(parsed.data.allergies || ""),
+            medicalCondition: String(parsed.data.medicalCondition || "")
+          }));
+          setRememberPatientProfile(true);
+        }
+      } catch (_err) {
+        localStorage.removeItem(SAVED_PATIENT_INFO_KEY);
+      }
     }
   }, []);
 
@@ -1042,7 +1105,7 @@ export default function Home() {
   };
 
   // Add this function to clear the thread and reset the chat
-  const handlePatientFormSubmit = (e) => {
+  const handlePatientFormSubmit = async (e) => {
     e.preventDefault();
     setPatientFormError(null);
     const age = String(patientInfo.age || "").trim();
@@ -1056,11 +1119,80 @@ export default function Home() {
       setPatientFormError(t.patientForm.requiredField);
       return;
     }
+    const email = String(patientInfo.email || "").trim();
+    const phone = String(patientInfo.phone || "").trim();
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setPatientFormError(t.patientForm.invalidEmail);
+      return;
+    }
+    if (phone) {
+      const digits = phone.replace(/\D/g, "");
+      if (digits.length < 9) {
+        setPatientFormError(t.patientForm.invalidPhone);
+        return;
+      }
+    }
     if (!patientConsentChecked) {
       setPatientFormError(t.patientForm.consentRequired);
       return;
     }
+    try {
+      await fetch("/api/patient-profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: String(patientInfo.name || "").trim(),
+          email,
+          phone,
+          age,
+          sex,
+          allergies: String(patientInfo.allergies || "").trim(),
+          medicalCondition: String(patientInfo.medicalCondition || "").trim(),
+          language,
+          consentMarketing: false,
+          consentDisclaimer: true
+        })
+      });
+    } catch (_err) {
+      // Do not block chat start if server-side profile save fails.
+    }
+    if (rememberPatientProfile) {
+      const expiresAt = Date.now() + (30 * 24 * 60 * 60 * 1000);
+      localStorage.setItem(
+        SAVED_PATIENT_INFO_KEY,
+        JSON.stringify({
+          data: {
+            name: String(patientInfo.name || "").trim(),
+            email,
+            phone,
+            age,
+            sex,
+            allergies: String(patientInfo.allergies || "").trim(),
+            medicalCondition: String(patientInfo.medicalCondition || "").trim()
+          },
+          expiresAt
+        })
+      );
+    } else {
+      localStorage.removeItem(SAVED_PATIENT_INFO_KEY);
+    }
     setPatientInfoSubmitted(true);
+  };
+
+  const clearSavedPatientProfile = () => {
+    localStorage.removeItem(SAVED_PATIENT_INFO_KEY);
+    setRememberPatientProfile(false);
+    setPatientConsentChecked(false);
+    setPatientInfo({
+      name: "",
+      email: "",
+      phone: "",
+      age: "",
+      sex: "",
+      allergies: "",
+      medicalCondition: ""
+    });
+    setPatientInfoSubmitted(false);
   };
 
   const handleNewChat = () => {
@@ -1306,6 +1438,13 @@ export default function Home() {
                 </button>
               )}
               <button
+                type="button"
+                onClick={clearSavedPatientProfile}
+                className="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg text-sm font-medium transition-colors border border-red-200"
+              >
+                {t.patientForm.clearSavedProfile}
+              </button>
+              <button
                 onClick={handleNewChat}
                 className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg text-sm font-medium transition-colors"
               >
@@ -1321,6 +1460,36 @@ export default function Home() {
                 <h4 className="text-xl font-semibold text-gray-800 mb-1">{t.patientForm.title}</h4>
                 <p className="text-gray-600 text-sm mb-6">{t.patientForm.subtitle}</p>
                 <form onSubmit={handlePatientFormSubmit} className="space-y-4 max-w-lg">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.patientForm.name} ({t.patientForm.optional})</label>
+                    <input
+                      type="text"
+                      value={patientInfo.name}
+                      onChange={(e) => setPatientInfo((prev) => ({ ...prev, name: e.target.value }))}
+                      placeholder={t.patientForm.namePlaceholder}
+                      className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.patientForm.email} ({t.patientForm.optional})</label>
+                    <input
+                      type="email"
+                      value={patientInfo.email}
+                      onChange={(e) => setPatientInfo((prev) => ({ ...prev, email: e.target.value }))}
+                      placeholder={t.patientForm.emailPlaceholder}
+                      className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.patientForm.phone} ({t.patientForm.optional})</label>
+                    <input
+                      type="tel"
+                      value={patientInfo.phone}
+                      onChange={(e) => setPatientInfo((prev) => ({ ...prev, phone: e.target.value }))}
+                      placeholder={t.patientForm.phonePlaceholder}
+                      className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    />
+                  </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">{t.patientForm.age} *</label>
                     <input
@@ -1359,7 +1528,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.patientForm.allergies}</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.patientForm.allergies} ({t.patientForm.optional})</label>
                     <input
                       type="text"
                       value={patientInfo.allergies}
@@ -1369,7 +1538,7 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.patientForm.medicalCondition}</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.patientForm.medicalCondition} ({t.patientForm.optional})</label>
                     <input
                       type="text"
                       value={patientInfo.medicalCondition}
@@ -1378,6 +1547,15 @@ export default function Home() {
                       className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                     />
                   </div>
+                  <label className="flex items-start gap-2 cursor-pointer text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      checked={rememberPatientProfile}
+                      onChange={(e) => setRememberPatientProfile(e.target.checked)}
+                      className="mt-0.5 h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                    />
+                    <span>{t.patientForm.rememberProfile}</span>
+                  </label>
                   <label className="flex items-start gap-2 cursor-pointer text-sm text-gray-700">
                     <input
                       type="checkbox"
