@@ -96,9 +96,11 @@ export default function BlogArticlePage({ article }) {
   const seoTitle = `${article.title[language]} | Tabib.info`;
   const seoDescription = article.excerpt[language];
   const canonicalUrl = `https://tabib.info/blog/${article.slug}`;
-  const seoKeywords = isFr
-    ? `sante, blog sante, prevention, bien-etre, ${article.title.fr}`
-    : `الصحة, مدونة صحية, الوقاية, التوعية الصحية, ${article.title.ar}`;
+  const seoKeywords =
+    article.metaKeywords?.[language] ??
+    (isFr
+      ? `sante, blog sante, prevention, bien-etre, ${article.title.fr}`
+      : `الصحة, مدونة صحية, الوقاية, التوعية الصحية, ${article.title.ar}`);
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
