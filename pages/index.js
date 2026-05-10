@@ -36,6 +36,7 @@ const translations = {
     hero: {
       title: "طبيبك الذكي",
       subtitle: "استشارات طبية فورية بالذكاء الاصطناعي",
+      promotionalVideoAria: "فيديو تعريفي عن Tabib.info",
       features: {
         instant: "استشارات فورية 24/7",
         images: "تحليل الصور الطبية",
@@ -188,6 +189,7 @@ const translations = {
     hero: {
       title: "Your Smart Doctor",
       subtitle: "Instant medical consultations with artificial intelligence",
+      promotionalVideoAria: "Tabib.info promotional video",
       features: {
         instant: "24/7 instant consultations",
         images: "Medical image analysis",
@@ -340,6 +342,7 @@ const translations = {
     hero: {
       title: "Votre Médecin Intelligent",
       subtitle: "Consultations médicales instantanées avec l'intelligence artificielle",
+      promotionalVideoAria: "Vidéo promotionnelle Tabib.info",
       features: {
         instant: "Consultations instantanées 24/7",
         images: "Analyse d'images médicales",
@@ -1417,6 +1420,25 @@ export default function Home() {
               </svg>
               <span>{t.hero.features.privacy}</span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Promotional video (between hero and chat) */}
+      <section className="py-10 md:py-12 bg-white">
+        <div className="max-w-3xl mx-auto px-4">
+          <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200/80 bg-black/5 ring-1 ring-black/5">
+            <video
+              className="w-full h-auto max-h-[min(70vh,520px)] object-contain bg-black"
+              autoPlay
+              muted
+              playsInline
+              controls
+              preload="auto"
+              aria-label={t.hero.promotionalVideoAria}
+            >
+              <source src="/tabib-promotional-video.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </section>
