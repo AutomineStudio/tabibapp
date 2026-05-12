@@ -1,5 +1,42 @@
 [
   {
+    "slug": "importance-de-la-gestion-des-medicaments",
+    "image": "https://images.unsplash.com/photo-1571770897710-1c7c9a9d3c21?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "L'importance de la gestion des médicaments",
+      "ar": "أهمية إدارة الأدوية"
+    },
+    "excerpt": {
+      "fr": "Une bonne gestion des médicaments est essentielle pour la santé.",
+      "ar": "إدارة الأدوية بشكل صحيح أساسية للصحة."
+    },
+    "metaKeywords": {
+      "fr": "gestion des médicaments, santé, pharmacie, prévention, Maroc, médicaments génériques, polypharmacie, éducation sanitaire, sécurité des médicaments, étiquettes des médicaments, consultation médicale, soins de santé, santé publique, maladies chroniques, bien-être, nutrition",
+      "ar": "إدارة الأدوية, الصحة, الصيدلة, الوقاية, المغرب, الأدوية الجنيسة, تعدد الأدوية, التعليم الصحي, سلامة الأدوية, ملصقات الأدوية, استشارة طبية, الرعاية الصحية, الصحة العامة, الأمراض المزمنة, الرفاهية, التغذية"
+    },
+    "content": {
+      "fr": [
+        "La gestion des médicaments est un aspect crucial de la santé qui doit être pris au sérieux. En effet, une utilisation appropriée des médicaments contribue non seulement à leur efficacité, mais aussi à la prévention des effets secondaires indésirables.",
+        "Il est important de suivre les recommandations de votre médecin ou pharmacien concernant les médicaments prescrits. Cela inclut le respect des posologies, des horaires de prise et des conseils d'utilisation.",
+        "La polypharmacie, qui désigne l'utilisation de plusieurs médicaments, est fréquente chez les personnes âgées ou atteintes de maladies chroniques. Une bonne gestion est alors primordiale pour éviter les interactions médicamenteuses.",
+        "Lire attentivement les étiquettes des médicaments peut aider à mieux comprendre leur utilisation. Cela inclut les informations sur les ingrédients actifs, les effets secondaires et les contre-indications.",
+        "Il est également essentiel de faire la distinction entre les médicaments génériques et de marque. Les médicaments génériques sont souvent plus abordables tout en étant tout aussi efficaces que leurs homologues de marque.",
+        "En cas de doute ou de questions sur vos médicaments, n'hésitez pas à consulter votre pharmacien. Ils sont formés pour vous aider à gérer votre traitement de manière sécuritaire et efficace.",
+        "Enfin, rappelez-vous que la gestion des médicaments ne se limite pas à la prise de médicaments. Une bonne communication avec votre équipe de soins de santé et une attention particulière à votre état de santé global sont tout aussi importantes."
+      ],
+      "ar": [
+        "إدارة الأدوية هي جانب حاسم من جوانب الصحة التي يجب أخذها على محمل الجد. إن الاستخدام المناسب للأدوية لا يساهم فقط في فعاليتها، بل يساعد أيضًا على الوقاية من الآثار الجانبية غير المرغوب فيها.",
+        "من المهم اتباع توصيات الطبيب أو الصيدلي بشأن الأدوية الموصوفة. وهذا يشمل الالتزام بالجرعات، ومواعيد تناول الأدوية، ونصائح الاستخدام.",
+        "تعدد الأدوية، الذي يشير إلى استخدام عدة أدوية، شائع بين كبار السن أو المصابين بأمراض مزمنة. لذلك، فإن الإدارة الجيدة ضرورية لتجنب التفاعلات الدوائية.",
+        "يمكن أن تساعد قراءة ملصقات الأدوية بعناية على فهم استخدامها بشكل أفضل. وهذا يشمل المعلومات حول المكونات الفعالة، والآثار الجانبية، وموانع الاستعمال.",
+        "من الضروري أيضًا التمييز بين الأدوية الجنيسة والعلامات التجارية. غالبًا ما تكون الأدوية الجنيسة أكثر تكلفة ولكنها فعالة تمامًا مثل نظيراتها من العلامات التجارية.",
+        "في حالة الشك أو وجود أسئلة حول أدويتك، لا تتردد في استشارة صيدلي. فهم مدربون لمساعدتك في إدارة علاجك بطريقة آمنة وفعالة.",
+        "أخيرًا، تذكر أن إدارة الأدوية لا تقتصر على تناول الأدوية فقط. فالاتصال الجيد مع فريق الرعاية الصحية الخاص بك والانتباه الجيد لحالتك الصحية العامة مهمان بنفس القدر."
+      ]
+    },
+    "date": "2026-05-12"
+  },
+  {
     "slug": "gestion-du-poids-et-sante",
     "image": "https://images.unsplash.com/photo-1534080563777-6e0c1e6b1e5d?auto=format&fit=crop&w=1200&q=80",
     "title": {
