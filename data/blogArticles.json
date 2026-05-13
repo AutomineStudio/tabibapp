@@ -1,5 +1,42 @@
 [
   {
+    "slug": "medicaments-et-securite-d-usage",
+    "image": "https://images.unsplash.com/photo-1596501632954-7c58c4dfd8b4?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Medicaments et sécurité d'usage",
+      "ar": "الأدوية واستخدامها بأمان"
+    },
+    "excerpt": {
+      "fr": "Comprendre les bonnes pratiques pour l'utilisation sécurisée des médicaments est essentiel pour la santé.",
+      "ar": "فهم الممارسات الجيدة لاستخدام الأدوية بشكل آمن أمر ضروري للصحة."
+    },
+    "metaKeywords": {
+      "fr": "sécurité des médicaments, utilisation sécurisée, santé, pharmacie, Maroc, prévention, gestion des médicaments, éducation sanitaire, médicaments génériques, étiquettes, polypharmacie",
+      "ar": "أمان الأدوية, الاستخدام الآمن, الصحة, الصيدلة, المغرب, الوقاية, إدارة الأدوية, التعليم الصحي, الأدوية العامة, الملصقات, تعدد الأدوية"
+    },
+    "content": {
+      "fr": [
+        "L'utilisation des médicaments est une partie intégrante de la gestion de la santé, mais elle doit être faite avec prudence.",
+        "Il est essentiel de toujours suivre les recommandations de votre médecin ou pharmacien concernant la posologie et la fréquence de prise.",
+        "Avant de prendre un médicament, vérifiez toujours l'étiquette pour comprendre les ingrédients et les effets secondaires potentiels.",
+        "La polypharmacie, qui consiste à prendre plusieurs médicaments, peut augmenter le risque d'interactions médicamenteuses.",
+        "Les médicaments génériques peuvent être une alternative sûre et efficace aux médicaments de marque, souvent à un coût réduit.",
+        "Éduquer les patients sur la lecture des étiquettes et la compréhension des prescriptions est crucial pour une utilisation sûre des médicaments.",
+        "N'oubliez pas de consulter régulièrement votre professionnel de santé pour évaluer vos traitements et ajuster les dosages si nécessaire."
+      ],
+      "ar": [
+        "استخدام الأدوية هو جزء أساسي من إدارة الصحة، ولكن يجب أن يتم ذلك بحذر.",
+        "من الضروري دائمًا اتباع توصيات الطبيب أو الصيدلي بشأن الجرعة وتكرار تناول الأدوية.",
+        "قبل تناول الدواء، تحقق دائمًا من الملصق لفهم المكونات وآثارها الجانبية المحتملة.",
+        "تعدد الأدوية، الذي يتضمن تناول عدة أدوية، يمكن أن يزيد من خطر التفاعلات الدوائية.",
+        "يمكن أن تكون الأدوية العامة بديلًا آمنًا وفعالًا للأدوية ذات العلامات التجارية، وغالبًا ما تكون بتكلفة أقل.",
+        "يعد تعليم المرضى كيفية قراءة الملصقات وفهم الوصفات الطبية أمرًا حيويًا لاستخدام الأدوية بأمان.",
+        "تذكر أن تستشير دائمًا مهني الصحة الخاص بك لتقييم العلاجات الخاصة بك وتعديل الجرعات إذا لزم الأمر."
+      ]
+    },
+    "date": "2026-05-13"
+  },
+  {
     "slug": "importance-de-la-gestion-des-medicaments",
     "image": "https://images.unsplash.com/photo-1571770897710-1c7c9a9d3c21?auto=format&fit=crop&w=1200&q=80",
     "title": {
