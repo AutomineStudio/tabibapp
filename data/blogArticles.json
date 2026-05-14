@@ -1,5 +1,42 @@
 [
   {
+    "slug": "importance-de-la-prevention-des-maladies-chroniques",
+    "image": "https://images.unsplash.com/photo-1581091870621-8c7e90c6e0d5?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "L'importance de la prévention des maladies chroniques",
+      "ar": "أهمية الوقاية من الأمراض المزمنة"
+    },
+    "excerpt": {
+      "fr": "La prévention des maladies chroniques est essentielle pour une vie saine.",
+      "ar": "الوقاية من الأمراض المزمنة ضرورية لحياة صحية."
+    },
+    "metaKeywords": {
+      "fr": "prévention maladies chroniques, santé, mode de vie sain, dépistage, conseils santé, Maroc, nutrition, activité physique, bien-être, maladies non transmissibles, éducation à la santé, gestion des risques, vaccination, habitudes saines, suivi médical",
+      "ar": "الوقاية من الأمراض المزمنة, الصحة, نمط حياة صحي, الفحص, نصائح صحية, المغرب, التغذية, النشاط البدني, الرفاهية, الأمراض غير المعدية, التعليم الصحي, إدارة المخاطر, التطعيم, العادات الصحية, المتابعة الطبية"
+    },
+    "content": {
+      "fr": [
+        "Les maladies chroniques, telles que le diabète, l'hypertension et les maladies cardiaques, sont en augmentation. Leur prévention passe par une meilleure éducation à la santé et des choix de vie éclairés.",
+        "Un mode de vie sain inclut une alimentation équilibrée, riche en fruits et légumes, ainsi qu'une activité physique régulière. Ces habitudes peuvent réduire significativement le risque de développer des maladies chroniques.",
+        "Le dépistage précoce est crucial. Des bilans de santé réguliers permettent d'identifier les facteurs de risque avant qu'ils ne se transforment en problèmes de santé graves. Consultez votre médecin pour des conseils personnalisés.",
+        "La vaccination joue également un rôle important dans la prévention. Elle protège non seulement contre les maladies infectieuses, mais contribue aussi à la santé globale en réduisant les complications.",
+        "Il est essentiel de gérer le stress, qui peut aggraver de nombreuses conditions chroniques. Des techniques de relaxation, comme la méditation ou le yoga, peuvent être bénéfiques.",
+        "La sensibilisation au sujet des maladies chroniques et de leur prévention doit commencer dès le plus jeune âge. Éduquer les enfants sur la nutrition et l'activité physique pose les bases d'un avenir en meilleure santé.",
+        "Enfin, n'oubliez pas de consulter régulièrement votre médecin ou votre pharmacien pour des conseils sur la gestion de votre santé et la prévention des maladies chroniques."
+      ],
+      "ar": [
+        "تزداد الأمراض المزمنة مثل السكري وارتفاع ضغط الدم وأمراض القلب. إن الوقاية منها تتطلب تحسين التعليم الصحي واتخاذ خيارات مستنيرة في الحياة.",
+        "تتضمن أسلوب حياة صحي تناول غذاء متوازن غني بالفواكه والخضروات، بالإضافة إلى ممارسة النشاط البدني بانتظام. يمكن أن تقلل هذه العادات بشكل كبير من خطر الإصابة بالأمراض المزمنة.",
+        "يعتبر الفحص المبكر أمرًا حاسمًا. تسمح الفحوصات الصحية المنتظمة بتحديد عوامل الخطر قبل أن تتحول إلى مشاكل صحية خطيرة. استشر طبيبك للحصول على نصائح مخصصة.",
+        "تلعب التطعيمات أيضًا دورًا مهمًا في الوقاية. فهي تحمي من الأمراض المعدية وتساهم في الصحة العامة عن طريق تقليل المضاعفات.",
+        "من الضروري إدارة التوتر، الذي يمكن أن يؤدي إلى تفاقم العديد من الحالات المزمنة. يمكن أن تكون تقنيات الاسترخاء مثل التأمل أو اليوغا مفيدة.",
+        "يجب أن تبدأ التوعية حول الأمراض المزمنة وطرق الوقاية منها منذ سن مبكرة. حيث إن تعليم الأطفال حول التغذية والنشاط البدني يضع أساسًا لمستقبل صحي أفضل.",
+        "أخيرًا، لا تنسَ استشارة طبيبك أو صيدليتك بانتظام للحصول على نصائح حول إدارة صحتك والوقاية من الأمراض المزمنة."
+      ]
+    },
+    "date": "2026-05-14"
+  },
+  {
     "slug": "medicaments-et-securite-d-usage",
     "image": "https://images.unsplash.com/photo-1596501632954-7c58c4dfd8b4?auto=format&fit=crop&w=1200&q=80",
     "title": {
