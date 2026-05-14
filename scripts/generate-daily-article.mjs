@@ -111,9 +111,9 @@ Return a single JSON object with this shape:
 
 Hard rules:
 - slug unique, kebab-case, max 72 chars.
-- image MUST be https://images.unsplash.com/photo-... with real parameters (use a plausible Unsplash medicine/wellness/pharmacy/lifestyle photo URL).
 - Exactly 7 paragraphs in each language.
-- metaKeywords rich for Google (include medicine/santé/Maroc style terms in FR).`;
+- metaKeywords rich for Google (include medicine/santé/Maroc style terms in FR).
+- Do not invent image URLs; the site assigns the cover image after generation.`;
 
   const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
 
@@ -174,10 +174,7 @@ async function main() {
       }
 
       parsed.date = today;
-
-      if (!isValidImageUrl(parsed.image)) {
-        parsed.image = pickFallbackImage(parsed.slug || "fallback");
-      }
+      parsed.image = pickFallbackImage(parsed.slug || "fallback");
 
       validateArticle(parsed, existingSlugs);
 
