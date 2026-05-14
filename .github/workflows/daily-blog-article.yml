@@ -20,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -41,7 +43,12 @@ jobs:
           git add data/blogArticles.json
           if git diff --staged --quiet; then
             echo "No JSON changes (skipped or already up to date)."
-          else
-            git commit -m "chore(blog): add daily AI article $(date -u +%Y-%m-%d)"
-            git push
+            exit 0
           fi
+          git commit -m "chore(blog): add daily AI article $(date -u +%Y-%m-%d)"
+          if ! git pull --rebase origin main; then
+            echo "Could not rebase onto latest main (often after re-running an old workflow). Aborting push."
+            git rebase --abort 2>/dev/null || true
+            exit 0
+          fi
+          git push origin HEAD:main
