@@ -1,5 +1,42 @@
 [
   {
+    "slug": "medicament-et-choix-intelligent",
+    "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Médicaments : faire des choix intelligents",
+      "ar": "الأدوية: اتخاذ قرارات ذكية"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment choisir des médicaments de manière éclairée.",
+      "ar": "اكتشف كيفية اختيار الأدوية بشكل مدروس."
+    },
+    "metaKeywords": {
+      "fr": "médicaments, choix éclairé, pharmacie, santé, prévention, éducation santé, médicaments génériques, médicaments de marque, Maroc",
+      "ar": "الأدوية, اختيار ذكي, صيدلية, صحة, وقاية, تعليم صحي, أدوية جنيسة, أدوية ماركة, المغرب"
+    },
+    "content": {
+      "fr": [
+        "Le choix des médicaments est une étape cruciale pour garantir votre santé. Que vous ayez besoin d'un traitement ponctuel ou d'une thérapie à long terme, il est important de prendre des décisions éclairées.",
+        "Les médicaments peuvent être classés en deux catégories principales : les médicaments de marque et les médicaments génériques. Comprendre la différence peut vous aider à faire un choix économique sans compromettre votre santé.",
+        "Les médicaments génériques contiennent les mêmes ingrédients actifs que leurs homologues de marque, mais sont souvent proposés à un prix inférieur. Cela en fait une option intéressante pour de nombreux patients.",
+        "L'éducation sur les médicaments inclut également la compréhension des effets secondaires potentiels. Ne laissez pas l'incertitude vous empêcher de poser des questions à votre médecin ou pharmacien.",
+        "Il est essentiel de lire les étiquettes des médicaments, y compris les instructions de dosage et les avertissements. Cela vous aide à utiliser les médicaments en toute sécurité et efficacement.",
+        "Si vous prenez plusieurs médicaments, parlez-en à votre professionnel de santé. La polypharmacie peut augmenter le risque d'interactions médicamenteuses, ce qui nécessite une attention particulière.",
+        "Enfin, rappelez-vous que votre médecin ou pharmacien est votre meilleur allié pour toute décision liée aux médicaments. Ne hésitez pas à demander des conseils pour assurer votre bien-être."
+      ],
+      "ar": [
+        "اختيار الأدوية خطوة حاسمة لضمان صحتك. سواء كنت بحاجة إلى علاج مؤقت أو علاج طويل الأمد، من المهم اتخاذ قرارات مدروسة.",
+        "يمكن تصنيف الأدوية إلى فئتين رئيسيتين: الأدوية الماركة والأدوية الجنيسة. فهم الفرق يمكن أن يساعدك في اتخاذ خيار اقتصادي دون التأثير على صحتك.",
+        "تحتوي الأدوية الجنيسة على نفس المكونات النشطة مثل نظيراتها الماركة، ولكن غالبًا ما تُعرض بسعر أقل. مما يجعلها خيارًا مثيرًا للاهتمام للعديد من المرضى.",
+        "تشمل التعليمات حول الأدوية أيضًا فهم الآثار الجانبية المحتملة. لا تدع عدم اليقين يمنعك من طرح الأسئلة على طبيبك أو صيدليتك.",
+        "من الضروري قراءة ملصقات الأدوية، بما في ذلك تعليمات الجرعات والتحذيرات. يساعدك ذلك على استخدام الأدوية بأمان وفعالية.",
+        "إذا كنت تتناول عدة أدوية، تحدث مع محترف الرعاية الصحية. يمكن أن تزيد تعددية الأدوية من خطر التفاعلات الدوائية، مما يتطلب اهتمامًا خاصًا.",
+        "أخيرًا، تذكر أن طبيبك أو صيدلك هو أفضل حليف لك في أي قرار يتعلق بالأدوية. لا تتردد في طلب المشورة لضمان صحتك."
+      ]
+    },
+    "date": "2026-05-15"
+  },
+  {
     "slug": "importance-de-la-prevention-des-maladies-chroniques",
     "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
     "title": {
