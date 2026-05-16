@@ -1,5 +1,42 @@
 [
   {
+    "slug": "comprendre-les-generiques-et-leurs-avantages",
+    "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Comprendre les médicaments génériques et leurs avantages",
+      "ar": "فهم الأدوية الجنيسة ومزاياها"
+    },
+    "excerpt": {
+      "fr": "Les médicaments génériques offrent une alternative abordable et efficace aux médicaments de marque.",
+      "ar": "توفر الأدوية الجنيسة بديلاً فعالًا وميسور التكلفة للأدوية ذات العلامات التجارية."
+    },
+    "metaKeywords": {
+      "fr": "médicaments génériques, santé, pharmacie, Maroc, coût, efficacité, choix de médicaments, éducation santé, prévention, médicament de marque",
+      "ar": "الأدوية الجنيسة, الصحة, الصيدلة, المغرب, التكلفة, الفعالية, اختيار الأدوية, التعليم الصحي, الوقاية, الأدوية ذات العلامات التجارية"
+    },
+    "content": {
+      "fr": [
+        "Les médicaments génériques sont souvent perçus comme une alternative moins coûteuse aux médicaments de marque. Mais que sont-ils exactement ?",
+        "Un médicament générique contient le même principe actif que son homologue de marque. Cela signifie qu'il agit de la même manière pour traiter une condition médicale.",
+        "Les coûts réduits des médicaments génériques sont principalement dus à l'absence de dépenses liées à la recherche et au développement, ce qui peut rendre les traitements plus accessibles pour tous.",
+        "Il est important de noter que les médicaments génériques doivent répondre aux mêmes normes de qualité, de sécurité et d'efficacité que les médicaments de marque avant d'être approuvés par les autorités sanitaires.",
+        "La lecture des étiquettes et des notices est essentielle pour comprendre les différences potentielles entre les génériques et les médicaments de marque, notamment en ce qui concerne les excipients.",
+        "En choisissant un médicament générique, il est conseillé de consulter un professionnel de santé pour s'assurer que ce choix est approprié pour votre situation personnelle.",
+        "En fin de compte, les médicaments génériques peuvent être une option judicieuse pour ceux qui cherchent à gérer leurs coûts de santé tout en recevant un traitement efficace."
+      ],
+      "ar": [
+        "تعتبر الأدوية الجنيسة في كثير من الأحيان بديلاً أقل تكلفة للأدوية ذات العلامات التجارية. لكن ما هي بالتحديد؟",
+        "يحتوي الدواء الجنيس على نفس المادة الفعالة التي يحتويها نظيره ذو العلامة التجارية. وهذا يعني أنه يعمل بنفس الطريقة لعلاج حالة طبية معينة.",
+        "تعود التكاليف المنخفضة للأدوية الجنيسة بشكل أساسي إلى عدم وجود نفقات مرتبطة بالبحث والتطوير، مما يمكن أن يجعل العلاجات أكثر سهولة للجميع.",
+        "من المهم ملاحظة أن الأدوية الجنيسة يجب أن تستوفي نفس معايير الجودة والسلامة والفعالية مثل الأدوية ذات العلامات التجارية قبل أن يتم الموافقة عليها من قبل السلطات الصحية.",
+        "تعتبر قراءة الملصقات والنشرات أمرًا أساسيًا لفهم الاختلافات المحتملة بين الأدوية الجنيسة والأدوية ذات العلامات التجارية، خاصة فيما يتعلق بالمواد المساعدة.",
+        "عند اختيار دواء جنيس، يُنصح باستشارة متخصص في الصحة للتأكد من أن هذا الخيار مناسب لوضعك الشخصي.",
+        "في النهاية، يمكن أن تكون الأدوية الجنيسة خيارًا حكيمًا لأولئك الذين يسعون لإدارة تكاليفهم الصحية مع تلقي علاج فعال."
+      ]
+    },
+    "date": "2026-05-16"
+  },
+  {
     "slug": "medicament-et-choix-intelligent",
     "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
     "title": {
