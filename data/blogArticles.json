@@ -1,5 +1,42 @@
 [
   {
+    "slug": "comprendre-limportance-de-la-vaccination",
+    "image": "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Comprendre l'importance de la vaccination",
+      "ar": "فهم أهمية التطعيم"
+    },
+    "excerpt": {
+      "fr": "La vaccination est un pilier essentiel de la santé publique.",
+      "ar": "التطعيم هو ركيزة أساسية للصحة العامة."
+    },
+    "metaKeywords": {
+      "fr": "vaccination, santé publique, prévention, maladies, immunité, Maroc, vaccins, santé, enfants, adultes, épidémies, sécurité, éducation sanitaire, médicaments, pharmacie, santé communautaire",
+      "ar": "التطعيم, الصحة العامة, الوقاية, الأمراض, المناعة, المغرب, اللقاحات, الصحة, الأطفال, البالغين, الأوبئة, الأمان, التعليم الصحي, الأدوية, الصيدلة, الصحة المجتمعية"
+    },
+    "content": {
+      "fr": [
+        "La vaccination est une méthode éprouvée pour prévenir de nombreuses maladies potentiellement graves. Elle contribue à protéger les individus ainsi que la communauté dans son ensemble.",
+        "Les vaccins agissent en stimulant le système immunitaire, aidant le corps à reconnaître et à combattre les agents pathogènes. Cela permet d'éviter des épidémies qui pourraient affecter la santé publique.",
+        "Il est crucial de suivre les calendriers de vaccination recommandés, qui varient selon l'âge et les conditions de santé. Cela garantit une protection adéquate tout au long de la vie.",
+        "Les vaccins ne protègent pas seulement ceux qui sont vaccinés, mais ils créent aussi une immunité collective, réduisant la propagation de maladies dans la population.",
+        "Bien que certaines personnes aient des préoccupations concernant les effets secondaires, la plupart des vaccins sont sûrs et les bénéfices l'emportent largement sur les risques.",
+        "Consulter un médecin ou un pharmacien est essentiel pour toute question sur les vaccins. Ils peuvent fournir des informations précises adaptées à votre situation personnelle.",
+        "En fin de compte, la vaccination est un acte de solidarité et de protection pour soi-même et pour les autres. Il est important de s'informer et de rester à jour sur les recommandations."
+      ],
+      "ar": [
+        "يعد التطعيم وسيلة مثبتة للوقاية من العديد من الأمراض الخطيرة. إنه يساعد في حماية الأفراد والمجتمع ككل.",
+        "تعمل اللقاحات على تحفيز جهاز المناعة، مما يساعد الجسم على التعرف على مسببات الأمراض ومكافحتها. وهذا يساعد على تجنب الأوبئة التي قد تؤثر على الصحة العامة.",
+        "من المهم اتباع جداول التطعيم الموصى بها، والتي تختلف حسب العمر والحالة الصحية. وهذا يضمن حماية كافية طوال الحياة.",
+        "لا تحمي اللقاحات فقط أولئك الذين يتم تطعيمهم، بل تخلق أيضًا مناعة جماعية، مما يقلل من انتشار الأمراض داخل المجتمع.",
+        "على الرغم من أن بعض الأشخاص قد تكون لديهم مخاوف بشأن الآثار الجانبية، فإن معظم اللقاحات آمنة، وتفوق الفوائد بكثير المخاطر.",
+        "يعد استشارة طبيب أو صيدلي أمرًا ضروريًا لأي سؤال حول اللقاحات. يمكنهم تقديم معلومات دقيقة تناسب وضعك الشخصي.",
+        "في النهاية، يعد التطعيم عملاً من أعمال التضامن والحماية للنفس وللآخرين. من المهم أن نكون على اطلاع دائم وأن نبقى على اطلاع على التوصيات."
+      ]
+    },
+    "date": "2026-05-17"
+  },
+  {
     "slug": "comprendre-les-generiques-et-leurs-avantages",
     "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
     "title": {
