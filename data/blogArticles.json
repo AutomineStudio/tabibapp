@@ -1,5 +1,42 @@
 [
   {
+    "slug": "medicaments-et-polypharmacie",
+    "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Polypharmacie : Comprendre les enjeux",
+      "ar": "تعدد الأدوية: فهم التحديات"
+    },
+    "excerpt": {
+      "fr": "La polypharmacie est une réalité pour de nombreux patients, nécessitant une attention particulière.",
+      "ar": "تعدد الأدوية هو واقع للعديد من المرضى، مما يتطلب اهتمامًا خاصًا."
+    },
+    "metaKeywords": {
+      "fr": "polypharmacie, médicaments, santé, gestion des médicaments, patients âgés, risques de santé, Maroc, sécurité des médicaments, consultation médicale, éducation à la santé, pharmacologie, prévention, informations sur les médicaments, suivi médical, adhésion au traitement",
+      "ar": "تعدد الأدوية، الأدوية، الصحة، إدارة الأدوية، المرضى المسنون، مخاطر صحية، المغرب، سلامة الأدوية، استشارة طبية، تعليم صحي، صيدلة، وقاية، معلومات عن الأدوية، متابعة طبية، الالتزام بالعلاج"
+    },
+    "content": {
+      "fr": [
+        "La polypharmacie se réfère à la prise de plusieurs médicaments par un même patient. Elle est particulièrement courante chez les personnes âgées qui souffrent de multiples maladies chroniques.",
+        "Bien que la polypharmacie puisse être nécessaire pour gérer différentes conditions de santé, elle pose également des risques. Les interactions entre médicaments peuvent entraîner des effets secondaires indésirables.",
+        "Il est essentiel que les patients discutent régulièrement de leur médication avec leur médecin ou leur pharmacien. Cela aide à s'assurer que chaque médicament est toujours nécessaire et approprié.",
+        "Les médecins doivent évaluer les bénéfices et les risques de chaque médicament, en tenant compte de l'état de santé général du patient et des autres traitements en cours.",
+        "Les patients doivent être conscients des signes d'interactions médicamenteuses, tels que la fatigue accrue, des changements d'humeur ou des symptômes gastro-intestinaux. Signaler ces symptômes est crucial.",
+        "L'éducation à la santé joue un rôle vital dans la gestion de la polypharmacie. Comprendre les médicaments prescrits et leur fonctionnement peut aider les patients à mieux gérer leur traitement.",
+        "Enfin, il est important de toujours consulter un professionnel de santé avant d'apporter des changements à votre traitement. Votre médecin ou pharmacien est là pour vous aider à naviguer dans ces défis."
+      ],
+      "ar": [
+        "تعدد الأدوية يشير إلى تناول عدة أدوية من قبل نفس المريض. وهو شائع بشكل خاص بين كبار السن الذين يعانون من عدة أمراض مزمنة.",
+        "على الرغم من أن تعدد الأدوية قد يكون ضروريًا لإدارة حالات صحية مختلفة، إلا أنه يمثل أيضًا مخاطر. يمكن أن تؤدي التفاعلات بين الأدوية إلى آثار جانبية غير مرغوب فيها.",
+        "من الضروري أن يناقش المرضى أدويتهم بانتظام مع طبيبهم أو صيدليهم. يساعد ذلك في التأكد من أن كل دواء لا يزال ضروريًا ومناسبًا.",
+        "يجب على الأطباء تقييم الفوائد والمخاطر لكل دواء، مع الأخذ بعين الاعتبار الحالة الصحية العامة للمريض والعلاجات الأخرى التي يتلقاها.",
+        "يجب أن يكون المرضى واعين بعلامات التفاعلات الدوائية، مثل التعب المفرط، والتغيرات المزاجية، أو الأعراض المعوية. الإبلاغ عن هذه الأعراض أمر حيوي.",
+        "تلعب التثقيف الصحي دورًا حيويًا في إدارة تعدد الأدوية. يمكن أن يساعد فهم الأدوية الموصوفة وآلية عملها المرضى في إدارة علاجهم بشكل أفضل.",
+        "أخيرًا، من المهم دائمًا استشارة متخصص في الرعاية الصحية قبل إجراء أي تغييرات على علاجك. طبيبك أو صيدليك هنا لمساعدتك في التغلب على هذه التحديات."
+      ]
+    },
+    "date": "2026-05-18"
+  },
+  {
     "slug": "comprendre-limportance-de-la-vaccination",
     "image": "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=1200&q=80",
     "title": {
