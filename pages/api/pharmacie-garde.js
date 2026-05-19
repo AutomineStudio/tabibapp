@@ -1,8 +1,10 @@
 /**
- * Fetches pharmacie de garde data from med.ma for a given city.
- * Source: https://www.med.ma/pharmacie/garde-24-24/
+ * Fetches pharmacie de garde data for Moroccan cities.
+ * Primary source: pharmacieenpermanence.ma (city subdomains, updated daily).
+ * Fallback: med.ma (legacy HTML parser; site often returns empty without JS).
  */
 const MED_MA_BASE = "https://www.med.ma/pharmacie/garde-24-24";
+const PEP_BASE = "https://{city}.pharmacieenpermanence.ma";
 
 /** Decode HTML entities first, then remove tags so output is plain text */
 function stripHtml(html) {
@@ -49,6 +51,74 @@ function normalizeCitySlug(input) {
     .replace(/ùûü/g, "u")
     .replace(/[^a-z0-9-]/g, "");
   return s || null;
+}
+
+/** pharmacieenpermanence.ma subdomain slugs (mostly match our city slugs) */
+const PEP_CITY_SLUG = {
+  "es-semara": "es-semara",
+  "tan-tan": "tan-tan",
+  "sidi-kacem": "sidi-kacem",
+  "sidi-slimane": "sidi-slimane",
+  "al-kelaa-des-sraghna": "al-kelaa-des-sraghna",
+};
+
+function pepCityUrl(citySlug) {
+  const sub = PEP_CITY_SLUG[citySlug] || citySlug;
+  return PEP_BASE.replace("{city}", sub);
+}
+
+function formatMaPhone(digits) {
+  const d = String(digits).replace(/\D/g, "");
+  if (d.startsWith("212")) return "+" + d;
+  if (d.startsWith("0")) return "+212" + d.slice(1);
+  if (d.length >= 9) return "+212" + d;
+  return d ? "+" + d : "";
+}
+
+/** Parse pharmacies from pharmacieenpermanence.ma city pages */
+function parsePharmaciesFromPepHtml(html) {
+  if (typeof html !== "string" || !html.includes("pharmacieenpermanence")) return [];
+  const pharmacies = [];
+  const h3Re = /<h3([^>]*)>([\s\S]*?)<\/h3>/gi;
+  let match;
+  while ((match = h3Re.exec(html)) !== null) {
+    const attrs = match[1];
+    const inner = match[2];
+    const titleAttr = attrs.match(/title="([^"]+)"/i)?.[1];
+    const name = (titleAttr || inner.replace(/<[^>]+>/g, "")).trim();
+    if (!name || /^(accueil|pharmacies|appeler)/i.test(name)) continue;
+    const rest = html.slice(match.index + match[0].length, match.index + match[0].length + 2500);
+    const telRaw = rest.match(/href="tel:([^"]+)"/i)?.[1];
+    if (!telRaw) continue;
+    const phone = formatMaPhone(telRaw);
+    const mapsUrl = (rest.match(/https:\/\/www\.google\.com\/maps[^"']+/i)?.[0] || "").replace(/&amp;/g, "&");
+    const address =
+      rest.match(/line-clamp-2[^>]*>([^<]+)</i)?.[1]?.trim() ||
+      rest.match(/uppercase tracking-wider">Adresse<\/div>\s*<p[^>]*>([^<]+)</i)?.[1]?.trim() ||
+      "";
+    const dest = mapsUrl.match(/destination=(-?\d+\.?\d*),(-?\d+\.?\d*)/i);
+    const entry = {
+      name,
+      address,
+      phone,
+      mapsUrl,
+      profileUrl: "",
+    };
+    if (dest) {
+      entry.lat = parseFloat(dest[1]);
+      entry.lng = parseFloat(dest[2]);
+    }
+    pharmacies.push(entry);
+  }
+  return pharmacies;
+}
+
+async function fetchFromPharmacieEnPermanence(citySlug) {
+  const url = pepCityUrl(citySlug);
+  const response = await fetch(url, { headers: FETCH_HEADERS });
+  if (!response.ok) return { pharmacies: [], url };
+  const html = await response.text();
+  return { pharmacies: parsePharmaciesFromPepHtml(html), url };
 }
 
 function parsePharmaciesFromHtml(html) {
@@ -329,15 +399,25 @@ const CITY_CENTERS = [
 ];
 
 async function fetchCityPharmacies(citySlug) {
-  const allPharmacies = [];
-  for (let pageIndex = 0; pageIndex < MAX_PAGES; pageIndex++) {
-    const { html } = await fetchPage(citySlug, pageIndex);
-    if (!html) break;
-    const pagePharmacies = parsePharmaciesFromHtml(html);
-    if (pagePharmacies.length === 0) break;
-    allPharmacies.push(...pagePharmacies);
-    if (pagePharmacies.length < 10) break;
+  let sourceUrl = pepCityUrl(citySlug);
+  let allPharmacies = [];
+
+  const pep = await fetchFromPharmacieEnPermanence(citySlug);
+  if (pep.pharmacies.length > 0) {
+    allPharmacies = pep.pharmacies;
+    sourceUrl = pep.url;
+  } else {
+    for (let pageIndex = 0; pageIndex < MAX_PAGES; pageIndex++) {
+      const { html, url } = await fetchPage(citySlug, pageIndex);
+      if (pageIndex === 0) sourceUrl = url;
+      if (!html) break;
+      const pagePharmacies = parsePharmaciesFromHtml(html);
+      if (pagePharmacies.length === 0) break;
+      allPharmacies.push(...pagePharmacies);
+      if (pagePharmacies.length < 10) break;
+    }
   }
+
   const deduped = dedupePharmacies(allPharmacies);
   let enriched = deduped.map((p) => {
     const coords = parseCoordsFromMapsUrl(p.mapsUrl);
@@ -359,7 +439,7 @@ async function fetchCityPharmacies(citySlug) {
     }
     await sleep(1200);
   }
-  return enriched;
+  return { pharmacies: enriched, sourceUrl };
 }
 
 export default async function handler(req, res) {
@@ -393,7 +473,7 @@ export default async function handler(req, res) {
       const seen = new Set();
       const merged = [];
       for (const slug of nearestSlugs) {
-        const list = await fetchCityPharmacies(slug);
+        const { pharmacies: list } = await fetchCityPharmacies(slug);
         for (const p of list) {
           const key = (p.phone || "").replace(/\D/g, "") || `${(p.name || "").slice(0, 40)}|${(p.address || "").slice(0, 40)}`;
           if (seen.has(key)) continue;
@@ -435,57 +515,22 @@ export default async function handler(req, res) {
   }
 
   try {
-    const allPharmacies = [];
-    let firstPageUrl = `${MED_MA_BASE}/${citySlug}`;
+    const { pharmacies: enriched, sourceUrl } = await fetchCityPharmacies(citySlug);
 
-    for (let pageIndex = 0; pageIndex < MAX_PAGES; pageIndex++) {
-      const { html, url } = await fetchPage(citySlug, pageIndex);
-      if (pageIndex === 0) firstPageUrl = url;
-      if (!html) {
-        if (pageIndex === 0) {
-          return res.status(502).json({
-            error: "Could not fetch data from source",
-            status: 502,
-            sourceUrl: url
-          });
-        }
-        break;
-      }
-      const pagePharmacies = parsePharmaciesFromHtml(html);
-      if (pagePharmacies.length === 0) break;
-      allPharmacies.push(...pagePharmacies);
-      if (pagePharmacies.length < 10) break;
-    }
-
-    const pharmacies = dedupePharmacies(allPharmacies);
-
-    // Enrich with lat/lng when mapsUrl contains coordinates
-    let enriched = pharmacies.map((p) => {
-      const coords = parseCoordsFromMapsUrl(p.mapsUrl);
-      return coords ? { ...p, lat: coords.lat, lng: coords.lng } : p;
-    });
-
-    // Geocode up to 10 pharmacies that still have no coords (Nominatim: 1 req/s, be gentle)
-    const toGeocode = enriched
-      .filter((p) => (p.lat == null || p.lng == null) && (p.address || p.name) && (p.address || p.name).trim().length > 8)
-      .slice(0, 10);
-    for (let i = 0; i < toGeocode.length; i++) {
-      const p = toGeocode[i];
-      const coords = await geocodeAddress(p.address || p.name, citySlug);
-      if (coords) {
-        enriched = enriched.map((ph) =>
-          ph === p ? { ...ph, lat: coords.lat, lng: coords.lng } : ph
-        );
-      }
-      await sleep(1200);
+    if (enriched.length === 0) {
+      return res.status(502).json({
+        error: "Could not fetch pharmacy data for this city",
+        city: citySlug,
+        sourceUrl,
+      });
     }
 
     res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=7200");
     return res.status(200).json({
       city: citySlug,
-      sourceUrl: firstPageUrl,
-      sourceName: "med.ma",
-      pharmacies: enriched
+      sourceUrl,
+      sourceName: sourceUrl.includes("pharmacieenpermanence") ? "pharmacieenpermanence.ma" : "med.ma",
+      pharmacies: enriched,
     });
   } catch (err) {
     console.error("pharmacie-garde API error:", err);

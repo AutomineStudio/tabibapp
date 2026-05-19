@@ -839,56 +839,20 @@ export default function Home() {
     );
   };
 
-  // Fetch pharmacies from multiple cities when we have user location; merge, sort by distance, top 10
+  // Fetch nearest pharmacies via API (server merges 3 closest cities)
   useEffect(() => {
     if (!userLocation) {
       if (locationError) setPharmacieData(null);
       return;
     }
+
+    setLocationRequested(false);
+
+    const cacheKey = `nearby:${userLocation.lat.toFixed(3)},${userLocation.lng.toFixed(3)}`;
     const cache = pharmacieCacheRef.current;
-    const isFresh = (entry) => entry && (Date.now() - entry.ts) < PHARMACIE_CACHE_TTL_MS;
-    const getDistanceKm = (lat1, lng1, lat2, lng2) => {
-      const R = 6371;
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLng = (lng2 - lng1) * Math.PI / 180;
-      const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      return R * c;
-    };
-    const mergeAndSort = (results) => {
-      const seen = new Set();
-      const merged = [];
-      for (const data of results) {
-        if (!data.pharmacies || !Array.isArray(data.pharmacies)) continue;
-        for (const p of data.pharmacies) {
-          const key = (p.phone || "").replace(/\D/g, "") || `${(p.name || "").slice(0, 30)}-${(p.address || "").slice(0, 30)}`;
-          if (seen.has(key)) continue;
-          seen.add(key);
-          merged.push(p);
-        }
-      }
-      const withDistance = merged.map((p) => {
-        const km = p.lat != null && p.lng != null
-          ? getDistanceKm(userLocation.lat, userLocation.lng, p.lat, p.lng)
-          : null;
-        return { ...p, distanceKm: km };
-      });
-      const sorted = withDistance.sort((a, b) => {
-        if (a.distanceKm == null && b.distanceKm == null) return 0;
-        if (a.distanceKm == null) return 1;
-        if (b.distanceKm == null) return -1;
-        return a.distanceKm - b.distanceKm;
-      });
-      return sorted.slice(0, 10);
-    };
-
-    setLocationRequested(false); // location obtained, clear the "waiting" flag
-
-    // If all cities are cached and fresh, use instant (no loading)
-    const allCached = CITIES_FOR_NEARBY.every((city) => isFresh(cache[city]));
-    if (allCached) {
-      const results = CITIES_FOR_NEARBY.map((city) => ({ pharmacies: cache[city].pharmacies }));
-      setPharmacieData({ pharmacies: mergeAndSort(results), userCoords: userLocation });
+    const isFresh = (entry) => entry && Date.now() - entry.ts < PHARMACIE_CACHE_TTL_MS;
+    if (isFresh(cache[cacheKey])) {
+      setPharmacieData({ pharmacies: cache[cacheKey].pharmacies, userCoords: userLocation });
       setPharmacieError(null);
       return;
     }
@@ -896,30 +860,30 @@ export default function Home() {
     let cancelled = false;
     setPharmacieLoading(true);
     setPharmacieError(null);
-    Promise.allSettled(
-      CITIES_FOR_NEARBY.map((city) => {
-        if (isFresh(cache[city])) return Promise.resolve({ pharmacies: cache[city].pharmacies });
-        return fetch(`/api/pharmacie-garde?city=${encodeURIComponent(city)}`)
-          .then((res) => (res.ok ? res.json() : { pharmacies: [] }))
-          .then((data) => {
-            const list = data.pharmacies && Array.isArray(data.pharmacies) ? data.pharmacies : [];
-            cache[city] = { pharmacies: list, ts: Date.now() };
-            return { pharmacies: list };
-          });
+    const { lat, lng } = userLocation;
+    fetch(`/api/pharmacie-garde?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(res.status === 502 ? "Source unavailable" : "Request failed");
+        return res.json();
       })
-    )
-      .then((outcomes) => {
+      .then((data) => {
         if (cancelled) return;
-        const results = outcomes.map((o) => (o.status === "fulfilled" ? o.value : { pharmacies: [] }));
-        const merged = mergeAndSort(results);
-        setPharmacieData({ pharmacies: merged, userCoords: userLocation });
-        setPharmacieError(merged.length === 0 ? "Could not load the list." : null);
+        const list = Array.isArray(data.pharmacies) ? data.pharmacies : [];
+        cache[cacheKey] = { pharmacies: list, ts: Date.now() };
+        setPharmacieData({ pharmacies: list, userCoords: userLocation });
+        setPharmacieError(list.length === 0 ? "Could not load the list." : null);
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setPharmacieData(null);
+          setPharmacieError(err.message || "Error");
+        }
       })
       .finally(() => {
         if (!cancelled) setPharmacieLoading(false);
       });
     return () => { cancelled = true; };
-  }, [userLocation]);
+  }, [userLocation, locationError]);
 
   // Fallback: fetch by city when user selects a city (and no location or they want city list)
   useEffect(() => {
