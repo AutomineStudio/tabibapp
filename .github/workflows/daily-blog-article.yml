@@ -36,11 +36,14 @@ jobs:
           OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
         run: node scripts/generate-daily-article.mjs
 
+      - name: Regenerate sitemap
+        run: node scripts/generate-sitemap.mjs
+
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/blogArticles.json
+          git add data/blogArticles.json public/sitemap.xml
           if git diff --staged --quiet; then
             echo "No JSON changes (skipped or already up to date)."
             exit 0
