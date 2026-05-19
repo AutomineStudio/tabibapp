@@ -1,5 +1,42 @@
 [
   {
+    "slug": "medicaments-et-lectures-des-etiquettes",
+    "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Lire les étiquettes des médicaments : un guide essentiel",
+      "ar": "قراءة ملصقات الأدوية: دليل أساسي"
+    },
+    "excerpt": {
+      "fr": "Savoir lire les étiquettes des médicaments est crucial pour une utilisation sûre.",
+      "ar": "معرفة كيفية قراءة ملصقات الأدوية أمر أساسي للاستخدام الآمن."
+    },
+    "metaKeywords": {
+      "fr": "lecture des étiquettes, médicaments, santé, pharmacie, prévention, sécurité, éducation santé, Maroc, choix éclairés, médicaments génériques, polypharmacie, étiquettes médicamenteuses, conseils santé, bien-être, prévention santé, sensibilisation au médicament",
+      "ar": "قراءة الملصقات, الأدوية, الصحة, الصيدلة, الوقاية, الأمان, التثقيف الصحي, المغرب, خيارات مستنيرة, الأدوية العامة, تعدد الأدوية, الملصقات الدوائية, نصائح صحية, الرفاهية, الوقاية الصحية, التوعية بالأدوية"
+    },
+    "content": {
+      "fr": [
+        "Lire les étiquettes des médicaments est une compétence essentielle pour tout utilisateur de médicaments. Cela permet non seulement de comprendre le dosage, mais aussi les indications et les effets secondaires possibles.",
+        "Les étiquettes contiennent des informations vitales sur le médicament, y compris son nom, sa composition et les instructions d'utilisation. Chaque élément peut influencer votre santé et votre sécurité.",
+        "Il est important de prêter attention aux avertissements sur les étiquettes. Certains médicaments peuvent interagir entre eux, ou avoir des effets indésirables en cas de non-respect des instructions.",
+        "Vérifiez toujours la date d'expiration sur l'étiquette. Prendre des médicaments périmés peut être dangereux et peut compromettre leur efficacité.",
+        "La distinction entre médicaments génériques et de marque est également indiquée. Les médicaments génériques sont souvent moins coûteux et tout aussi efficaces, mais il est toujours bon de consulter un professionnel de santé.",
+        "En cas de doute, n'hésitez pas à demander des clarifications à votre pharmacien. Ils sont là pour vous aider à bien comprendre les étiquettes et à utiliser vos médicaments de manière sécurisée.",
+        "En somme, lire attentivement les étiquettes des médicaments peut contribuer grandement à une meilleure gestion de votre santé. Rappelez-vous d'être proactif et informé."
+      ],
+      "ar": [
+        "قراءة ملصقات الأدوية هي مهارة أساسية لكل مستخدم للأدوية. إنها تسمح بفهم الجرعة، وكذلك الدلائل والآثار الجانبية المحتملة.",
+        "تحتوي الملصقات على معلومات حيوية حول الدواء، بما في ذلك اسمه وتركيبته وتعليمات استخدامه. يمكن أن يؤثر كل عنصر على صحتك وسلامتك.",
+        "من المهم الانتباه إلى التحذيرات الموجودة على الملصقات. قد تتفاعل بعض الأدوية مع بعضها البعض، أو يكون لها آثار جانبية في حال عدم اتباع التعليمات.",
+        "تحقق دائمًا من تاريخ انتهاء صلاحية الدواء. تناول الأدوية منتهية الصلاحية يمكن أن يكون خطيرًا وقد يؤثر على فعاليتها.",
+        "أيضًا، يتم الإشارة إلى الفرق بين الأدوية العامة والأدوية ذات العلامات التجارية. الأدوية العامة غالبًا ما تكون أقل تكلفة وفعالة بنفس القدر، ولكن من الجيد دائمًا استشارة متخصص في الصحة.",
+        "إذا كانت لديك أي شكوك، فلا تتردد في طلب توضيحات من صيدليتك. هم هنا لمساعدتك في فهم الملصقات واستخدام أدويتك بشكل آمن.",
+        "باختصار، قراءة الملصقات بعناية يمكن أن تسهم بشكل كبير في إدارة صحتك بشكل أفضل. تذكر أن تكون نشطًا ومطلعًا."
+      ]
+    },
+    "date": "2026-05-19"
+  },
+  {
     "slug": "medicaments-et-polypharmacie",
     "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
     "title": {
