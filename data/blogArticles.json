@@ -1,5 +1,42 @@
 [
   {
+    "slug": "alimentation-et-sante-des-os",
+    "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "L'importance d'une alimentation saine pour la santé des os",
+      "ar": "أهمية التغذية السليمة لصحة العظام"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment une alimentation équilibrée contribue à la santé de vos os.",
+      "ar": "اكتشف كيف تساهم التغذية المتوازنة في صحة عظامك."
+    },
+    "metaKeywords": {
+      "fr": "santé des os, nutrition, aliments riches en calcium, prévention des maladies, santé publique, Maroc, alimentation équilibrée, vitamines, minéraux, santé osseuse, mode de vie sain",
+      "ar": "صحة العظام, تغذية, أطعمة غنية بالكالسيوم, الوقاية من الأمراض, الصحة العامة, المغرب, تغذية متوازنة, فيتامينات, معادن, صحة العظام, نمط حياة صحي"
+    },
+    "content": {
+      "fr": [
+        "La santé des os est essentielle pour le bien-être général. Une alimentation adéquate joue un rôle clé dans le maintien de la solidité et de la densité osseuse.",
+        "Les aliments riches en calcium, comme les produits laitiers, les légumes à feuilles vertes et les poissons, sont cruciaux. Ils fournissent le minéral nécessaire pour renforcer les os.",
+        "En plus du calcium, la vitamine D est importante pour l'absorption de ce minéral. On peut la trouver dans certains poissons gras, les œufs et les exposés au soleil.",
+        "Un apport suffisant en protéines est également vital, car elles constituent la base de la structure osseuse. Pensez à inclure des sources de protéines saines dans votre alimentation.",
+        "Les nutriments comme le magnésium et le phosphore jouent un rôle complémentaire dans la santé osseuse. Variez votre alimentation pour en assurer un bon apport.",
+        "L'hydratation est souvent négligée, mais elle est essentielle pour maintenir la santé des os. Boire suffisamment d'eau aide à transporter les nutriments vers les cellules osseuses.",
+        "Enfin, consultez un professionnel de la santé pour des conseils personnalisés sur votre alimentation et votre santé osseuse, surtout si vous avez des préoccupations spécifiques."
+      ],
+      "ar": [
+        "صحة العظام ضرورية للرفاهية العامة. تلعب التغذية السليمة دورًا رئيسيًا في الحفاظ على قوة وكثافة العظام.",
+        "الأطعمة الغنية بالكالسيوم، مثل منتجات الألبان، والخضروات الورقية، والأسماك، تعتبر ضرورية. فهي توفر المعادن اللازمة لتقوية العظام.",
+        "بالإضافة إلى الكالسيوم، تلعب فيتامين د دورًا هامًا في امتصاص هذا المعدن. يمكن العثور عليه في بعض الأسماك الدهنية، والبيض، وأشعة الشمس.",
+        "كما أن تناول ما يكفي من البروتينات يعتبر ضروريًا، حيث تشكل أساس التركيب العظمي. حاول إدراج مصادر بروتين صحية في نظامك الغذائي.",
+        "تلعب العناصر الغذائية مثل المغنيسيوم والفوسفور دورًا تكميليًا في صحة العظام. حاول التنويع في طعامك لضمان الحصول على كميات كافية منها.",
+        "غالبًا ما يُهمل الترطيب، لكنه ضروري للحفاظ على صحة العظام. شرب كمية كافية من الماء يساعد في نقل العناصر الغذائية إلى خلايا العظام.",
+        "أخيرًا، استشر متخصصًا في الصحة للحصول على نصائح شخصية بشأن تغذيتك وصحة عظامك، خاصةً إذا كان لديك مخاوف محددة."
+      ]
+    },
+    "date": "2026-05-20"
+  },
+  {
     "slug": "medicaments-et-lectures-des-etiquettes",
     "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
     "title": {
