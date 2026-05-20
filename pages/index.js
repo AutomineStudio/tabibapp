@@ -484,10 +484,7 @@ const translations = {
   }
 };
 
-const CITIES_FOR_NEARBY = [
-  "casablanca", "rabat", "marrakech", "fes", "agadir", "tanger", "meknes", "sale", "kenitra", "oujda"
-];
-const PHARMACIE_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+const PHARMACIE_CACHE_TTL_MS = 60 * 1000; // 1 minute — med.ma list rotates frequently
 
 const PHARMACIE_CITIES = [
   { slug: "agadir", label: "Agadir" },
@@ -585,22 +582,6 @@ export default function Home() {
   const messagesContainerRef = useRef(null);
   const pharmacieCacheRef = useRef(Object.create(null)); // { [citySlug]: { pharmacies, ts } }
   const locationErrorTimeoutRef = useRef(null);
-
-  // Prefetch pharmacie data for nearby cities in the background on page load
-  useEffect(() => {
-    const cache = pharmacieCacheRef.current;
-    const isFresh = (entry) => entry && (Date.now() - entry.ts) < PHARMACIE_CACHE_TTL_MS;
-    CITIES_FOR_NEARBY.forEach((city) => {
-      if (isFresh(cache[city])) return;
-      fetch(`/api/pharmacie-garde?city=${encodeURIComponent(city)}`)
-        .then((res) => (res.ok ? res.json() : { pharmacies: [] }))
-        .then((data) => {
-          const list = data.pharmacies && Array.isArray(data.pharmacies) ? data.pharmacies : [];
-          cache[city] = { pharmacies: list, ts: Date.now() };
-        })
-        .catch(() => {});
-    });
-  }, []);
 
   // Smooth scroll with header offset
   const scrollElementWithOffset = (el) => {
@@ -835,60 +816,25 @@ export default function Home() {
           }, 8000);
         }
       },
-      { enableHighAccuracy: false, timeout: 30000, maximumAge: 300000 }
+      { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 }
     );
   };
 
-  // Fetch pharmacies from multiple cities when we have user location; merge, sort by distance, top 10
+  // Nearby: med.ma city pool sorted by distance (10 nearest on-duty pharmacies)
   useEffect(() => {
-    if (!userLocation) {
-      if (locationError) setPharmacieData(null);
+    if (!userLocation || pharmacieCity) {
+      if (locationError && !pharmacieCity) setPharmacieData(null);
       return;
     }
+
+    setLocationRequested(false);
+
     const cache = pharmacieCacheRef.current;
-    const isFresh = (entry) => entry && (Date.now() - entry.ts) < PHARMACIE_CACHE_TTL_MS;
-    const getDistanceKm = (lat1, lng1, lat2, lng2) => {
-      const R = 6371;
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLng = (lng2 - lng1) * Math.PI / 180;
-      const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      return R * c;
-    };
-    const mergeAndSort = (results) => {
-      const seen = new Set();
-      const merged = [];
-      for (const data of results) {
-        if (!data.pharmacies || !Array.isArray(data.pharmacies)) continue;
-        for (const p of data.pharmacies) {
-          const key = (p.phone || "").replace(/\D/g, "") || `${(p.name || "").slice(0, 30)}-${(p.address || "").slice(0, 30)}`;
-          if (seen.has(key)) continue;
-          seen.add(key);
-          merged.push(p);
-        }
-      }
-      const withDistance = merged.map((p) => {
-        const km = p.lat != null && p.lng != null
-          ? getDistanceKm(userLocation.lat, userLocation.lng, p.lat, p.lng)
-          : null;
-        return { ...p, distanceKm: km };
-      });
-      const sorted = withDistance.sort((a, b) => {
-        if (a.distanceKm == null && b.distanceKm == null) return 0;
-        if (a.distanceKm == null) return 1;
-        if (b.distanceKm == null) return -1;
-        return a.distanceKm - b.distanceKm;
-      });
-      return sorted.slice(0, 10);
-    };
+    const isFresh = (entry) => entry && Date.now() - entry.ts < PHARMACIE_CACHE_TTL_MS;
+    const cacheKey = `nearby:${userLocation.lat},${userLocation.lng}`;
 
-    setLocationRequested(false); // location obtained, clear the "waiting" flag
-
-    // If all cities are cached and fresh, use instant (no loading)
-    const allCached = CITIES_FOR_NEARBY.every((city) => isFresh(cache[city]));
-    if (allCached) {
-      const results = CITIES_FOR_NEARBY.map((city) => ({ pharmacies: cache[city].pharmacies }));
-      setPharmacieData({ pharmacies: mergeAndSort(results), userCoords: userLocation });
+    if (isFresh(cache[cacheKey])) {
+      setPharmacieData({ pharmacies: cache[cacheKey].pharmacies, userCoords: userLocation });
       setPharmacieError(null);
       return;
     }
@@ -896,32 +842,34 @@ export default function Home() {
     let cancelled = false;
     setPharmacieLoading(true);
     setPharmacieError(null);
-    Promise.allSettled(
-      CITIES_FOR_NEARBY.map((city) => {
-        if (isFresh(cache[city])) return Promise.resolve({ pharmacies: cache[city].pharmacies });
-        return fetch(`/api/pharmacie-garde?city=${encodeURIComponent(city)}`)
-          .then((res) => (res.ok ? res.json() : { pharmacies: [] }))
-          .then((data) => {
-            const list = data.pharmacies && Array.isArray(data.pharmacies) ? data.pharmacies : [];
-            cache[city] = { pharmacies: list, ts: Date.now() };
-            return { pharmacies: list };
-          });
+    const { lat, lng } = userLocation;
+
+    fetch(`/api/pharmacie-garde?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(res.status === 502 ? "Source unavailable" : "Request failed");
+        return res.json();
       })
-    )
-      .then((outcomes) => {
+      .then((data) => {
         if (cancelled) return;
-        const results = outcomes.map((o) => (o.status === "fulfilled" ? o.value : { pharmacies: [] }));
-        const merged = mergeAndSort(results);
-        setPharmacieData({ pharmacies: merged, userCoords: userLocation });
-        setPharmacieError(merged.length === 0 ? "Could not load the list." : null);
+        const list = Array.isArray(data.pharmacies) ? data.pharmacies : [];
+        cache[cacheKey] = { pharmacies: list, ts: Date.now() };
+        setPharmacieData({ pharmacies: list, userCoords: userLocation });
+        setPharmacieError(list.length === 0 ? "Could not load the list." : null);
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setPharmacieData(null);
+          setPharmacieError(err.message || "Error");
+        }
       })
       .finally(() => {
         if (!cancelled) setPharmacieLoading(false);
       });
-    return () => { cancelled = true; };
-  }, [userLocation]);
 
-  // Fallback: fetch by city when user selects a city (and no location or they want city list)
+    return () => { cancelled = true; };
+  }, [userLocation, locationError, pharmacieCity]);
+
+  // City search: med.ma city page listing (independent from geolocation)
   useEffect(() => {
     if (!pharmacieCity) {
       if (!userLocation) setPharmacieData(null);
@@ -929,33 +877,12 @@ export default function Home() {
     }
     const cache = pharmacieCacheRef.current;
     const isFresh = (entry) => entry && (Date.now() - entry.ts) < PHARMACIE_CACHE_TTL_MS;
-    const getDistanceKm = (lat1, lng1, lat2, lng2) => {
-      const R = 6371;
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLng = (lng2 - lng1) * Math.PI / 180;
-      const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      return R * c;
-    };
+
     const applyList = (list) => {
-      const withDistance = userLocation
-        ? list.map((p) => {
-            const km = p.lat != null && p.lng != null
-              ? getDistanceKm(userLocation.lat, userLocation.lng, p.lat, p.lng)
-              : null;
-            return { ...p, distanceKm: km };
-          }).sort((a, b) => {
-            if (a.distanceKm == null && b.distanceKm == null) return 0;
-            if (a.distanceKm == null) return 1;
-            if (b.distanceKm == null) return -1;
-            return a.distanceKm - b.distanceKm;
-          })
-        : list.map((p) => ({ ...p, distanceKm: null }));
-      setPharmacieData({ pharmacies: withDistance, userCoords: userLocation || undefined });
+      setPharmacieData({ pharmacies: list });
       setPharmacieError(null);
     };
 
-    // Use cache if available and fresh
     const entry = cache[pharmacieCity];
     if (isFresh(entry)) {
       applyList(entry.pharmacies);
@@ -986,11 +913,10 @@ export default function Home() {
         if (!cancelled) setPharmacieLoading(false);
       });
     return () => { cancelled = true; };
-  }, [pharmacieCity, userLocation]);
+  }, [pharmacieCity]);
 
-  // Pharmacies are already sorted by distance and limited to top 10 (with distanceKm) from the fetch effect
   const sortedPharmacies = pharmacieData?.pharmacies ?? [];
-  const userCoords = pharmacieData?.userCoords || userLocation;
+  const userCoords = pharmacieData?.userCoords ?? null;
 
   const getDistanceKm = (lat1, lng1, lat2, lng2) => {
     const R = 6371;
@@ -1799,8 +1725,15 @@ export default function Home() {
               <select
                 value={pharmacieCity}
                 onChange={(e) => {
-                  setPharmacieCity(e.target.value);
-                  if (!e.target.value) setPharmacieData(null);
+                  const value = e.target.value;
+                  setPharmacieCity(value);
+                  if (value) {
+                    setUserLocation(null);
+                    setLocationRequested(false);
+                    setLocationError(null);
+                  } else if (!userLocation) {
+                    setPharmacieData(null);
+                  }
                 }}
                 className="w-full max-w-xs p-3 rounded-xl border border-gray-200 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                 dir={language === "fr" ? "ltr" : "rtl"}

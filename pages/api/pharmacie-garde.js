@@ -1,8 +1,125 @@
 /**
- * Fetches pharmacie de garde data from med.ma for a given city.
- * Source: https://www.med.ma/pharmacie/garde-24-24/
+ * Fetches pharmacie de garde 24/24 from med.ma only.
+ * Source: https://www.med.ma/pharmacie/garde-24-24
+ * City: med.ma city page (GET). Geolocation: full city pool sorted nearest first.
  */
 const MED_MA_BASE = "https://www.med.ma/pharmacie/garde-24-24";
+const MED_MA_GARDE = "Garde 24/24";
+
+const FETCH_HEADERS = {
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+  Accept: "text/html,application/xhtml+xml",
+  "Accept-Language": "fr-FR,fr;q=0.9,en;q=0.8",
+};
+
+/** med.ma field_gouvernorat_pharma values (national filter form) */
+const MED_MA_CITY_IDS = {
+  agadir: "9731",
+  "al-hoceima": "9710",
+  "al-kelaa-des-sraghna": "9716",
+  azilal: "9703",
+  "beni-mellal": "9704",
+  benslimane: "14030",
+  boujdour: "9728",
+  boulemane: "9711",
+  casablanca: "9701",
+  chefchaouen: "9738",
+  chichaoua: "9715",
+  dakhla: "9730",
+  "el-jadida": "9705",
+  errachidia: "9721",
+  "es-semara": "9729",
+  essaouirra: "9717",
+  fes: "9708",
+  figuig: "9725",
+  guelmim: "9732",
+  ifrane: "9722",
+  kenitra: "9698",
+  khemisset: "9699",
+  khenifra: "9723",
+  khouribga: "9706",
+  laayoune: "9727",
+  larache: "9739",
+  marrakech: "9714",
+  meknes: "9720",
+  mohammedia: "9702",
+  nador: "9726",
+  ouarzazate: "9718",
+  oujda: "9724",
+  rabat: "9694",
+  safi: "9719",
+  sale: "9695",
+  sefrou: "9709",
+  settat: "9707",
+  "sidi-kacem": "9700",
+  "sidi-slimane": "9697",
+  "tan-tan": "9733",
+  tanger: "9737",
+  taounate: "9712",
+  taroudannt: "9734",
+  tata: "9735",
+  taza: "9713",
+  temara: "9696",
+  tetouan: "9740",
+  tiznit: "9736",
+};
+
+/** Approximate centers to pick the med.ma city (governorate) for geolocation. */
+const CITY_CENTERS = {
+  agadir: { lat: 30.4278, lng: -9.5981 },
+  "al-hoceima": { lat: 35.1682, lng: -3.9983 },
+  "al-kelaa-des-sraghna": { lat: 32.0531, lng: -7.4083 },
+  azilal: { lat: 31.9628, lng: -6.5711 },
+  "beni-mellal": { lat: 32.3373, lng: -6.3498 },
+  benslimane: { lat: 33.6188, lng: -7.1234 },
+  boujdour: { lat: 26.1282, lng: -14.4926 },
+  boulemane: { lat: 33.3628, lng: -4.7303 },
+  casablanca: { lat: 33.5731, lng: -7.5898 },
+  chefchaouen: { lat: 35.1688, lng: -5.2638 },
+  chichaoua: { lat: 31.5383, lng: -8.7633 },
+  dakhla: { lat: 23.6847, lng: -15.9579 },
+  "el-jadida": { lat: 33.2316, lng: -8.5004 },
+  errachidia: { lat: 31.9319, lng: -4.4248 },
+  "es-semara": { lat: 26.7392, lng: -11.6741 },
+  essaouirra: { lat: 31.5085, lng: -9.7595 },
+  fes: { lat: 34.0181, lng: -5.0078 },
+  figuig: { lat: 32.1099, lng: -1.2284 },
+  guelmim: { lat: 28.9864, lng: -10.0563 },
+  ifrane: { lat: 33.5228, lng: -5.1106 },
+  kenitra: { lat: 34.261, lng: -6.5792 },
+  khemisset: { lat: 33.8158, lng: -6.0663 },
+  khenifra: { lat: 32.9388, lng: -5.6694 },
+  khouribga: { lat: 32.8848, lng: -6.9013 },
+  laayoune: { lat: 27.1253, lng: -13.1625 },
+  larache: { lat: 35.1939, lng: -6.1557 },
+  marrakech: { lat: 31.6295, lng: -7.9891 },
+  meknes: { lat: 33.8935, lng: -5.5473 },
+  mohammedia: { lat: 33.6874, lng: -7.3829 },
+  nador: { lat: 35.1682, lng: -2.9333 },
+  ouarzazate: { lat: 30.9333, lng: -6.9093 },
+  oujda: { lat: 34.6867, lng: -1.9114 },
+  rabat: { lat: 34.0209, lng: -6.8416 },
+  safi: { lat: 32.2994, lng: -9.2372 },
+  sale: { lat: 34.0531, lng: -6.7983 },
+  sefrou: { lat: 33.8308, lng: -4.8353 },
+  settat: { lat: 33.0015, lng: -7.6168 },
+  "sidi-kacem": { lat: 34.2262, lng: -5.7125 },
+  "sidi-slimane": { lat: 34.2648, lng: -5.926 },
+  "tan-tan": { lat: 28.4381, lng: -11.1039 },
+  tanger: { lat: 35.7595, lng: -5.834 },
+  taounate: { lat: 34.4167, lng: -4.64 },
+  taroudannt: { lat: 30.4703, lng: -8.877 },
+  tata: { lat: 29.7422, lng: -7.9747 },
+  taza: { lat: 34.2139, lng: -4.0086 },
+  temara: { lat: 33.9284, lng: -6.9066 },
+  tetouan: { lat: 35.5889, lng: -5.3626 },
+  tiznit: { lat: 29.6974, lng: -9.7316 },
+};
+
+/** med.ma URL slugs (e.g. essaouirra on site, essaouira in our UI) */
+const CITY_SLUG_ALIASES = {
+  essaouira: "essaouirra",
+};
 
 /** Decode HTML entities first, then remove tags so output is plain text */
 function stripHtml(html) {
@@ -49,6 +166,14 @@ function normalizeCitySlug(input) {
     .replace(/ùûü/g, "u")
     .replace(/[^a-z0-9-]/g, "");
   return s || null;
+}
+
+function resolveMedMaCitySlug(citySlug) {
+  return CITY_SLUG_ALIASES[citySlug] || citySlug;
+}
+
+function resolveMedMaCityId(citySlug) {
+  return MED_MA_CITY_IDS[resolveMedMaCitySlug(citySlug)] || null;
 }
 
 function parsePharmaciesFromHtml(html) {
@@ -184,29 +309,11 @@ function parsePharmaciesFromHtml(html) {
   return pharmacies;
 }
 
-const FETCH_HEADERS = {
-  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-  "Accept": "text/html,application/xhtml+xml",
-  "Accept-Language": "fr-FR,fr;q=0.9,en;q=0.8"
-};
-const MAX_PAGES = 100;
-
-/** Fetch one page; page 0 = first (no segment), page 1 = /1, page 2 = /2, ... */
-async function fetchPage(citySlug, pageIndex) {
-  const path = pageIndex === 0 ? `/${citySlug}` : `/${citySlug}/${pageIndex}`;
-  const url = `${MED_MA_BASE}${path}`;
-  const response = await fetch(url, { headers: FETCH_HEADERS });
-  if (!response.ok) return { html: null, url };
-  const html = await response.text();
-  return { html, url };
-}
-
-/** Dedupe by phone (keep first); if no phone use profileUrl or name+address so we don't drop all pharmacies without phone */
+/** Keep med.ma card order; drop duplicate links to the same profile in one page. */
 function dedupePharmacies(pharmacies) {
   const seen = new Set();
   return pharmacies.filter((p) => {
-    const phoneKey = (p.phone || "").replace(/\D/g, "");
-    const key = phoneKey || p.profileUrl || `${(p.name || "").slice(0, 50)}|${(p.address || "").slice(0, 80)}`;
+    const key = p.profileUrl || `${(p.name || "").slice(0, 50)}|${(p.address || "").slice(0, 80)}`;
     if (!key || seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -270,33 +377,6 @@ function parseCoordsFromMapsUrl(mapsUrl) {
   return null;
 }
 
-/** Geocode address in Morocco via Nominatim (rate-limited). Returns { lat, lng } or null. */
-async function geocodeAddress(address, citySlug) {
-  if (!address || typeof address !== "string") return null;
-  const query = `${address.trim().slice(0, 100)}, Morocco`;
-  try {
-    const url = new URL("https://nominatim.openstreetmap.org/search");
-    url.searchParams.set("q", query);
-    url.searchParams.set("format", "json");
-    url.searchParams.set("limit", "1");
-    url.searchParams.set("countrycodes", "ma");
-    const res = await fetch(url.toString(), {
-      headers: { "User-Agent": "TabibApp/1.0 (pharmacie de garde)" }
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (!Array.isArray(data) || data.length === 0) return null;
-    const lat = parseFloat(data[0].lat);
-    const lng = parseFloat(data[0].lon);
-    if (Number.isNaN(lat) || Number.isNaN(lng)) return null;
-    return { lat, lng };
-  } catch (_) {
-    return null;
-  }
-}
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
 function distanceKm(lat1, lng1, lat2, lng2) {
   const R = 6371;
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -308,58 +388,134 @@ function distanceKm(lat1, lng1, lat2, lng2) {
   return R * c;
 }
 
-const CITY_CENTERS = [
-  { slug: "casablanca", lat: 33.5731, lng: -7.5898 },
-  { slug: "rabat", lat: 34.0209, lng: -6.8416 },
-  { slug: "marrakech", lat: 31.6295, lng: -7.9891 },
-  { slug: "fes", lat: 34.0181, lng: -5.0078 },
-  { slug: "agadir", lat: 30.4278, lng: -9.5981 },
-  { slug: "tanger", lat: 35.7595, lng: -5.834 },
-  { slug: "meknes", lat: 33.8935, lng: -5.5473 },
-  { slug: "sale", lat: 34.0531, lng: -6.7983 },
-  { slug: "kenitra", lat: 34.261, lng: -6.5792 },
-  { slug: "oujda", lat: 34.6867, lng: -1.9114 },
-  { slug: "nador", lat: 35.1682, lng: -2.9333 },
-  { slug: "tetouan", lat: 35.5889, lng: -5.3626 },
-  { slug: "el-jadida", lat: 33.2316, lng: -8.5004 },
-  { slug: "safi", lat: 32.2994, lng: -9.2372 },
-  { slug: "khouribga", lat: 32.8848, lng: -6.9013 },
-  { slug: "settat", lat: 33.0015, lng: -7.6168 },
-  { slug: "mohammedia", lat: 33.6874, lng: -7.3829 }
-];
+function enrichWithCoords(pharmacies) {
+  return pharmacies.map((p) => {
+    const coords = parseCoordsFromMapsUrl(p.mapsUrl);
+    return coords ? { ...p, lat: coords.lat, lng: coords.lng } : p;
+  });
+}
 
-async function fetchCityPharmacies(citySlug) {
+function findNearestCitySlug(lat, lng) {
+  let nearest = null;
+  let minDist = Infinity;
+  for (const [slug, center] of Object.entries(CITY_CENTERS)) {
+    const km = distanceKm(lat, lng, center.lat, center.lng);
+    if (km < minDist) {
+      minDist = km;
+      nearest = slug;
+    }
+  }
+  return nearest;
+}
+
+/** City listing page — same as https://www.med.ma/pharmacie/garde-24-24/{city} (GET, first page). */
+async function fetchMedMaCityListingPage(citySlug, pageIndex = 0) {
+  const slug = resolveMedMaCitySlug(citySlug);
+  const path = pageIndex === 0 ? `/${slug}` : `/${slug}/${pageIndex}`;
+  const sourceUrl = `${MED_MA_BASE}${path}`;
+  const res = await fetch(sourceUrl, { headers: FETCH_HEADERS });
+  if (!res.ok) return { html: null, sourceUrl };
+  const html = await res.text();
+  if (html.includes("Aucune pharmacie ne correspond")) {
+    return { html: null, sourceUrl };
+  }
+  return { html, sourceUrl };
+}
+
+/** Paginated city POST — used only for geolocation (full city pool). */
+async function fetchMedMaCityPageAt(citySlug, pageIndex) {
+  const slug = resolveMedMaCitySlug(citySlug);
+  const cityId = resolveMedMaCityId(citySlug);
+  if (!cityId) return { html: null, sourceUrl: MED_MA_BASE };
+
+  const path = pageIndex === 0 ? `/${slug}` : `/${slug}/${pageIndex}`;
+  const sourceUrl = `${MED_MA_BASE}${path}`;
+  const getRes = await fetch(sourceUrl, { headers: FETCH_HEADERS });
+  if (!getRes.ok) return { html: null, sourceUrl };
+
+  const getHtml = await getRes.text();
+  const security = getHtml.match(/name="security"[^>]*value="([^"]+)"/i)?.[1];
+  if (!security) return { html: null, sourceUrl };
+
+  const form = new URLSearchParams({
+    action: "searchhomepharma",
+    formlang: "fr",
+    security,
+    garde: MED_MA_GARDE,
+    pays_doc: "ma",
+    field_keyword_pharma: "",
+    field_delegation_pharma: "",
+    field_gouvernorat_pharma: cityId,
+  });
+
+  const postRes = await fetch(sourceUrl, {
+    method: "POST",
+    headers: {
+      ...FETCH_HEADERS,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Referer: sourceUrl,
+    },
+    body: form,
+  });
+
+  if (!postRes.ok) return { html: null, sourceUrl };
+  const html = await postRes.text();
+  if (html.includes("Aucune pharmacie ne correspond")) {
+    return { html: null, sourceUrl };
+  }
+  return { html, sourceUrl };
+}
+
+/** All Garde 24/24 pharmacies for a city (med.ma paginated city POST). */
+async function fetchAllCityPharmacies(citySlug, { maxPages = 15 } = {}) {
   const allPharmacies = [];
-  for (let pageIndex = 0; pageIndex < MAX_PAGES; pageIndex++) {
-    const { html } = await fetchPage(citySlug, pageIndex);
+  let sourceUrl = `${MED_MA_BASE}/${resolveMedMaCitySlug(citySlug)}`;
+
+  for (let pageIndex = 0; pageIndex < maxPages; pageIndex++) {
+    const { html, sourceUrl: pageUrl } = await fetchMedMaCityPageAt(citySlug, pageIndex);
+    if (pageIndex === 0 && pageUrl) sourceUrl = pageUrl;
     if (!html) break;
     const pagePharmacies = parsePharmaciesFromHtml(html);
     if (pagePharmacies.length === 0) break;
     allPharmacies.push(...pagePharmacies);
     if (pagePharmacies.length < 10) break;
   }
-  const deduped = dedupePharmacies(allPharmacies);
-  let enriched = deduped.map((p) => {
-    const coords = parseCoordsFromMapsUrl(p.mapsUrl);
-    return coords ? { ...p, lat: coords.lat, lng: coords.lng } : p;
-  });
-  const toGeocode = enriched
-    .filter(
-      (p) =>
-        (p.lat == null || p.lng == null) &&
-        (p.address || p.name) &&
-        (p.address || p.name).trim().length > 8
-    )
-    .slice(0, 5);
-  for (let i = 0; i < toGeocode.length; i++) {
-    const p = toGeocode[i];
-    const coords = await geocodeAddress(p.address || p.name, citySlug);
-    if (coords) {
-      enriched = enriched.map((ph) => (ph === p ? { ...ph, lat: coords.lat, lng: coords.lng } : ph));
-    }
-    await sleep(1200);
+
+  return { pharmacies: enrichWithCoords(dedupePharmacies(allPharmacies)), sourceUrl };
+}
+
+async function fetchCityPharmacies(citySlug) {
+  const { html, sourceUrl } = await fetchMedMaCityListingPage(citySlug, 0);
+  if (!html) {
+    return { pharmacies: [], sourceUrl, sourceName: "med.ma" };
   }
-  return enriched;
+  const pharmacies = enrichWithCoords(dedupePharmacies(parsePharmaciesFromHtml(html)));
+  return { pharmacies, sourceUrl, sourceName: "med.ma" };
+}
+async function fetchNearbyPharmacies(userLat, userLng) {
+  const citySlug = findNearestCitySlug(userLat, userLng);
+  if (!citySlug) {
+    return { pharmacies: [], sourceUrl: MED_MA_BASE, citySlug: null };
+  }
+
+  const { pharmacies, sourceUrl } = await fetchAllCityPharmacies(citySlug);
+  const withDistance = pharmacies.map((p) => ({
+    ...p,
+    distanceKm: p.lat != null && p.lng != null ? distanceKm(userLat, userLng, p.lat, p.lng) : null,
+  }));
+
+  withDistance.sort((a, b) => {
+    if (a.distanceKm == null && b.distanceKm == null) return 0;
+    if (a.distanceKm == null) return 1;
+    if (b.distanceKm == null) return -1;
+    return a.distanceKm - b.distanceKm;
+  });
+
+  return {
+    pharmacies: withDistance.slice(0, 10),
+    sourceUrl,
+    citySlug,
+  };
 }
 
 export default async function handler(req, res) {
@@ -384,39 +540,22 @@ export default async function handler(req, res) {
 
   if (hasUserLocation) {
     try {
-      const withDist = CITY_CENTERS.map((c) => ({
-        ...c,
-        dist: distanceKm(userLat, userLng, c.lat, c.lng)
-      }));
-      withDist.sort((a, b) => a.dist - b.dist);
-      const nearestSlugs = withDist.slice(0, 3).map((c) => c.slug);
-      const seen = new Set();
-      const merged = [];
-      for (const slug of nearestSlugs) {
-        const list = await fetchCityPharmacies(slug);
-        for (const p of list) {
-          const key = (p.phone || "").replace(/\D/g, "") || `${(p.name || "").slice(0, 40)}|${(p.address || "").slice(0, 40)}`;
-          if (seen.has(key)) continue;
-          seen.add(key);
-          merged.push(p);
-        }
+      const { pharmacies, sourceUrl, citySlug: nearbyCity } = await fetchNearbyPharmacies(userLat, userLng);
+      if (pharmacies.length === 0) {
+        return res.status(502).json({
+          error: "Could not fetch nearby pharmacies from med.ma",
+          sourceUrl,
+          city: nearbyCity,
+        });
       }
-      const withDistanceKm = merged.map((p) => {
-        const km = p.lat != null && p.lng != null ? distanceKm(userLat, userLng, p.lat, p.lng) : null;
-        return { ...p, distanceKm: km };
-      });
-      withDistanceKm.sort((a, b) => {
-        if (a.distanceKm == null && b.distanceKm == null) return 0;
-        if (a.distanceKm == null) return 1;
-        if (b.distanceKm == null) return -1;
-        return a.distanceKm - b.distanceKm;
-      });
-      const top10 = withDistanceKm.slice(0, 10);
-      res.setHeader("Cache-Control", "public, s-maxage=600, stale-while-revalidate=1200");
+      res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
       return res.status(200).json({
         mode: "nearby",
         userCoords: { lat: userLat, lng: userLng },
-        pharmacies: top10
+        city: nearbyCity,
+        sourceUrl,
+        sourceName: "med.ma",
+        pharmacies,
       });
     } catch (err) {
       console.error("pharmacie-garde nearby error:", err);
@@ -435,57 +574,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    const allPharmacies = [];
-    let firstPageUrl = `${MED_MA_BASE}/${citySlug}`;
+    const { pharmacies: enriched, sourceUrl, sourceName } = await fetchCityPharmacies(citySlug);
 
-    for (let pageIndex = 0; pageIndex < MAX_PAGES; pageIndex++) {
-      const { html, url } = await fetchPage(citySlug, pageIndex);
-      if (pageIndex === 0) firstPageUrl = url;
-      if (!html) {
-        if (pageIndex === 0) {
-          return res.status(502).json({
-            error: "Could not fetch data from source",
-            status: 502,
-            sourceUrl: url
-          });
-        }
-        break;
-      }
-      const pagePharmacies = parsePharmaciesFromHtml(html);
-      if (pagePharmacies.length === 0) break;
-      allPharmacies.push(...pagePharmacies);
-      if (pagePharmacies.length < 10) break;
+    if (enriched.length === 0) {
+      return res.status(502).json({
+        error: "Could not fetch pharmacy data for this city",
+        city: citySlug,
+        sourceUrl,
+      });
     }
 
-    const pharmacies = dedupePharmacies(allPharmacies);
-
-    // Enrich with lat/lng when mapsUrl contains coordinates
-    let enriched = pharmacies.map((p) => {
-      const coords = parseCoordsFromMapsUrl(p.mapsUrl);
-      return coords ? { ...p, lat: coords.lat, lng: coords.lng } : p;
-    });
-
-    // Geocode up to 10 pharmacies that still have no coords (Nominatim: 1 req/s, be gentle)
-    const toGeocode = enriched
-      .filter((p) => (p.lat == null || p.lng == null) && (p.address || p.name) && (p.address || p.name).trim().length > 8)
-      .slice(0, 10);
-    for (let i = 0; i < toGeocode.length; i++) {
-      const p = toGeocode[i];
-      const coords = await geocodeAddress(p.address || p.name, citySlug);
-      if (coords) {
-        enriched = enriched.map((ph) =>
-          ph === p ? { ...ph, lat: coords.lat, lng: coords.lng } : ph
-        );
-      }
-      await sleep(1200);
-    }
-
-    res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=7200");
+    res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
     return res.status(200).json({
+      mode: "city",
       city: citySlug,
-      sourceUrl: firstPageUrl,
-      sourceName: "med.ma",
-      pharmacies: enriched
+      sourceUrl,
+      sourceName,
+      pharmacies: enriched,
     });
   } catch (err) {
     console.error("pharmacie-garde API error:", err);
