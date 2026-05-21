@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-des-aliments-fermentes-pour-la-sante",
+    "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits des aliments fermentés pour la santé",
+      "ar": "فوائد الأطعمة المخمرة للصحة"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment les aliments fermentés peuvent améliorer votre santé.",
+      "ar": "اكتشف كيف يمكن أن تحسن الأطعمة المخمرة صحتك."
+    },
+    "metaKeywords": {
+      "fr": "aliments fermentés, santé digestive, probiotiques, nutrition, bien-être, Maroc, prévention, médecine, santé, alimentation, microbiote, recettes saines, habitudes alimentaires, équilibre alimentaire",
+      "ar": "الأطعمة المخمرة, الصحة الهضمية, البروبيوتيك, التغذية, الرفاهية, المغرب, الوقاية, الطب, الصحة, التغذية, الميكروبيوم, وصفات صحية, العادات الغذائية, التوازن الغذائي"
+    },
+    "content": {
+      "fr": [
+        "Les aliments fermentés, tels que le yaourt, le kéfir et la choucroute, sont de plus en plus reconnus pour leurs bienfaits potentiels sur la santé. Ils contiennent des probiotiques, des micro-organismes bénéfiques qui peuvent améliorer la santé digestive.",
+        "La fermentation permet de conserver les aliments tout en augmentant leur valeur nutritionnelle. En améliorant la biodisponibilité des nutriments, ces aliments peuvent contribuer à une meilleure absorption des vitamines et minéraux essentiels.",
+        "Une consommation régulière d'aliments fermentés peut également renforcer le système immunitaire. Des études suggèrent qu'une flore intestinale saine peut aider à lutter contre les infections et à réduire l'inflammation dans le corps.",
+        "Il est important de noter que les bienfaits des aliments fermentés peuvent varier d'une personne à l'autre. Certaines personnes peuvent ressentir des effets positifs sur leur digestion, tandis que d'autres peuvent ne pas observer de changements significatifs.",
+        "Pour intégrer les aliments fermentés dans votre alimentation, essayez de commencer par de petites portions. Vous pouvez ajouter du yaourt à vos petits déjeuners ou utiliser de la choucroute comme garniture dans vos plats.",
+        "N'oubliez pas que la variété est essentielle. En plus des aliments fermentés, une alimentation équilibrée comprenant des légumes, des fruits et des céréales complètes est cruciale pour une santé optimale.",
+        "Comme toujours, consultez un médecin ou un pharmacien avant de faire des changements importants à votre régime alimentaire, surtout si vous avez des problèmes de santé sous-jacents."
+      ],
+      "ar": [
+        "تعتبر الأطعمة المخمرة مثل الزبادي والكفير ومخلل الملفوف معروفة بشكل متزايد لفوائدها المحتملة على الصحة. تحتوي هذه الأطعمة على البروبيوتيك، وهي ميكروبات مفيدة يمكن أن تحسن الصحة الهضمية.",
+        "تساعد عملية التخمر في الحفاظ على الأطعمة وزيادة قيمتها الغذائية. من خلال تحسين التوافر الحيوي للمغذيات، يمكن أن تسهم هذه الأطعمة في امتصاص أفضل للفيتامينات والمعادن الأساسية.",
+        "يمكن أن يؤدي الاستهلاك المنتظم للأطعمة المخمرة أيضًا إلى تعزيز الجهاز المناعي. تشير الدراسات إلى أن وجود ميكروبيوم صحي يمكن أن يساعد في محاربة العدوى وتقليل الالتهابات في الجسم.",
+        "من المهم ملاحظة أن فوائد الأطعمة المخمرة قد تختلف من شخص لآخر. قد يشعر بعض الأشخاص بتأثيرات إيجابية على هضمهم، بينما قد لا يلاحظ آخرون تغييرات ملحوظة.",
+        "لإدخال الأطعمة المخمرة في نظامك الغذائي، حاول أن تبدأ بكميات صغيرة. يمكنك إضافة الزبادي إلى إفطارك أو استخدام مخلل الملفوف كإضافة في أطباقك.",
+        "لا تنسى أن التنوع هو الأساس. بالإضافة إلى الأطعمة المخمرة، فإن تناول نظام غذائي متوازن يحتوي على الخضار والفواكه والحبوب الكاملة ضروري للصحة المثلى.",
+        "كما هو الحال دائمًا، استشر طبيبك أو صيدلي قبل إجراء تغييرات كبيرة في نظامك الغذائي، خاصة إذا كان لديك حالات صحية مسبقة."
+      ]
+    },
+    "date": "2026-05-21"
+  },
+  {
     "slug": "alimentation-et-sante-des-os",
     "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
     "title": {
