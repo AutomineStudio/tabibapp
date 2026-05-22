@@ -1,5 +1,42 @@
 [
   {
+    "slug": "nutrition-et-sante-mentale",
+    "image": "https://images.unsplash.com/photo-1505576633757-0ac1084af824?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Nutrition et santé mentale",
+      "ar": "التغذية والصحة النفسية"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment une alimentation équilibrée influence votre bien-être mental.",
+      "ar": "اكتشف كيف يؤثر النظام الغذائي المتوازن على صحتك النفسية."
+    },
+    "metaKeywords": {
+      "fr": "nutrition, santé mentale, bien-être, alimentation équilibrée, santé, prévention, Maroc, habitudes alimentaires, santé holistique, psychologique, choix alimentaires, conseils santé, santé publique, maladies chroniques, qualité de vie, éducation à la santé",
+      "ar": "التغذية, الصحة النفسية, الرفاهية, النظام الغذائي المتوازن, الصحة, الوقاية, المغرب, العادات الغذائية, الصحة الشاملة, النفسية, الخيارات الغذائية, نصائح صحية, الصحة العامة, الأمراض المزمنة, جودة الحياة, التثقيف الصحي"
+    },
+    "content": {
+      "fr": [
+        "La santé mentale est tout aussi importante que la santé physique, et elle peut être influencée par ce que nous mangeons. Une alimentation équilibrée aide à maintenir un bon équilibre émotionnel.",
+        "Les nutriments jouent un rôle essentiel dans le fonctionnement du cerveau. Les acides gras oméga-3, par exemple, sont connus pour leur impact positif sur l'humeur et la cognition.",
+        "Une alimentation riche en fruits et légumes fournit des vitamines et des minéraux essentiels qui soutiennent le bien-être mental. Ces aliments aident à réduire l'anxiété et à améliorer l'humeur.",
+        "Éviter les aliments transformés et riches en sucre peut également avoir un effet bénéfique sur la santé mentale. Ces aliments peuvent entraîner des fluctuations d'énergie et d'humeur.",
+        "L'hydratation est un autre facteur clé. Boire suffisamment d'eau est crucial pour le fonctionnement optimal du cerveau et peut aider à prévenir la fatigue mentale.",
+        "Il est important de se rappeler que chaque personne est unique. Ce qui fonctionne pour un individu peut ne pas convenir à un autre. Consultez un professionnel de santé pour des conseils personnalisés.",
+        "En intégrant des choix alimentaires sains et en prenant soin de votre nutrition, vous pouvez contribuer à votre bien-être mental et à votre qualité de vie."
+      ],
+      "ar": [
+        "تعتبر الصحة النفسية مهمة بنفس القدر مثل الصحة الجسدية، ويمكن أن تتأثر بما نتناوله. يساعد النظام الغذائي المتوازن في الحفاظ على توازن عاطفي جيد.",
+        "تلعب العناصر الغذائية دورًا أساسيًا في وظائف الدماغ. على سبيل المثال، تعتبر الأحماض الدهنية أوميغا-3 معروفة بتأثيرها الإيجابي على المزاج والإدراك.",
+        "يوفر النظام الغذائي الغني بالفواكه والخضروات الفيتامينات والمعادن الأساسية التي تدعم الرفاهية النفسية. تساعد هذه الأطعمة في تقليل القلق وتحسين المزاج.",
+        "تجنب الأطعمة المصنعة والغنية بالسكر يمكن أن يكون له تأثير مفيد على الصحة النفسية. يمكن أن تؤدي هذه الأطعمة إلى تقلبات في الطاقة والمزاج.",
+        "تعتبر الترطيب عاملاً آخر أساسياً. شرب كمية كافية من الماء ضروري لوظيفة الدماغ المثلى ويمكن أن يساعد في منع التعب الذهني.",
+        "من المهم أن نتذكر أن كل شخص فريد. ما يعمل لشخص قد لا يناسب شخصًا آخر. استشر متخصص الرعاية الصحية للحصول على نصائح مخصصة.",
+        "من خلال دمج خيارات غذائية صحية والعناية بتغذيتك، يمكنك المساهمة في رفاهيتك النفسية وجودة حياتك."
+      ]
+    },
+    "date": "2026-05-22"
+  },
+  {
     "slug": "bienfaits-des-aliments-fermentes-pour-la-sante",
     "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
     "title": {
