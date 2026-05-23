@@ -1,5 +1,42 @@
 [
   {
+    "slug": "alimentation-saine-et-sante-du-coeur",
+    "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Alimentation saine et santé du cœur",
+      "ar": "التغذية الصحية وصحة القلب"
+    },
+    "excerpt": {
+      "fr": "Adopter une alimentation saine est essentiel pour la santé du cœur.",
+      "ar": "إن اعتماد نظام غذائي صحي أمر ضروري لصحة القلب."
+    },
+    "metaKeywords": {
+      "fr": "alimentation saine, santé du cœur, nutrition, prévention des maladies, médicaments, Maroc, santé, bien-être, régime alimentaire, habitudes alimentaires, protection cardiovasculaire, mode de vie sain, conseils nutritionnels, aliments sains, gestion du stress, santé préventive",
+      "ar": "التغذية الصحية, صحة القلب, التغذية, الوقاية من الأمراض, الأدوية, المغرب, الصحة, الرفاهية, النظام الغذائي, العادات الغذائية, الحماية القلبية, نمط حياة صحي, نصائح غذائية, الأطعمة الصحية, إدارة التوتر, الصحة الوقائية"
+    },
+    "content": {
+      "fr": [
+        "Une alimentation équilibrée joue un rôle vital dans la santé du cœur. En intégrant des aliments riches en nutriments, vous pouvez réduire les risques de maladies cardiovasculaires.",
+        "Les fruits et légumes frais sont essentiels dans un régime alimentaire sain. Ils apportent des vitamines, des minéraux et des antioxydants qui protègent le cœur.",
+        "Les graisses saines, comme celles contenues dans l'huile d'olive ou les avocats, sont également bénéfiques. Elles aident à maintenir un bon taux de cholestérol.",
+        "Il est important de surveiller votre consommation de sel et de sucre. Un excès peut entraîner des problèmes de tension artérielle et de poids.",
+        "De plus, une hydratation adéquate est cruciale. L'eau aide à maintenir une circulation sanguine saine et à prévenir la déshydratation.",
+        "N'oubliez pas que l'exercice physique régulier, combiné à une bonne nutrition, contribue à la santé du cœur. Même une marche quotidienne peut faire une différence.",
+        "Enfin, consultez toujours votre médecin ou pharmacien avant d'apporter des changements significatifs à votre régime alimentaire ou à votre mode de vie."
+      ],
+      "ar": [
+        "تلعب التغذية المتوازنة دورًا حيويًا في صحة القلب. من خلال دمج الأطعمة الغنية بالعناصر الغذائية، يمكنك تقليل مخاطر الإصابة بأمراض القلب.",
+        "تعتبر الفواكه والخضروات الطازجة أساسية في النظام الغذائي الصحي. فهي توفر الفيتامينات والمعادن ومضادات الأكسدة التي تحمي القلب.",
+        "كما أن الدهون الصحية، مثل تلك الموجودة في زيت الزيتون أو الأفوكادو، مفيدة أيضًا. تساعد على الحفاظ على مستوى جيد من الكوليسترول.",
+        "من المهم مراقبة استهلاكك للملح والسكر. يمكن أن يؤدي الإفراط في ذلك إلى مشاكل في ضغط الدم والوزن.",
+        "بالإضافة إلى ذلك، فإن الترطيب الجيد أمر حاسم. يساعد الماء في الحفاظ على الدورة الدموية الصحية ومنع الجفاف.",
+        "لا تنسَ أن ممارسة الرياضة بانتظام، جنبًا إلى جنب مع التغذية الجيدة، تساهم في صحة القلب. حتى المشي اليومي يمكن أن يحدث فرقًا.",
+        "أخيرًا، استشر دائمًا طبيبك أو صيدليك قبل إدخال تغييرات كبيرة على نظامك الغذائي أو نمط حياتك."
+      ]
+    },
+    "date": "2026-05-23"
+  },
+  {
     "slug": "nutrition-et-sante-mentale",
     "image": "https://images.unsplash.com/photo-1505576633757-0ac1084af824?auto=format&fit=crop&w=1200&q=80",
     "title": {
