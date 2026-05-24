@@ -1,5 +1,42 @@
 [
   {
+    "slug": "importance-de-la-nutrition-pour-la-sante-globale",
+    "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "L'importance de la nutrition pour la santé globale",
+      "ar": "أهمية التغذية للصحة العامة"
+    },
+    "excerpt": {
+      "fr": "Une bonne nutrition est essentielle pour maintenir une santé optimale.",
+      "ar": "التغذية السليمة ضرورية للحفاظ على صحة مثلى."
+    },
+    "metaKeywords": {
+      "fr": "nutrition, santé, bien-être, prévention, alimentation, maladies chroniques, médicaments, Maroc, habitudes alimentaires, santé globale, conseils nutritionnels, vitamines, minéraux, santé publique, alimentation équilibrée",
+      "ar": "التغذية, الصحة, الرفاهية, الوقاية, التغذية السليمة, الأمراض المزمنة, الأدوية, المغرب, العادات الغذائية, الصحة العامة, نصائح غذائية, الفيتامينات, المعادن, الصحة العامة, التغذية المتوازنة"
+    },
+    "content": {
+      "fr": [
+        "La nutrition joue un rôle fondamental dans notre santé globale. Une alimentation équilibrée fournit les nutriments nécessaires pour maintenir notre corps en bonne santé et prévenir les maladies.",
+        "Les aliments que nous consommons influencent non seulement notre poids, mais aussi notre bien-être mental et physique. Une bonne nutrition est liée à une meilleure humeur et à une meilleure concentration.",
+        "Il est important de choisir des aliments riches en vitamines et minéraux. Cela aide à renforcer notre système immunitaire et à réduire le risque de maladies chroniques.",
+        "Les régimes alimentaires variés, incluant des fruits, des légumes, des protéines maigres et des grains entiers, sont essentiels pour une santé optimale. Ils fournissent l'énergie nécessaire pour nos activités quotidiennes.",
+        "Il est conseillé de lire les étiquettes des produits alimentaires pour faire des choix éclairés. Comprendre la composition des aliments peut aider à éviter les excès de sucres et de graisses saturées.",
+        "N'oublions pas que l'hydratation est également une composante clé de la nutrition. Boire suffisamment d'eau est crucial pour le bon fonctionnement de notre organisme.",
+        "Enfin, il est toujours prudent de consulter un médecin ou un nutritionniste pour adapter son régime alimentaire à ses besoins spécifiques et assurer une santé optimale."
+      ],
+      "ar": [
+        "تلعب التغذية دورًا أساسيًا في صحتنا العامة. يوفر النظام الغذائي المتوازن العناصر الغذائية اللازمة للحفاظ على صحتنا العامة والوقاية من الأمراض.",
+        "إن الأطعمة التي نتناولها تؤثر ليس فقط على وزننا، ولكن أيضًا على رفاهيتنا العقلية والجسدية. ترتبط التغذية السليمة بمزاج أفضل وتركيز أعلى.",
+        "من المهم اختيار الأطعمة الغنية بالفيتامينات والمعادن. يساعد ذلك على تعزيز جهاز المناعة وتقليل خطر الإصابة بالأمراض المزمنة.",
+        "تعتبر الأنظمة الغذائية المتنوعة، التي تشمل الفواكه والخضار والبروتينات الخالية من الدهون والحبوب الكاملة، ضرورية للصحة المثلى. فهي توفر الطاقة اللازمة لنشاطاتنا اليومية.",
+        "من المستحسن قراءة ملصقات المنتجات الغذائية لاتخاذ خيارات مدروسة. يمكن أن يساعد فهم مكونات الأطعمة في تجنب الإفراط في تناول السكريات والدهون المشبعة.",
+        "لا ننسى أن الترطيب أيضًا عنصر رئيسي في التغذية. شرب كمية كافية من الماء أمر حيوي لعمل الجسم بشكل سليم.",
+        "أخيرًا، من الحكمة دائمًا استشارة طبيب أو أخصائي تغذية لتكييف نظامك الغذائي وفقًا لاحتياجاتك الخاصة وضمان صحة مثلى."
+      ]
+    },
+    "date": "2026-05-24"
+  },
+  {
     "slug": "alimentation-saine-et-sante-du-coeur",
     "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
     "title": {
