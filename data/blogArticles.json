@@ -1,5 +1,42 @@
 [
   {
+    "slug": "sante-et-bienfaits-des-aliments-bio",
+    "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Santé et bienfaits des aliments bio",
+      "ar": "الصحة وفوائد الأطعمة العضوية"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment les aliments bio peuvent améliorer votre santé.",
+      "ar": "اكتشف كيف يمكن أن تحسن الأطعمة العضوية صحتك."
+    },
+    "metaKeywords": {
+      "fr": "aliments bio, santé, nutrition, bienfaits, produits biologiques, prévention, Maroc, alimentation saine, choix alimentaires, santé globale, médecine préventive",
+      "ar": "الأطعمة العضوية, الصحة, التغذية, الفوائد, المنتجات البيولوجية, الوقاية, المغرب, غذاء صحي, خيارات غذائية, الصحة العامة, الطب الوقائي"
+    },
+    "content": {
+      "fr": [
+        "Les aliments bio gagnent en popularité, non seulement pour leur goût, mais aussi pour leurs nombreux bienfaits pour la santé. En choisissant des produits biologiques, vous optez pour une alimentation plus saine.",
+        "Les aliments bio sont souvent cultivés sans pesticides synthétiques ni engrais chimiques. Cela signifie moins de résidus chimiques dans votre assiette et un impact environnemental réduit.",
+        "Consommer des aliments bio peut également améliorer votre bien-être mental. Plusieurs études montrent que ces aliments, riches en nutriments, peuvent contribuer à une meilleure santé mentale et à une réduction du stress.",
+        "Les produits biologiques peuvent contenir plus d'antioxydants et de nutriments essentiels, favorisant ainsi un système immunitaire fort et une meilleure résistance aux maladies.",
+        "Il est important de lire les étiquettes et de se renseigner sur les certifications bio pour faire des choix éclairés. Cela garantit que vous consommez réellement des aliments respectant les normes biologiques.",
+        "N'oubliez pas que, même avec une alimentation bio, il est essentiel de maintenir un équilibre. Une alimentation variée et riche en fruits et légumes est la clé d'une bonne santé.",
+        "Enfin, consultez toujours un professionnel de la santé ou un nutritionniste avant de faire des changements majeurs dans votre alimentation. Chaque individu a des besoins uniques."
+      ],
+      "ar": [
+        "تكتسب الأطعمة العضوية شعبية متزايدة، ليس فقط لطعمها، ولكن أيضًا لفوائدها العديدة للصحة. من خلال اختيار المنتجات العضوية، تختار نظام غذائي أكثر صحة.",
+        "غالبًا ما تزرع الأطعمة العضوية دون استخدام المبيدات الحشرية الاصطناعية أو الأسمدة الكيميائية. هذا يعني وجود بقايا كيميائية أقل في طبقك وتأثير بيئي مخفض.",
+        "يمكن أن تساهم استهلاك الأطعمة العضوية أيضًا في تحسين صحتك العقلية. تظهر العديد من الدراسات أن هذه الأطعمة، الغنية بالعناصر الغذائية، يمكن أن تساهم في تحسين الصحة العقلية وتقليل التوتر.",
+        "قد تحتوي المنتجات العضوية على المزيد من مضادات الأكسدة والعناصر الغذائية الأساسية، مما يعزز نظام المناعة لديك ويزيد من مقاومتك للأمراض.",
+        "من المهم قراءة الملصقات والبحث عن الشهادات العضوية لاتخاذ خيارات مستنيرة. هذا يضمن أنك تستهلك بالفعل الأطعمة التي تتوافق مع المعايير العضوية.",
+        "لا تنسَ أنه حتى مع النظام الغذائي العضوي، من الضروري الحفاظ على التوازن. النظام الغذائي المتنوع والغني بالفواكه والخضروات هو مفتاح الصحة الجيدة.",
+        "أخيرًا، استشر دائمًا محترفًا في الصحة أو أخصائي تغذية قبل إجراء تغييرات كبيرة في نظامك الغذائي. كل فرد لديه احتياجات فريدة."
+      ]
+    },
+    "date": "2026-05-25"
+  },
+  {
     "slug": "importance-de-la-nutrition-pour-la-sante-globale",
     "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
     "title": {
