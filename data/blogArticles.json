@@ -1,5 +1,42 @@
 [
   {
+    "slug": "alimentation-saine-pour-le-bien-etre",
+    "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Alimentation saine pour le bien-être",
+      "ar": "التغذية السليمة من أجل الرفاهية"
+    },
+    "excerpt": {
+      "fr": "Une alimentation équilibrée est essentielle pour maintenir une bonne santé.",
+      "ar": "التغذية المتوازنة ضرورية للحفاظ على صحة جيدة."
+    },
+    "metaKeywords": {
+      "fr": "alimentation saine, nutrition, santé, bien-être, prévention, maladies chroniques, Maroc, habitudes alimentaires, conseils nutritionnels, santé digestive, équilibre alimentaire, vitamines, minéraux, santé mentale, mode de vie sain",
+      "ar": "التغذية السليمة, الصحة, الرفاهية, الوقاية, الأمراض المزمنة, المغرب, العادات الغذائية, نصائح غذائية, الصحة النفسية, نمط حياة صحي"
+    },
+    "content": {
+      "fr": [
+        "L'alimentation joue un rôle crucial dans notre bien-être général et peut influencer notre santé physique et mentale.",
+        "Une alimentation saine comprend une variété d'aliments riches en nutriments, tels que les fruits, les légumes, les céréales complètes et les protéines maigres.",
+        "Il est important de limiter la consommation de sucres ajoutés, de sel et de graisses saturées pour maintenir un équilibre nutritionnel optimal.",
+        "Les habitudes alimentaires doivent être adaptées à chaque individu, en tenant compte des besoins spécifiques, des niveaux d'activité physique et des conditions de santé.",
+        "Prendre le temps de préparer des repas équilibrés peut également renforcer le lien social et culturel autour de la table.",
+        "N'oubliez pas que l'hydratation est une composante essentielle d'une bonne nutrition, alors buvez suffisamment d'eau tout au long de la journée.",
+        "Enfin, consultez toujours un professionnel de santé pour des conseils adaptés à votre situation personnelle."
+      ],
+      "ar": [
+        "تلعب التغذية دورًا حاسمًا في رفاهيتنا العامة ويمكن أن تؤثر على صحتنا البدنية والعقلية.",
+        "تتضمن التغذية السليمة مجموعة من الأطعمة الغنية بالعناصر الغذائية، مثل الفواكه والخضروات والحبوب الكاملة والبروتينات الخفيفة.",
+        "من المهم تقليل استهلاك السكريات المضافة والملح والدهون المشبعة للحفاظ على توازن غذائي مثالي.",
+        "يجب أن تتكيف العادات الغذائية مع كل فرد، مع مراعاة الاحتياجات الخاصة، ومستويات النشاط البدني، والحالات الصحية.",
+        "يمكن أن تعزز قضاء الوقت في إعداد وجبات متوازنة الروابط الاجتماعية والثقافية حول المائدة.",
+        "لا تنسَ أن الترطيب هو عنصر أساسي في التغذية الجيدة، لذا اشرب ما يكفي من الماء طوال اليوم.",
+        "وأخيرًا، استشر دائمًا متخصصًا في الصحة للحصول على نصائح تناسب وضعك الشخصي."
+      ]
+    },
+    "date": "2026-05-26"
+  },
+  {
     "slug": "sante-et-bienfaits-des-aliments-bio",
     "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
     "title": {
