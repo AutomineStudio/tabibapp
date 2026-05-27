@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-des-aliments-entiers-pour-la-sante",
+    "image": "https://images.unsplash.com/photo-1535914254981-b5012eebbd15?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits des aliments entiers pour la santé",
+      "ar": "فوائد الأطعمة الكاملة للصحة"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment les aliments entiers peuvent améliorer votre santé.",
+      "ar": "اكتشف كيف يمكن أن تحسن الأطعمة الكاملة صحتك."
+    },
+    "metaKeywords": {
+      "fr": "aliments entiers, santé, nutrition, bien-être, Maroc, aliments naturels, prévention maladies, choix alimentaires, santé digestive, alimentation équilibrée, phytothérapie, vitamines, minéraux, fibres alimentaires, mode de vie sain",
+      "ar": "الأطعمة الكاملة, الصحة, التغذية, العافية, المغرب, الأطعمة الطبيعية, الوقاية من الأمراض, الخيارات الغذائية, الصحة الهضمية, التغذية المتوازنة, العلاج بالنباتات, الفيتامينات, المعادن, الألياف الغذائية, نمط الحياة الصحي"
+    },
+    "content": {
+      "fr": [
+        "Les aliments entiers, comme les fruits, les légumes et les grains, sont essentiels pour une alimentation équilibrée. Ils fournissent des nutriments importants qui soutiennent le bon fonctionnement de notre corps.",
+        "Ces aliments sont riches en fibres, ce qui aide à la digestion et peut prévenir des maladies chroniques telles que le diabète et les maladies cardiovasculaires.",
+        "En choisissant des aliments entiers, vous évitez souvent les additifs et les sucres ajoutés présents dans les aliments transformés, contribuant ainsi à une meilleure santé globale.",
+        "Les vitamines et minéraux présents dans les aliments entiers renforcent le système immunitaire, augmentant ainsi votre résilience face aux infections et aux maladies.",
+        "Il est important d'incorporer une variété d'aliments entiers dans votre régime alimentaire pour assurer un apport adéquat en tous les nutriments nécessaires.",
+        "Lorsque vous faites vos courses, lisez attentivement les étiquettes pour identifier les aliments entiers et éviter ceux qui sont hautement transformés.",
+        "Enfin, rappelez-vous que chaque individu est unique. Consultez un professionnel de santé pour des conseils personnalisés sur votre alimentation."
+      ],
+      "ar": [
+        "تعتبر الأطعمة الكاملة، مثل الفواكه والخضروات والحبوب، أساسية لنظام غذائي متوازن. فهي توفر مغذيات مهمة تدعم الوظيفة السليمة لجسمنا.",
+        "تتميز هذه الأطعمة بكونها غنية بالألياف، مما يساعد على الهضم ويمكن أن يمنع الأمراض المزمنة مثل السكري وأمراض القلب.",
+        "عند اختيار الأطعمة الكاملة، فإنك غالبًا ما تتجنب الإضافات والسكر المضاف الموجود في الأطعمة المصنعة، مما يساهم في تحسين صحتك العامة.",
+        "تعمل الفيتامينات والمعادن الموجودة في الأطعمة الكاملة على تقوية جهاز المناعة، مما يزيد من قدرتك على مقاومة العدوى والأمراض.",
+        "من المهم تضمين مجموعة متنوعة من الأطعمة الكاملة في نظامك الغذائي لضمان تلبية احتياجاتك من جميع المغذيات الضرورية.",
+        "عند التسوق، اقرأ بعناية الملصقات لتحديد الأطعمة الكاملة وتجنب تلك التي تم تصنيعها بشكل كبير.",
+        "وأخيرًا، تذكر أن كل فرد فريد. استشر متخصصًا في الصحة للحصول على نصائح مخصصة حول نظامك الغذائي."
+      ]
+    },
+    "date": "2026-05-27"
+  },
+  {
     "slug": "alimentation-saine-pour-le-bien-etre",
     "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
     "title": {
