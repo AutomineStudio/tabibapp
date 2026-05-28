@@ -1,5 +1,42 @@
 [
   {
+    "slug": "importance-de-la-nutrition-dans-la-prevention-des-maladies-chroniques",
+    "image": "https://images.unsplash.com/photo-1505576633757-0ac1084af824?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "L'importance de la nutrition dans la prévention des maladies chroniques",
+      "ar": "أهمية التغذية في الوقاية من الأمراض المزمنة"
+    },
+    "excerpt": {
+      "fr": "Une bonne nutrition est essentielle pour prévenir de nombreuses maladies chroniques.",
+      "ar": "التغذية الجيدة ضرورية للوقاية من العديد من الأمراض المزمنة."
+    },
+    "metaKeywords": {
+      "fr": "nutrition, santé, prévention, maladies chroniques, alimentation saine, bien-être, Maroc, habitudes alimentaires, conseils nutritionnels, santé globale, maladies non transmissibles, éducation à la santé, gestion du poids, hygiène de vie, rôle de la nutrition",
+      "ar": "التغذية, الصحة, الوقاية, الأمراض المزمنة, نظام غذائي صحي, رفاهية, المغرب, عادات غذائية, نصائح غذائية, صحة عامة, أمراض غير معدية, توعية صحية, إدارة الوزن, نمط حياة صحي, دور التغذية"
+    },
+    "content": {
+      "fr": [
+        "La nutrition joue un rôle crucial dans la prévention des maladies chroniques, qui représentent une part significative des problèmes de santé dans le monde moderne.",
+        "Une alimentation équilibrée aide à maintenir un poids corporel sain, réduisant ainsi le risque d'obésité, de diabète et de maladies cardiovasculaires.",
+        "Inclure des fruits, des légumes, des grains entiers et des protéines maigres dans votre alimentation quotidienne est essentiel pour une bonne santé.",
+        "Il est également important de limiter la consommation de sucres ajoutés, de sodium et de graisses saturées qui peuvent nuire à votre santé.",
+        "De plus, une bonne hydratation est souvent négligée, mais elle est essentielle pour le bon fonctionnement de votre corps et la prévention de diverses maladies.",
+        "N'oubliez pas que chaque individu a des besoins nutritionnels différents; il est donc recommandé de consulter un professionnel de la santé ou un nutritionniste pour des conseils adaptés.",
+        "En adoptant de saines habitudes alimentaires dès maintenant, vous pouvez améliorer votre qualité de vie et réduire le risque de maladies chroniques à l'avenir."
+      ],
+      "ar": [
+        "تلعب التغذية دورًا حاسمًا في الوقاية من الأمراض المزمنة، التي تمثل جزءًا كبيرًا من مشاكل الصحة في العالم الحديث.",
+        "يساعد النظام الغذائي المتوازن في الحفاظ على وزن صحي، مما يقلل من خطر السمنة والسكري وأمراض القلب.",
+        "من الضروري تضمين الفواكه والخضروات والحبوب الكاملة والبروتينات الخفيفة في نظامك الغذائي اليومي للحفاظ على صحة جيدة.",
+        "كما أنه من المهم الحد من استهلاك السكريات المضافة والصوديوم والدهون المشبعة التي قد تضر بصحتك.",
+        "بالإضافة إلى ذلك، غالبًا ما يتم تجاهل الترطيب الجيد، لكنه ضروري للحفاظ على وظائف الجسم والوقاية من الأمراض المختلفة.",
+        "تذكر أن كل فرد له احتياجات غذائية مختلفة؛ لذلك يُنصح باستشارة مختص في الصحة أو التغذية للحصول على نصائح ملائمة.",
+        "من خلال تبني عادات غذائية صحية الآن، يمكنك تحسين جودة حياتك وتقليل خطر الإصابة بالأمراض المزمنة في المستقبل."
+      ]
+    },
+    "date": "2026-05-28"
+  },
+  {
     "slug": "bienfaits-des-aliments-entiers-pour-la-sante",
     "image": "https://images.unsplash.com/photo-1535914254981-b5012eebbd15?auto=format&fit=crop&w=1200&q=80",
     "title": {
