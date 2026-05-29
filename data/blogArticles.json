@@ -1,5 +1,42 @@
 [
   {
+    "slug": "alimentation-saine-et-sante-du-foie",
+    "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Alimentation saine et santé du foie",
+      "ar": "التغذية الصحية وصحة الكبد"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment une alimentation équilibrée peut soutenir la santé de votre foie.",
+      "ar": "اكتشف كيف يمكن أن تدعم التغذية المتوازنة صحة كبدك."
+    },
+    "metaKeywords": {
+      "fr": "santé du foie, alimentation saine, prévention des maladies, nutrition, médicaments, Maroc, foie gras, santé hépatique, régime alimentaire, bien-être, santé globale, vitamines, minéraux, aliments, habitudes alimentaires",
+      "ar": "صحة الكبد, التغذية الصحية, الوقاية من الأمراض, التغذية, الأدوية, المغرب, الكبد الدهني, الصحة الكبدية, النظام الغذائي, الرفاهية, الصحة العامة, الفيتامينات, المعادن, الأطعمة, العادات الغذائية"
+    },
+    "content": {
+      "fr": [
+        "Le foie est un organe vital qui joue un rôle essentiel dans le métabolisme et la détoxication. Une alimentation saine peut contribuer à maintenir sa fonction optimale.",
+        "Consommer des aliments riches en antioxydants, comme les fruits et légumes, aide à protéger le foie des dommages oxydatifs. Il est important d'incorporer une variété de couleurs dans votre assiette.",
+        "Les acides gras oméga-3, présents dans des aliments comme le poisson gras et les noix, sont également bénéfiques pour la santé du foie. Ils peuvent contribuer à réduire l'inflammation et à favoriser un bon métabolisme.",
+        "Éviter les aliments transformés et riches en sucres ajoutés est crucial. Ces types d'aliments peuvent entraîner une accumulation de graisse dans le foie, ce qui peut nuire à sa santé.",
+        "L'hydratation est tout aussi essentielle. Boire suffisamment d'eau aide à éliminer les toxines et à maintenir une fonction hépatique saine. N'oubliez pas d'inclure des tisanes et des infusions.",
+        "Enfin, il est conseillé de consulter un professionnel de santé pour adapter votre alimentation à vos besoins spécifiques. Chaque individu a des besoins nutritionnels différents.",
+        "Rappelez-vous que des choix alimentaires judicieux joués un rôle clé dans la prévention des maladies du foie. Prenez soin de votre santé globale en faisant des choix éclairés."
+      ],
+      "ar": [
+        "يعتبر الكبد عضوًا حيويًا يلعب دورًا أساسيًا في الأيض والتخلص من السموم. يمكن أن تساهم التغذية الصحية في الحفاظ على وظيفته المثلى.",
+        "يساعد تناول الأطعمة الغنية بمضادات الأكسدة، مثل الفواكه والخضروات، في حماية الكبد من الأضرار التأكسدية. من المهم إدراج مجموعة متنوعة من الألوان في طبقك.",
+        "تعتبر الأحماض الدهنية أوميغا-3، الموجودة في الأطعمة مثل الأسماك الدهنية والمكسرات، مفيدة أيضًا لصحة الكبد. يمكن أن تساهم في تقليل الالتهابات وتعزيز الأيض السليم.",
+        "تجنب الأطعمة المعالجة والغنية بالسكريات المضافة أمر ضروري. يمكن أن تؤدي هذه الأنواع من الأطعمة إلى تراكم الدهون في الكبد، مما قد يضر بصحته.",
+        "تعتبر الترطيب أيضًا أمرًا ضروريًا. يساعد شرب كمية كافية من الماء في التخلص من السموم والحفاظ على وظيفة كبد صحية. لا تنسَ تضمين الأعشاب والشاي.",
+        "أخيرًا، يُنصح باستشارة متخصص صحي لتكييف نظامك الغذائي وفقًا لاحتياجاتك الخاصة. كل فرد له احتياجات غذائية مختلفة.",
+        "تذكر أن الخيارات الغذائية الذكية تلعب دورًا رئيسيًا في الوقاية من أمراض الكبد. اعتنِ بصحتك العامة من خلال اتخاذ خيارات مستنيرة."
+      ]
+    },
+    "date": "2026-05-29"
+  },
+  {
     "slug": "importance-de-la-nutrition-dans-la-prevention-des-maladies-chroniques",
     "image": "https://images.unsplash.com/photo-1505576633757-0ac1084af824?auto=format&fit=crop&w=1200&q=80",
     "title": {
