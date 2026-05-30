@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-des-aliments-anti-inflammatoires",
+    "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits des aliments anti-inflammatoires",
+      "ar": "فوائد الأطعمة المضادة للإلتهابات"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment les aliments anti-inflammatoires peuvent améliorer votre santé.",
+      "ar": "اكتشف كيف يمكن أن تعزز الأطعمة المضادة للإلتهابات صحتك."
+    },
+    "metaKeywords": {
+      "fr": "aliments anti-inflammatoires, santé, nutrition, prévention, maladies chroniques, alimentation saine, Maroc, bien-être, choix alimentaires, inflammation, santé globale, médecine, pharmacologie, conseils nutritionnels, aliments sains, régime anti-inflammatoire",
+      "ar": "الأطعمة المضادة للإلتهابات, الصحة, التغذية, الوقاية, الأمراض المزمنة, التغذية الصحية, المغرب, الرفاهية, الخيارات الغذائية, الالتهاب, الصحة العامة, الطب, الصيدلة, نصائح التغذية, الأطعمة الصحية, النظام الغذائي المضاد للإلتهابات"
+    },
+    "content": {
+      "fr": [
+        "Les aliments anti-inflammatoires jouent un rôle essentiel dans notre santé globale. Ils aident à réduire l'inflammation chronique, qui est liée à de nombreuses maladies, y compris les maladies cardiaques et le diabète.",
+        "Incorporer des aliments riches en antioxydants et en acides gras oméga-3 peut contribuer à diminuer l'inflammation. Des exemples d'aliments efficaces incluent le saumon, les noix, les baies et les légumes verts.",
+        "La consommation régulière de ces aliments peut aussi influencer positivement notre bien-être mental. Des études montrent que certains nutriments peuvent aider à réduire les symptômes de dépression et d'anxiété.",
+        "Il est important de considérer l'alimentation comme un facteur de prévention. En intégrant des choix alimentaires sains, vous pouvez non seulement améliorer votre santé physique, mais aussi prévenir des maladies à long terme.",
+        "Cependant, il est crucial de se rappeler que chaque individu est unique. Ce qui fonctionne pour une personne peut ne pas convenir à une autre, ce qui rend la consultation d'un médecin ou d'un nutritionniste essentielle.",
+        "De plus, une alimentation équilibrée et variée est la clé. Évitez de vous concentrer uniquement sur un type d'aliment; au lieu de cela, essayez d'inclure une gamme d'aliments nutritifs dans votre alimentation quotidienne.",
+        "Enfin, rappelez-vous que la prévention passe aussi par d'autres habitudes de vie saines, comme l'exercice régulier et un sommeil de qualité, qui, combinés à une bonne alimentation, favorisent une vie saine."
+      ],
+      "ar": [
+        "تلعب الأطعمة المضادة للإلتهابات دورًا أساسيًا في صحتنا العامة. فهي تساعد على تقليل الإلتهابات المزمنة، المرتبطة بالعديد من الأمراض، بما في ذلك أمراض القلب والسكري.",
+        "يمكن أن تساهم إضافة أطعمة غنية بمضادات الأكسدة والأحماض الدهنية أوميغا-3 في تقليل الإلتهاب. تشمل أمثلة الأطعمة الفعالة السلمون، والجوز، والتوت، والخضروات الورقية.",
+        "يمكن أن تؤثر استهلاك هذه الأطعمة بشكل إيجابي أيضًا على صحتنا النفسية. تظهر الدراسات أن بعض العناصر الغذائية يمكن أن تساعد في تقليل أعراض الاكتئاب والقلق.",
+        "من المهم اعتبار التغذية كعامل للوقاية. من خلال دمج اختيارات غذائية صحية، يمكنك تحسين صحتك البدنية والوقاية من الأمراض على المدى الطويل.",
+        "ومع ذلك، من المهم أن نتذكر أن كل فرد فريد. ما يناسب شخصًا ما قد لا يناسب آخر، مما يجعل استشارة طبيب أو أخصائي تغذية أمرًا ضروريًا.",
+        "علاوة على ذلك، فإن التغذية المتوازنة والمتنوعة هي المفتاح. تجنب التركيز على نوع واحد من الطعام، وبدلاً من ذلك، حاول تضمين مجموعة من الأطعمة المغذية في نظامك الغذائي اليومي.",
+        "وأخيرًا، تذكر أن الوقاية تشمل أيضًا عادات حياتية صحية أخرى، مثل ممارسة الرياضة بانتظام والحصول على قسط كافٍ من النوم، والتي، عند دمجها مع التغذية الجيدة، تعزز حياة صحية."
+      ]
+    },
+    "date": "2026-05-30"
+  },
+  {
     "slug": "alimentation-saine-et-sante-du-foie",
     "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
     "title": {
