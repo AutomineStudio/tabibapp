@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-de-lalimentation-equilibree",
+    "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits d'une alimentation équilibrée",
+      "ar": "فوائد التغذية المتوازنة"
+    },
+    "excerpt": {
+      "fr": "Une alimentation équilibrée contribue à la santé globale.",
+      "ar": "تساهم التغذية المتوازنة في الصحة العامة."
+    },
+    "metaKeywords": {
+      "fr": "alimentation équilibrée, santé, nutrition, prévention, bien-être, maladies chroniques, Maroc, alimentation saine, régime alimentaire, santé digestive, choix alimentaires, fruits et légumes, vitamines, minéraux, habitudes alimentaires, santé publique",
+      "ar": "التغذية المتوازنة, الصحة, التغذية, الوقاية, الرفاهية, الأمراض المزمنة, المغرب, التغذية الصحية, النظام الغذائي, الصحة الهضمية, الخيارات الغذائية, الفواكه والخضروات, الفيتامينات, المعادن, العادات الغذائية, الصحة العامة"
+    },
+    "content": {
+      "fr": [
+        "Une alimentation équilibrée est cruciale pour maintenir une bonne santé. Elle fournit les nutriments nécessaires au bon fonctionnement de notre corps.",
+        "En intégrant une variété d'aliments, y compris des fruits, des légumes, des protéines et des grains entiers, nous assurons un apport optimal en vitamines et minéraux.",
+        "Une bonne nutrition aide à prévenir diverses maladies chroniques telles que le diabète, les maladies cardiaques et l'obésité, ce qui est essentiel pour une vie saine.",
+        "Il est également important de rester hydraté et de limiter les aliments transformés, riches en sucre et en sel, pour protéger notre santé.",
+        "Adopter des habitudes alimentaires saines implique non seulement ce que l'on mange, mais aussi la manière dont on mange, comme prendre le temps de savourer chaque repas.",
+        "Si vous avez des questions sur votre alimentation ou votre santé, n'hésitez pas à consulter un professionnel de santé, comme un médecin ou un diététicien.",
+        "En somme, investir dans une alimentation équilibrée est un choix judicieux pour notre bien-être à long terme."
+      ],
+      "ar": [
+        "تعتبر التغذية المتوازنة ضرورية للحفاظ على صحة جيدة. فهي تزود الجسم بالعناصر الغذائية اللازمة لوظائفه بشكل سليم.",
+        "من خلال تضمين مجموعة متنوعة من الأطعمة، بما في ذلك الفواكه والخضروات والبروتينات والحبوب الكاملة، نضمن تلبية احتياجاتنا المثلى من الفيتامينات والمعادن.",
+        "تساعد التغذية الجيدة في الوقاية من العديد من الأمراض المزمنة مثل السكري وأمراض القلب والسمنة، وهو أمر أساسي لحياة صحية.",
+        "من المهم أيضًا الحفاظ على ترطيب الجسم وتقليل تناول الأطعمة المصنعة الغنية بالسكر والملح، لحماية صحتنا.",
+        "يتطلب اعتماد عادات غذائية صحية التفكير ليس فقط في ما نأكله، بل في كيفية تناوله، مثل تخصيص الوقت لتذوق كل وجبة.",
+        "إذا كانت لديك أي أسئلة حول تغذيتك أو صحتك، فلا تتردد في استشارة متخصص في الصحة، مثل طبيب أو أخصائي تغذية.",
+        "في الختام، فإن الاستثمار في التغذية المتوازنة هو خيار حكيم لصحتنا ورفاهيتنا على المدى الطويل."
+      ]
+    },
+    "date": "2026-05-31"
+  },
+  {
     "slug": "bienfaits-des-aliments-anti-inflammatoires",
     "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
     "title": {
