@@ -1,5 +1,42 @@
 [
   {
+    "slug": "importance-des-aliments-nutritifs-pour-la-sante",
+    "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "L'importance des aliments nutritifs pour la santé",
+      "ar": "أهمية الأطعمة المغذية للصحة"
+    },
+    "excerpt": {
+      "fr": "Les aliments nutritifs jouent un rôle clé dans notre santé globale.",
+      "ar": "تلعب الأطعمة المغذية دوراً أساسياً في صحتنا العامة."
+    },
+    "metaKeywords": {
+      "fr": "alimentation nutritive, santé, prévention, maladies chroniques, bien-être, nutrition, Maroc, choix alimentaires, habitudes saines, médicaments, pharmacie, éducation santé",
+      "ar": "الأغذية الصحية, الصحة, الوقاية, الأمراض المزمنة, العافية, التغذية, المغرب, خيارات غذائية, عادات صحية, الأدوية, الصيدلة, تعليم صحي"
+    },
+    "content": {
+      "fr": [
+        "Une alimentation riche en nutriments est essentielle pour maintenir une bonne santé. Elle contribue au bon fonctionnement de notre organisme et aide à prévenir diverses maladies.",
+        "Les aliments nutritifs, tels que les fruits, les légumes, les grains entiers et les protéines maigres, fournissent les vitamines et minéraux nécessaires au corps. Ils sont la base d'une alimentation équilibrée.",
+        "En intégrant une variété d'aliments riches en nutriments dans votre régime alimentaire, vous soutenez non seulement votre santé physique, mais aussi votre santé mentale. Cela peut améliorer votre humeur et votre bien-être général.",
+        "Il est également important de prêter attention aux portions et aux fréquences de consommation. Évitez les aliments transformés et riches en sucres ajoutés, qui peuvent nuire à votre santé.",
+        "Consulter un professionnel de la santé, comme un médecin ou un nutritionniste, peut vous aider à établir un plan alimentaire adapté à vos besoins spécifiques.",
+        "Rappelez-vous que chacun a des besoins alimentaires différents, et ce qui fonctionne pour une personne peut ne pas convenir à une autre. L'écoute de votre corps est primordiale.",
+        "Enfin, une bonne nutrition doit être accompagnée d'autres habitudes saines, comme l'exercice régulier et un sommeil adéquat, pour garantir une santé optimale."
+      ],
+      "ar": [
+        "تعتبر التغذية السليمة غنية بالعناصر الغذائية أساساً للحفاظ على صحة جيدة. فهي تساهم في وظائف الجسم السليمة وتساعد على الوقاية من العديد من الأمراض.",
+        "توفر الأطعمة المغذية مثل الفواكه والخضروات والحبوب الكاملة والبروتينات الخالية من الدهون الفيتامينات والمعادن الضرورية للجسم. إنها أساس نظام غذائي متوازن.",
+        "من خلال دمج مجموعة متنوعة من الأطعمة الغنية بالعناصر الغذائية في نظامك الغذائي، تدعم صحتك البدنية والعقلية. يمكن أن يحسن ذلك مزاجك ورفاهيتك العامة.",
+        "من المهم أيضاً الانتباه إلى حجم الحصص وتكرار الاستهلاك. تجنب الأطعمة المعالجة والغنية بالسكر المضاف، التي يمكن أن تضر بصحتك.",
+        "استشارة متخصص في الصحة، مثل طبيب أو أخصائي تغذية، يمكن أن تساعدك في وضع خطة غذائية تناسب احتياجاتك الخاصة.",
+        "تذكر أن احتياجات التغذية تختلف من شخص لآخر، وما يناسب شخصاً قد لا يناسب آخر. الاستماع إلى جسمك أمر بالغ الأهمية.",
+        "أخيراً، يجب أن تكون التغذية الجيدة مرفقة بعادات صحية أخرى، مثل ممارسة الرياضة بانتظام والحصول على قسط كافٍ من النوم لضمان الصحة المثلى."
+      ]
+    },
+    "date": "2026-06-01"
+  },
+  {
     "slug": "bienfaits-de-lalimentation-equilibree",
     "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
     "title": {
