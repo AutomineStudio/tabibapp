@@ -1,5 +1,42 @@
 [
   {
+    "slug": "nutrition-et-sante-des-enfants",
+    "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Nutrition et santé des enfants",
+      "ar": "التغذية وصحة الأطفال"
+    },
+    "excerpt": {
+      "fr": "Une bonne nutrition est essentielle pour la croissance des enfants.",
+      "ar": "التغذية الصحيحة ضرورية لنمو الأطفال."
+    },
+    "metaKeywords": {
+      "fr": "nutrition enfants, santé des enfants, alimentation équilibrée, prévention maladies, vitamines, minéraux, croissance, bien-être, éducation sanitaire, santé publique, Maroc, santé nutritionnelle, habitudes alimentaires, prévention des maladies, sécurité alimentaire, alimentation saine",
+      "ar": "تغذية الأطفال, صحة الأطفال, تغذية متوازنة, الوقاية من الأمراض, الفيتامينات, المعادن, النمو, الرفاهية, التعليم الصحي, الصحة العامة, المغرب, التغذية الصحية, العادات الغذائية, الوقاية من الأمراض, سلامة الغذاء, التغذية السليمة"
+    },
+    "content": {
+      "fr": [
+        "La nutrition joue un rôle crucial dans le développement des enfants. Elle influence non seulement leur croissance physique, mais également leur santé mentale et émotionnelle.",
+        "Une alimentation équilibrée, riche en fruits, légumes, protéines et céréales complètes, est essentielle pour fournir les nutriments nécessaires au bon développement des enfants.",
+        "Les enfants ont des besoins nutritionnels spécifiques, notamment en calcium et en fer, pour soutenir la croissance des os et le développement cognitif. Il est important d'intégrer ces nutriments dans leur alimentation quotidienne.",
+        "Éviter les aliments riches en sucres ajoutés et en gras saturés peut contribuer à prévenir l'obésité infantile et d'autres problèmes de santé à long terme. Favoriser des choix alimentaires sains est donc primordial.",
+        "L'éducation nutritionnelle joue un rôle clé pour aider les enfants à comprendre l'importance de la nutrition. Impliquer les enfants dans la préparation des repas peut aussi leur donner un sentiment d'autonomie.",
+        "Les parents doivent faire attention aux signaux de faim et de satiété de leurs enfants. Enseigner aux enfants à écouter leur corps peut les aider à développer une relation saine avec la nourriture.",
+        "Enfin, n'oubliez pas de consulter un pédiatre ou un nutritionniste pour des conseils personnalisés sur l'alimentation de votre enfant."
+      ],
+      "ar": [
+        "تلعب التغذية دورًا حاسمًا في نمو الأطفال. فهي تؤثر ليس فقط على نموهم الجسدي، ولكن أيضًا على صحتهم العقلية والعاطفية.",
+        "تعتبر التغذية المتوازنة، الغنية بالفواكه والخضروات والبروتينات والحبوب الكاملة، ضرورية لتوفير العناصر الغذائية اللازمة للنمو السليم للأطفال.",
+        "لدى الأطفال احتياجات غذائية خاصة، خاصة من الكالسيوم والحديد، لدعم نمو العظام وتطور العقل. من المهم دمج هذه العناصر الغذائية في نظامهم الغذائي اليومي.",
+        "تجنب الأطعمة الغنية بالسكر المضاف والدهون المشبعة يمكن أن يساعد في الوقاية من السمنة لدى الأطفال ومشاكل صحية أخرى على المدى الطويل. لذلك، فإن تشجيع خيارات غذائية صحية أمر بالغ الأهمية.",
+        "تلعب التربية الغذائية دورًا رئيسيًا في مساعدة الأطفال على فهم أهمية التغذية. يمكن أن يساعد إشراك الأطفال في إعداد الوجبات أيضًا في منحهم شعورًا بالاستقلالية.",
+        "يجب على الآباء الانتباه إلى إشارات الجوع والشبع لدى أطفالهم. تعليم الأطفال الاستماع إلى أجسادهم يمكن أن يساعدهم في تطوير علاقة صحية مع الطعام.",
+        "أخيرًا، لا تنسوا استشارة طبيب الأطفال أو أخصائي التغذية للحصول على نصائح مخصصة حول تغذية أطفالكم."
+      ]
+    },
+    "date": "2026-06-02"
+  },
+  {
     "slug": "importance-des-aliments-nutritifs-pour-la-sante",
     "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
     "title": {
