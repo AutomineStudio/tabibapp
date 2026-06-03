@@ -1,5 +1,42 @@
 [
   {
+    "slug": "limportance-de-la-nutrition-pour-la-sante-des-adultes",
+    "image": "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "L'importance de la nutrition pour la santé des adultes",
+      "ar": "أهمية التغذية لصحة البالغين"
+    },
+    "excerpt": {
+      "fr": "Une alimentation équilibrée est essentielle pour maintenir une bonne santé.",
+      "ar": "تعتبر التغذية المتوازنة ضرورية للحفاظ على صحة جيدة."
+    },
+    "metaKeywords": {
+      "fr": "nutrition, santé, alimentation équilibrée, bien-être, prévention, maladies chroniques, vitamines, minéraux, santé globale, alimentation saine, Maroc, conseils santé, habitudes alimentaires, médicaments, santé des adultes",
+      "ar": "التغذية, الصحة, الأكل المتوازن, العافية, الوقاية, الأمراض المزمنة, الفيتامينات, المعادن, الصحة العامة, الأكل الصحي, المغرب, نصائح صحية, العادات الغذائية, الأدوية, صحة البالغين"
+    },
+    "content": {
+      "fr": [
+        "La nutrition joue un rôle fondamental dans le maintien de la santé des adultes. Une alimentation appropriée peut prévenir de nombreuses maladies chroniques et améliorer la qualité de vie.",
+        "Il est crucial d'inclure des aliments riches en nutriments dans votre régime quotidien. Cela comprend des fruits, des légumes, des grains entiers, et des protéines maigres.",
+        "Les vitamines et les minéraux sont des éléments essentiels pour le fonctionnement optimal de l'organisme. Ils aident à renforcer le système immunitaire et à soutenir les fonctions corporelles.",
+        "L'hydratation est également une composante clé de la nutrition. Boire suffisamment d'eau aide à la digestion et à la circulation sanguine, entre autres.",
+        "Les choix alimentaires doivent être réfléchis, en évitant les aliments hautement transformés et riches en sucres ajoutés. Une alimentation saine contribue à un poids corporel stable.",
+        "Il est recommandé de consulter un professionnel de santé pour élaborer un plan nutritionnel adapté à vos besoins spécifiques, surtout en cas de conditions médicales existantes.",
+        "Enfin, une alimentation équilibrée, associée à une activité physique régulière, est la clé pour maintenir un bien-être durable et une bonne santé à long terme."
+      ],
+      "ar": [
+        "تلعب التغذية دوراً أساسياً في الحفاظ على صحة البالغين. يمكن أن تمنع التغذية السليمة العديد من الأمراض المزمنة وتحسن نوعية الحياة.",
+        "من الضروري تضمين الأطعمة الغنية بالعناصر الغذائية في نظامك الغذائي اليومي. يشمل ذلك الفواكه والخضروات والحبوب الكاملة والبروتينات الخفيفة.",
+        "تعتبر الفيتامينات والمعادن عناصر أساسية لعمل الجسم بشكل مثالي. إنها تساعد في تعزيز جهاز المناعة ودعم الوظائف الجسدية.",
+        "كما أن الترطيب عنصر رئيسي في التغذية. يساعد شرب كمية كافية من الماء في الهضم ودورة الدم، من بين أمور أخرى.",
+        "يجب أن تكون الخيارات الغذائية مدروسة، مع تجنب الأطعمة المعالجة بشكل كبير والغنية بالسكريات المضافة. تساهم التغذية الصحية في الحفاظ على وزن جسم مستقر.",
+        "يوصى باستشارة متخصص في الصحة لوضع خطة غذائية تتناسب مع احتياجاتك الخاصة، خاصة في حالة وجود حالات طبية قائمة.",
+        "أخيراً، تعتبر التغذية المتوازنة، جنباً إلى جنب مع النشاط البدني المنتظم، مفتاحاً للحفاظ على رفاهية مستدامة وصحة جيدة على المدى الطويل."
+      ]
+    },
+    "date": "2026-06-03"
+  },
+  {
     "slug": "nutrition-et-sante-des-enfants",
     "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
     "title": {
