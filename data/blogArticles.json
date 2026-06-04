@@ -1,5 +1,42 @@
 [
   {
+    "slug": "alimentation-saine-pour-une-vie-saine",
+    "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Alimentation saine pour une vie saine",
+      "ar": "تغذية صحية لحياة صحية"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment une alimentation équilibrée contribue à votre santé.",
+      "ar": "اكتشف كيف تسهم التغذية المتوازنة في صحتك."
+    },
+    "metaKeywords": {
+      "fr": "alimentation saine, santé, nutrition, prévention, maladies chroniques, Maroc, bien-être, habitudes alimentaires, santé globale, choix alimentaires, aliments nutritifs, prévention des maladies, habitudes saines, santé digestive, alimentation équilibrée",
+      "ar": "تغذية صحية, صحة, وقاية, أمراض مزمنة, مغرب, نمط حياة صحي, عادات غذائية, صحة عامة, خيارات غذائية, أطعمة مغذية, الوقاية من الأمراض, عادات صحية, صحة هضمية, تغذية متوازنة"
+    },
+    "content": {
+      "fr": [
+        "Une alimentation saine est fondamentale pour maintenir une bonne santé tout au long de la vie. Elle permet non seulement de prévenir des maladies, mais aussi d'améliorer la qualité de vie.",
+        "Les aliments que nous consommons jouent un rôle crucial dans notre bien-être général. En choisissant des aliments nutritifs, nous fournissons à notre corps les éléments nécessaires pour fonctionner efficacement.",
+        "Manger équilibré signifie inclure une variété de groupes alimentaires : fruits, légumes, protéines, grains entiers et produits laitiers. Chacun de ces groupes apporte des nutriments essentiels.",
+        "Pour prévenir les maladies chroniques, une attention particulière doit être portée à l'alimentation. Des études montrent qu'une nutrition adéquate peut réduire le risque de maladies comme le diabète et les maladies cardiaques.",
+        "Il est également important de lire les étiquettes des aliments pour faire des choix éclairés. Cela aide à éviter les ingrédients indésirables et à mieux gérer les portions.",
+        "N'oubliez pas que l'hydratation est tout aussi importante que l'alimentation. Boire suffisamment d'eau contribue à maintenir une bonne santé et à favoriser une digestion optimale.",
+        "Avant d'apporter des changements importants à votre régime alimentaire, consultez un professionnel de santé pour vous assurer que vos choix correspondent à vos besoins individuels."
+      ],
+      "ar": [
+        "تعتبر التغذية الصحية أساسية للحفاظ على صحة جيدة طوال الحياة. فهي لا تقي من الأمراض فحسب، بل تحسن أيضًا نوعية الحياة.",
+        "تلعب الأطعمة التي نتناولها دورًا حاسمًا في رفاهيتنا العامة. من خلال اختيار الأطعمة المغذية، نوفر لجسمنا العناصر اللازمة للعمل بشكل فعال.",
+        "يعني تناول الطعام المتوازن تضمين مجموعة متنوعة من المجموعات الغذائية: الفواكه، الخضروات، البروتينات، الحبوب الكاملة ومنتجات الألبان. كل مجموعة من هذه المجموعات توفر مغذيات أساسية.",
+        "للوقاية من الأمراض المزمنة، يجب إعطاء اهتمام خاص للتغذية. تظهر الدراسات أن التغذية السليمة يمكن أن تقلل من خطر الإصابة بأمراض مثل السكري وأمراض القلب.",
+        "من المهم أيضًا قراءة ملصقات الأطعمة لاتخاذ قرارات مستنيرة. يساعد ذلك في تجنب المكونات غير المرغوب فيها وإدارة الحصص بشكل أفضل.",
+        "لا تنسَ أن الترطيب مهم تمامًا مثل التغذية. يساعد شرب كمية كافية من الماء في الحفاظ على صحة جيدة وتعزيز عملية الهضم.",
+        "قبل إجراء تغييرات كبيرة في نظامك الغذائي، استشر متخصصًا في الرعاية الصحية للتأكد من أن اختياراتك تتناسب مع احتياجاتك الفردية."
+      ]
+    },
+    "date": "2026-06-04"
+  },
+  {
     "slug": "limportance-de-la-nutrition-pour-la-sante-des-adultes",
     "image": "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=1200&q=80",
     "title": {
