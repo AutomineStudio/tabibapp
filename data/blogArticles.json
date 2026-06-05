@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-des-aliments-nutritifs-pour-la-sante",
+    "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits des aliments nutritifs pour la santé",
+      "ar": "فوائد الأطعمة المغذية للصحة"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment une alimentation nutritive peut améliorer votre santé.",
+      "ar": "اكتشف كيف يمكن لنظام غذائي مغذي أن يحسن صحتك."
+    },
+    "metaKeywords": {
+      "fr": "alimentation nutritive, santé, bienfaits des aliments, prévention, maladies chroniques, nutrition, Maroc, alimentation équilibrée, santé globale, médicaments, pharmacie, choix alimentaires, bien-être, éducation à la santé, hygiène de vie, alimentation saine",
+      "ar": "الأطعمة المغذية, الصحة, فوائد التغذية, الوقاية, الأمراض المزمنة, التغذية, المغرب, الغذاء المتوازن, الصحة الشاملة, الأدوية, الصيدلة, خيارات غذائية, الرفاهية, التثقيف الصحي, أسلوب حياة صحي, التغذية الصحية"
+    },
+    "content": {
+      "fr": [
+        "Les aliments nutritifs jouent un rôle crucial dans le maintien de notre santé. Ils fournissent les vitamines, minéraux et autres nutriments nécessaires à notre corps pour fonctionner correctement.",
+        "Une alimentation riche en fruits, légumes, grains entiers et protéines maigres aide à prévenir de nombreuses maladies chroniques. Cela inclut des conditions telles que le diabète, l'hypertension et les maladies cardiaques.",
+        "En intégrant des aliments nutritifs dans votre régime, vous pouvez améliorer votre niveau d'énergie et votre bien-être général. Cela vous aide à vous sentir mieux physiquement et mentalement.",
+        "Il est important de lire les étiquettes des aliments pour faire des choix éclairés. Cela vous permettra de comprendre ce que vous consommez et d'éviter les ingrédients indésirables.",
+        "Les aliments transformés sont souvent riches en sucres ajoutés et en graisses saturées. En les remplaçant par des alternatives nutritives, vous pouvez améliorer votre santé globale.",
+        "Adopter une alimentation équilibrée nécessite des changements progressifs. Commencez par inclure des aliments nutritifs dans vos repas quotidiens et observez les bénéfices.",
+        "Enfin, n'oubliez pas de consulter un professionnel de la santé pour des conseils personnalisés sur la nutrition et l'alimentation. Chaque individu a des besoins uniques."
+      ],
+      "ar": [
+        "تلعب الأطعمة المغذية دورًا حيويًا في الحفاظ على صحتنا. إنها توفر الفيتامينات والمعادن والعناصر الغذائية الأخرى التي يحتاجها جسمنا ليعمل بشكل صحيح.",
+        "يساعد النظام الغذائي الغني بالفواكه والخضروات والحبوب الكاملة والبروتينات الخالية من الدهون في الوقاية من العديد من الأمراض المزمنة. ويشمل ذلك حالات مثل السكري وارتفاع ضغط الدم وأمراض القلب.",
+        "من خلال دمج الأطعمة المغذية في نظامك الغذائي، يمكنك تحسين مستوى طاقتك ورفاهيتك العامة. هذا يساعدك على الشعور بتحسن بدني وعقلي.",
+        "من المهم قراءة ملصقات الأطعمة لاتخاذ خيارات مستنيرة. سيمكنك ذلك من فهم ما تتناوله وتجنب المكونات غير المرغوب فيها.",
+        "غالبًا ما تكون الأطعمة المصنعة غنية بالسكريات المضافة والدهون المشبعة. من خلال استبدالها ببدائل مغذية، يمكنك تحسين صحتك العامة.",
+        "يتطلب اعتماد نظام غذائي متوازن تغييرات تدريجية. ابدأ بإضافة أطعمة مغذية إلى وجباتك اليومية وراقب الفوائد.",
+        "أخيرًا، لا تنسَ استشارة متخصص في الرعاية الصحية للحصول على نصائح مخصصة حول التغذية والنظام الغذائي. لكل فرد احتياجات فريدة."
+      ]
+    },
+    "date": "2026-06-05"
+  },
+  {
     "slug": "alimentation-saine-pour-une-vie-saine",
     "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
     "title": {
