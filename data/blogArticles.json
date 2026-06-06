@@ -1,5 +1,42 @@
 [
   {
+    "slug": "importance-de-l-hydratation-pour-la-sante",
+    "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "L'importance de l'hydratation pour la santé",
+      "ar": "أهمية الترطيب للصحة"
+    },
+    "excerpt": {
+      "fr": "L'hydratation joue un rôle crucial dans notre bien-être général.",
+      "ar": "يلعب الترطيب دورًا حيويًا في رفاهيتنا العامة."
+    },
+    "metaKeywords": {
+      "fr": "hydratation, santé, bien-être, prévention, maladies, nutrition, médicaments, Maroc, eau, équilibre, santé globale, système immunitaire, digestion, performance, santé des reins, conseils santé",
+      "ar": "ترطيب, صحة, رفاهية, وقاية, أمراض, تغذية, أدوية, المغرب, ماء, توازن, صحة عامة, جهاز المناعة, هضم, أداء, صحة الكلى, نصائح صحية"
+    },
+    "content": {
+      "fr": [
+        "L'hydratation est essentielle pour maintenir le bon fonctionnement de notre corps. L'eau constitue environ 60% de notre poids corporel et est impliquée dans de nombreuses fonctions vitales.",
+        "Elle aide à réguler la température corporelle, à transporter les nutriments et à éliminer les toxines. Une déshydratation même légère peut avoir des effets négatifs sur notre santé.",
+        "Dans le cadre d'une alimentation équilibrée, il est recommandé de boire suffisamment d'eau tout au long de la journée. Les besoins varient selon l'âge, le sexe, le niveau d'activité et le climat.",
+        "Il est également important de prêter attention aux signaux de notre corps, comme la soif, pour nous rappeler de nous hydrater régulièrement. Les boissons comme les tisanes et les jus naturels peuvent également contribuer à notre apport hydrique.",
+        "Les personnes âgées et celles souffrant de maladies chroniques doivent être particulièrement vigilantes concernant leur hydratation. Une consultation avec un professionnel de santé peut aider à définir les besoins spécifiques.",
+        "N'oublions pas que les aliments jouent un rôle dans notre hydratation. Les fruits et légumes contiennent une quantité significative d'eau et peuvent aider à maintenir un bon niveau d'hydratation.",
+        "En conclusion, une bonne hydratation est essentielle pour notre santé globale. Pensez à consulter votre médecin ou votre pharmacien pour des conseils personnalisés sur vos besoins en hydratation."
+      ],
+      "ar": [
+        "يعتبر الترطيب ضروريًا للحفاظ على الوظيفة الجيدة لجسمنا. تشكل المياه حوالي 60% من وزن جسمنا وتشارك في العديد من الوظائف الحيوية.",
+        "تساعد في تنظيم درجة حرارة الجسم، ونقل المغذيات، والتخلص من السموم. حتى الجفاف الخفيف يمكن أن يؤثر سلبًا على صحتنا.",
+        "كجزء من نظام غذائي متوازن، يُنصح بشرب كمية كافية من الماء طوال اليوم. تختلف الاحتياجات حسب العمر، والجنس، ومستوى النشاط، والمناخ.",
+        "من المهم أيضًا الانتباه إلى إشارات أجسامنا، مثل الشعور بالعطش، لتذكيرنا بضرورة الترطيب المنتظم. يمكن أن تساهم المشروبات مثل الأعشاب والعصائر الطبيعية أيضًا في مدنا بالماء.",
+        "يجب أن تكون الفئات العمرية الكبيرة والأشخاص الذين يعانون من أمراض مزمنة حذرين بشكل خاص بشأن ترطيبهم. يمكن أن تساعد استشارة متخصص صحي في تحديد الاحتياجات الخاصة بهم.",
+        "لا ننسى أن الأطعمة تلعب دورًا في ترطيبنا. تحتوي الفواكه والخضروات على كمية كبيرة من الماء ويمكن أن تساعد في الحفاظ على مستوى جيد من الترطيب.",
+        "في الختام، يعد الترطيب الجيد ضروريًا لصحتنا العامة. فكر في استشارة طبيبك أو صيدليك للحصول على نصائح مخصصة حول احتياجاتك من الترطيب."
+      ]
+    },
+    "date": "2026-06-06"
+  },
+  {
     "slug": "bienfaits-des-aliments-nutritifs-pour-la-sante",
     "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80",
     "title": {
