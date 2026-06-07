@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-de-l-hydratation-et-sante-globale",
+    "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits de l'hydratation pour la santé globale",
+      "ar": "فوائد الترطيب للصحة العامة"
+    },
+    "excerpt": {
+      "fr": "L'hydratation est essentielle pour maintenir une bonne santé.",
+      "ar": "الترطيب ضروري للحفاظ على صحة جيدة."
+    },
+    "metaKeywords": {
+      "fr": "hydratation, santé globale, bienfaits de l'eau, prévention maladies, nutrition, santé au Maroc, conseils santé",
+      "ar": "ترطيب, صحة عامة, فوائد الماء, الوقاية من الأمراض, تغذية, صحة في المغرب, نصائح صحية"
+    },
+    "content": {
+      "fr": [
+        "L'hydratation est un élément essentiel pour le bon fonctionnement de notre corps. Elle contribue à la régulation de la température, au transport des nutriments et à l'élimination des déchets.",
+        "Une bonne hydratation aide également à maintenir la santé de la peau, en lui apportant élasticité et éclat. L'eau joue un rôle clé dans la prévention du vieillissement prématuré.",
+        "Il est important de boire suffisamment d'eau tout au long de la journée, surtout dans des climats chauds comme celui du Maroc. Les besoins en eau peuvent varier selon l'âge, le sexe et le niveau d'activité.",
+        "L'eau est la meilleure boisson pour s'hydrater, mais d'autres liquides et aliments riches en eau, comme les fruits et légumes, peuvent également contribuer à notre apport hydrique.",
+        "Il est conseillé de limiter la consommation de boissons sucrées ou alcoolisées, qui peuvent entraîner une déshydratation. Optez plutôt pour de l'eau, des tisanes ou des jus naturels sans ajout de sucre.",
+        "N'oubliez pas que les personnes âgées et les enfants peuvent être plus vulnérables à la déshydratation. Surveillez les signes de déshydratation, comme la soif intense ou l'urine foncée.",
+        "Enfin, pour toute question sur vos besoins spécifiques en hydratation, il est toujours préférable de consulter un médecin ou un pharmacien."
+      ],
+      "ar": [
+        "يعتبر الترطيب عنصرًا أساسيًا لعمل الجسم بشكل سليم. يساهم في تنظيم درجة الحرارة، ونقل المواد الغذائية، والتخلص من النفايات.",
+        "يساعد الترطيب الجيد أيضًا في الحفاظ على صحة البشرة، حيث يوفر لها المرونة والإشراقة. تلعب المياه دورًا رئيسيًا في الوقاية من الشيخوخة المبكرة.",
+        "من المهم شرب كمية كافية من الماء طوال اليوم، خاصة في المناخات الحارة مثل المغرب. يمكن أن تختلف احتياجات الماء حسب العمر والجنس ومستوى النشاط.",
+        "الماء هو أفضل مشروب للترطيب، ولكن يمكن أن تساهم المشروبات الأخرى والأطعمة الغنية بالماء، مثل الفواكه والخضروات، في مدنا بالسوائل.",
+        "يُنصح بتقليل استهلاك المشروبات السكرية أو الكحولية، التي يمكن أن تؤدي إلى الجفاف. اختر بدلاً من ذلك الماء أو الأعشاب أو العصائر الطبيعية بدون سكر مضاف.",
+        "لا تنسَ أن الأشخاص المسنين والأطفال قد يكونون أكثر عرضة للجفاف. راقب علامات الجفاف، مثل العطش الشديد أو البول الداكن.",
+        "أخيرًا، في حال كان لديك أي استفسار حول احتياجاتك الخاصة للترطيب، من الأفضل دائمًا استشارة طبيب أو صيدلي."
+      ]
+    },
+    "date": "2026-06-07"
+  },
+  {
     "slug": "importance-de-l-hydratation-pour-la-sante",
     "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80",
     "title": {
