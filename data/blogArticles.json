@@ -1,5 +1,42 @@
 [
   {
+    "slug": "importance-de-l-hydratation-pour-la-sante-des-adultes",
+    "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "L'importance de l'hydratation pour la santé des adultes",
+      "ar": "أهمية الترطيب لصحة البالغين"
+    },
+    "excerpt": {
+      "fr": "Une bonne hydratation est essentielle pour maintenir la santé globale.",
+      "ar": "الترطيب الجيد ضروري للحفاظ على الصحة العامة."
+    },
+    "metaKeywords": {
+      "fr": "hydratation, santé, bienfaits de l'eau, prévention, nutrition, Maroc, santé des adultes, médecine préventive, importance de l'hydratation, conseils santé, boissons saines, équilibre hydrique, santé globale",
+      "ar": "الترطيب, الصحة, فوائد الماء, الوقاية, التغذية, المغرب, صحة البالغين, الطب الوقائي, أهمية الترطيب, نصائح صحية, مشروبات صحية, التوازن المائي, الصحة العامة"
+    },
+    "content": {
+      "fr": [
+        "L'hydratation joue un rôle crucial dans le maintien de la santé globale des adultes. L'eau est essentielle pour de nombreuses fonctions corporelles, y compris la régulation de la température et le transport des nutriments.",
+        "De plus, une bonne hydratation peut améliorer les performances physiques. Que ce soit pour le travail ou l'exercice, rester hydraté aide à maintenir l'énergie et la concentration.",
+        "Il est également important de noter que la déshydratation peut entraîner divers problèmes de santé, notamment des maux de tête, de la fatigue et des troubles digestifs. C'est pourquoi il est essentiel de boire suffisamment d'eau tout au long de la journée.",
+        "Les besoins en hydratation peuvent varier en fonction de l'âge, du climat et du niveau d'activité. Il est recommandé d'écouter les signaux de votre corps et de boire lorsque vous avez soif.",
+        "Les boissons comme les tisanes et les jus naturels peuvent également contribuer à votre apport hydrique, mais il est préférable de limiter les boissons sucrées et gazeuses.",
+        "En outre, certains aliments comme les fruits et légumes contiennent également une bonne part d'eau et peuvent aider à l'hydratation. Pensez à inclure des aliments riches en eau dans votre alimentation quotidienne.",
+        "Enfin, consultez toujours un professionnel de la santé pour des conseils personnalisés sur vos besoins en hydratation."
+      ],
+      "ar": [
+        "تلعب عملية الترطيب دورًا حاسمًا في الحفاظ على الصحة العامة للبالغين. يعتبر الماء أساسيًا للعديد من وظائف الجسم، بما في ذلك تنظيم درجة الحرارة ونقل العناصر الغذائية.",
+        "علاوة على ذلك، يمكن أن يحسن الترطيب الجيد الأداء البدني. سواء في العمل أو أثناء ممارسة الرياضة، يساعد البقاء رطبًا في الحفاظ على الطاقة والتركيز.",
+        "من المهم أيضًا ملاحظة أن الجفاف يمكن أن يؤدي إلى مشاكل صحية متنوعة، بما في ذلك الصداع والتعب واضطرابات الجهاز الهضمي. لذلك، من الضروري شرب كمية كافية من الماء طوال اليوم.",
+        "يمكن أن تختلف احتياجات الترطيب اعتمادًا على العمر والمناخ ومستوى النشاط. يُوصى بالاستماع إلى إشارات جسمك والشرب عندما تشعر بالعطش.",
+        "يمكن أن تساهم المشروبات مثل الأعشاب والعصائر الطبيعية أيضًا في تناولك للمياه، ولكن من الأفضل تقليل المشروبات المحلاة والمشروبات الغازية.",
+        "بالإضافة إلى ذلك، تحتوي بعض الأطعمة مثل الفواكه والخضروات أيضًا على كمية جيدة من الماء ويمكن أن تساعد في الترطيب. فكّر في تضمين أطعمة غنية بالماء في نظامك الغذائي اليومي.",
+        "أخيرًا، استشر دائمًا متخصصًا في الصحة للحصول على نصائح شخصية حول احتياجاتك في الترطيب."
+      ]
+    },
+    "date": "2026-06-08"
+  },
+  {
     "slug": "bienfaits-de-l-hydratation-et-sante-globale",
     "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
     "title": {
