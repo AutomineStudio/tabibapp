@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-de-l-hydratation-pour-la-sante",
+    "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits de l'hydratation pour la santé",
+      "ar": "فوائد الترطيب للصحة"
+    },
+    "excerpt": {
+      "fr": "L'hydratation est essentielle pour maintenir une bonne santé.",
+      "ar": "الترطيب ضروري للحفاظ على صحة جيدة."
+    },
+    "metaKeywords": {
+      "fr": "hydratation, santé, bienfaits, prévention, médicaments, Maroc, nutrition, bien-être, eau, santé globale, système immunitaire, digestion, soins de santé, qualité de vie, habitudes saines, prévention des maladies",
+      "ar": "الترطيب, الصحة, الفوائد, الوقاية, الأدوية, المغرب, التغذية, الرفاهية, الماء, الصحة العامة, الجهاز المناعي, الهضم, الرعاية الصحية, جودة الحياة, العادات الصحية, الوقاية من الأمراض"
+    },
+    "content": {
+      "fr": [
+        "L'hydratation joue un rôle crucial dans le maintien de la santé. En effet, notre corps est composé de près de 60% d'eau, ce qui souligne l'importance de consommer des liquides régulièrement.",
+        "Une hydratation adéquate aide à réguler la température corporelle et à maintenir la fonction des organes vitaux. L'eau est un élément essentiel qui facilite de nombreux processus biologiques.",
+        "De plus, une bonne hydratation contribue à la santé de la peau, la rendant plus souple et éclatante. Une peau bien hydratée est moins sujette aux irritations et aux problèmes cutanés.",
+        "L'eau aide également à la digestion en favorisant le transit intestinal. Une consommation suffisante de liquides peut prévenir la constipation et favoriser un système digestif sain.",
+        "En période de chaleur ou d'activité physique intense, les besoins en eau augmentent. Il est donc important de boire régulièrement, même si l'on ne ressent pas la soif.",
+        "N'oubliez pas que d'autres boissons et certains aliments, tels que les fruits et légumes, peuvent également contribuer à vos besoins quotidiens en hydratation.",
+        "Pour des conseils personnalisés sur l'hydratation, il est toujours préférable de consulter un professionnel de la santé, comme un médecin ou un pharmacien."
+      ],
+      "ar": [
+        "يلعب الترطيب دورًا حاسمًا في الحفاظ على الصحة. في الواقع، يتكون جسمنا من حوالي 60% ماء، مما يبرز أهمية استهلاك السوائل بانتظام.",
+        "يساعد الترطيب الجيد في تنظيم درجة حرارة الجسم والحفاظ على وظيفة الأعضاء الحيوية. الماء عنصر أساسي يسهل العديد من العمليات البيولوجية.",
+        "علاوة على ذلك، يساهم الترطيب الجيد في صحة البشرة، مما يجعلها أكثر مرونة وإشراقًا. البشرة الجيدة الترطيب أقل عرضة للتهيج والمشاكل الجلدية.",
+        "يساعد الماء أيضًا في الهضم من خلال تعزيز حركة الأمعاء. يمكن أن تمنع استهلاك السوائل الكافي الإمساك وتعزز نظامًا هضميًا صحيًا.",
+        "في فترات الحرارة أو النشاط البدني المكثف، تزداد احتياجات الجسم من الماء. لذلك، من المهم شرب السوائل بانتظام، حتى لو لم تشعر بالعطش.",
+        "لا تنسَ أن المشروبات الأخرى وبعض الأطعمة، مثل الفواكه والخضروات، يمكن أن تساهم أيضًا في تلبية احتياجاتك اليومية من الترطيب.",
+        "للحصول على نصائح مخصصة حول الترطيب، من الأفضل دائمًا استشارة متخصص في الصحة، مثل طبيب أو صيدلي."
+      ]
+    },
+    "date": "2026-06-09"
+  },
+  {
     "slug": "importance-de-l-hydratation-pour-la-sante-des-adultes",
     "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80",
     "title": {
