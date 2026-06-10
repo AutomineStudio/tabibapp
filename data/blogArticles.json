@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-de-lhydration-sur-la-sante",
+    "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits de l'hydratation pour la santé",
+      "ar": "فوائد الترطيب للصحة"
+    },
+    "excerpt": {
+      "fr": "L'hydratation est essentielle pour maintenir une bonne santé.",
+      "ar": "الترطيب ضروري للحفاظ على صحة جيدة."
+    },
+    "metaKeywords": {
+      "fr": "hydratation, santé, bienfaits de l'eau, prévention, santé globale, alimentation, médicaments, pharmacie, Maroc, santé des reins, prévention des maladies, équilibre hydrique, nutrition, bien-être, santé cardiaque, conseils de santé",
+      "ar": "الترطيب, الصحة, فوائد الماء, الوقاية, الصحة العامة, التغذية, الأدوية, الصيدلة, المغرب, صحة الكلى, الوقاية من الأمراض, التوازن المائي, التغذية, الرفاهية, الصحة القلبية, نصائح صحية"
+    },
+    "content": {
+      "fr": [
+        "L'hydratation joue un rôle crucial dans la santé globale du corps. Elle aide à réguler la température corporelle, à transporter les nutriments et à éliminer les déchets.",
+        "Il est souvent recommandé de boire au moins 1,5 à 2 litres d'eau par jour, mais les besoins varient en fonction de l'activité physique, de la température et de l'alimentation.",
+        "Une bonne hydratation contribue à la santé des reins, qui sont responsables de filtrer les toxines. De plus, elle aide à prévenir les infections urinaires et les calculs rénaux.",
+        "L'hydratation est également essentielle pour la santé de la peau. Une peau bien hydratée apparaît plus éclatante et peut mieux se défendre contre les agressions extérieures.",
+        "Pour les sportifs, l'hydratation est primordiale afin d'optimiser les performances et de réduire le risque de blessures. Boire avant, pendant et après l'exercice est conseillé.",
+        "N'oubliez pas que d'autres boissons et aliments, comme les fruits et légumes, contribuent aussi à l'hydratation. Il est donc important de varier les sources de liquide.",
+        "Enfin, si vous avez des préoccupations spécifiques concernant votre hydratation ou votre santé, consultez toujours un médecin ou un pharmacien pour des conseils personnalisés."
+      ],
+      "ar": [
+        "يلعب الترطيب دورًا حيويًا في الصحة العامة للجسم. يساعد في تنظيم درجة حرارة الجسم، ونقل العناصر الغذائية، وإزالة النفايات.",
+        "غالبًا ما يُوصى بشرب ما لا يقل عن 1.5 إلى 2 لتر من الماء يوميًا، لكن الاحتياجات تختلف حسب النشاط البدني، ودرجة الحرارة، والنظام الغذائي.",
+        "يساهم الترطيب الجيد في صحة الكلى، التي تتحمل مسؤولية تصفية السموم. بالإضافة إلى ذلك، يساعد في الوقاية من التهابات المسالك البولية والحصوات الكلوية.",
+        "الترطيب ضروري أيضًا لصحة الجلد. يظهر الجلد المرطب بشكل أكثر إشراقًا ويمكنه الدفاع بشكل أفضل ضد الاعتداءات الخارجية.",
+        "بالنسبة للرياضيين، يعتبر الترطيب أساسيًا لتحسين الأداء وتقليل خطر الإصابات. يُنصح بشرب الماء قبل وأثناء وبعد التمرين.",
+        "تذكر أن المشروبات والأطعمة الأخرى، مثل الفواكه والخضروات، تساهم أيضًا في الترطيب. لذا من المهم تنويع مصادر السوائل.",
+        "أخيرًا، إذا كان لديك مخاوف محددة بشأن الترطيب أو صحتك، استشر دائمًا طبيبًا أو صيدليًا للحصول على نصائح شخصية."
+      ]
+    },
+    "date": "2026-06-10"
+  },
+  {
     "slug": "bienfaits-de-l-hydratation-pour-la-sante",
     "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
     "title": {
