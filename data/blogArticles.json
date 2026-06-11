@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-du-repos-sur-la-sante",
+    "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits du repos pour la santé",
+      "ar": "فوائد الراحة على الصحة"
+    },
+    "excerpt": {
+      "fr": "Le repos est essentiel pour maintenir une bonne santé physique et mentale.",
+      "ar": "الراحة ضرورية للحفاظ على صحة بدنية وعقلية جيدة."
+    },
+    "metaKeywords": {
+      "fr": "repos, santé, bien-être, sommeil, récupération, stress, santé mentale, fatigue, hygiène de vie, prévention, Maroc",
+      "ar": "راحة, صحة, رفاهية, نوم, استشفاء, ضغط, صحة عقلية, تعب, نمط حياة صحي, وقاية, المغرب"
+    },
+    "content": {
+      "fr": [
+        "Le repos est souvent négligé dans notre vie quotidienne, pourtant il joue un rôle crucial dans notre santé globale. En effet, un repos adéquat permet de régénérer le corps et de restaurer l'énergie.",
+        "Durant le sommeil, le corps effectue des réparations essentielles, comme la régénération des cellules et le renforcement du système immunitaire. Ces processus sont vitaux pour prévenir des maladies.",
+        "Le manque de repos peut entraîner une série de problèmes de santé, incluant l'augmentation du stress, l'anxiété, et même des troubles cardiovasculaires à long terme. Il est donc indispensable de prioriser le repos.",
+        "Les experts recommandent de viser entre 7 à 9 heures de sommeil par nuit pour les adultes afin de bénéficier pleinement des effets réparateurs du repos. Écoutez votre corps et ajustez vos habitudes en conséquence.",
+        "En plus du sommeil, des pauses régulières durant la journée peuvent aider à réduire la fatigue et améliorer la concentration. Même quelques minutes de repos peuvent faire une grande différence.",
+        "Il est également important de créer un environnement propice au repos. Cela inclut un espace calme, sombre, et frais, ainsi que l’évitement des écrans avant de dormir.",
+        "Enfin, n'oubliez pas de consulter un professionnel de la santé si vous avez des problèmes persistants de sommeil ou si vous ressentez une fatigue excessive. Ils pourront vous fournir des conseils adaptés à votre situation."
+      ],
+      "ar": [
+        "تعتبر الراحة من الأمور التي يتم تجاهلها في حياتنا اليومية، لكنها تلعب دورًا حاسمًا في صحتنا العامة. فالحصول على فترة راحة كافية يساعد على تجديد الجسم واستعادة الطاقة.",
+        "أثناء النوم، يقوم الجسم بإجراء إصلاحات أساسية، مثل تجديد الخلايا وتعزيز جهاز المناعة. هذه العمليات ضرورية للوقاية من الأمراض.",
+        "يمكن أن يؤدي نقص الراحة إلى مجموعة من المشاكل الصحية، بما في ذلك زيادة التوتر والقلق وحتى اضطرابات القلب على المدى الطويل. لذلك، من الضروري إعطاء الأولوية للراحة.",
+        "يوصي الخبراء بالاستهداف من 7 إلى 9 ساعات من النوم كل ليلة للبالغين للاستفادة الكاملة من تأثيرات الراحة. استمع إلى جسمك وعدل عاداتك وفقًا لذلك.",
+        "بالإضافة إلى النوم، يمكن أن تساعد فترات الراحة المنتظمة خلال اليوم في تقليل التعب وتحسين التركيز. حتى بضع دقائق من الراحة يمكن أن تحدث فرقًا كبيرًا.",
+        "من المهم أيضًا إنشاء بيئة ملائمة للراحة، بما في ذلك مساحة هادئة ومظلمة وباردة، بالإضافة إلى تجنب الشاشات قبل النوم.",
+        "أخيرًا، لا تنسَ استشارة متخصص في الصحة إذا كنت تواجه مشاكل مستمرة في النوم أو إذا شعرت بالتعب المفرط. يمكنهم تقديم نصائح ملائمة لحالتك."
+      ]
+    },
+    "date": "2026-06-11"
+  },
+  {
     "slug": "bienfaits-de-lhydration-sur-la-sante",
     "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
     "title": {
