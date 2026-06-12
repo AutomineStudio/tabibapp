@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-des-aliments-ricos-en-antioxydants",
+    "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits des aliments riches en antioxydants",
+      "ar": "فوائد الأطعمة الغنية بمضادات الأكسدة"
+    },
+    "excerpt": {
+      "fr": "Les aliments riches en antioxydants jouent un rôle crucial dans la santé globale.",
+      "ar": "تلعب الأطعمة الغنية بمضادات الأكسدة دورًا حيويًا في الصحة العامة."
+    },
+    "metaKeywords": {
+      "fr": "aliments riches en antioxydants, santé, nutrition, prévention, maladies chroniques, bien-être, Maroc, médicaments, pharmacie, alimentation saine, antioxydants, santé globale, immunité, choix alimentaires",
+      "ar": "الأطعمة الغنية بمضادات الأكسدة, الصحة, التغذية, الوقاية, الأمراض المزمنة, الرفاهية, المغرب, الأدوية, الصيدلة, الغذاء الصحي, مضادات الأكسدة, الصحة العامة, المناعة, الاختيارات الغذائية"
+    },
+    "content": {
+      "fr": [
+        "Les antioxydants sont des substances cruciales qui aident à protéger notre corps contre les dommages causés par les radicaux libres. Ces derniers sont des molécules instables qui peuvent entraîner divers problèmes de santé, y compris des maladies chroniques.",
+        "Les aliments riches en antioxydants comprennent les fruits, les légumes, les noix et certains grains. Par exemple, les baies, les épinards et les noix sont réputés pour leur concentration élevée en ces précieux composés.",
+        "Consommer régulièrement des aliments antioxydants peut contribuer à réduire le risque de maladies cardiovasculaires, de certains cancers et d'autres affections liées au vieillissement. Une alimentation variée et équilibrée est essentielle pour maximiser ces bienfaits.",
+        "Il est important de noter que les antioxydants ne remplacent pas un mode de vie sain. L'exercice régulier, une bonne hydratation et un sommeil suffisant sont également des facteurs clés pour maintenir une bonne santé.",
+        "Lorsque vous choisissez des aliments, optez pour des produits frais et de saison. Ils contiennent souvent plus de nutriments et d'antioxydants que les produits transformés.",
+        "N'oubliez pas de consulter votre médecin ou votre pharmacien avant d'apporter des changements significatifs à votre alimentation, surtout si vous avez des problèmes de santé ou si vous prenez des médicaments.",
+        "En intégrant des aliments riches en antioxydants dans votre alimentation quotidienne, vous pouvez non seulement améliorer votre santé, mais aussi favoriser un bien-être général à long terme."
+      ],
+      "ar": [
+        "تعتبر مضادات الأكسدة مواد حيوية تساعد في حماية جسمنا من الأضرار الناتجة عن الجذور الحرة. هذه الأخيرة هي جزيئات غير مستقرة يمكن أن تسبب مشكلات صحية متنوعة، بما في ذلك الأمراض المزمنة.",
+        "تشمل الأطعمة الغنية بمضادات الأكسدة الفواكه والخضروات والمكسرات وبعض الحبوب. على سبيل المثال، تُعرف التوت والسبانخ والمكسرات بتركيزها العالي من هذه المركبات القيمة.",
+        "يمكن أن يساهم الاستهلاك المنتظم للأطعمة الغنية بمضادات الأكسدة في تقليل خطر الإصابة بأمراض القلب والأوعية الدموية وبعض أنواع السرطان وغيرها من الحالات المرتبطة بالشيخوخة. تعتبر التغذية المتنوعة والمتوازنة ضرورية لتعظيم هذه الفوائد.",
+        "من المهم ملاحظة أن مضادات الأكسدة لا تعوض عن نمط حياة صحي. فالنشاط البدني المنتظم، والتhydration الجيدة، والنوم الكافي هي أيضًا عوامل رئيسية للحفاظ على صحة جيدة.",
+        "عند اختيار الأطعمة، اختر المنتجات الطازجة والموسمية. فهي تحتوي غالبًا على مزيد من العناصر الغذائية ومضادات الأكسدة مقارنة بالمنتجات المعالجة.",
+        "لا تنسَ استشارة طبيبك أو صيدليك قبل إجراء تغييرات كبيرة على نظامك الغذائي، خاصة إذا كنت تعاني من مشاكل صحية أو تتناول أدوية.",
+        "من خلال دمج الأطعمة الغنية بمضادات الأكسدة في نظامك الغذائي اليومي، يمكنك تحسين صحتك وتعزيز الرفاهية العامة على المدى الطويل."
+      ]
+    },
+    "date": "2026-06-12"
+  },
+  {
     "slug": "bienfaits-du-repos-sur-la-sante",
     "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
     "title": {
