@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-des-aliments-riches-en-fibres",
+    "image": "https://images.unsplash.com/photo-1505576633757-0ac1084af824?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits des aliments riches en fibres",
+      "ar": "فوائد الأطعمة الغنية بالألياف"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment les aliments riches en fibres peuvent améliorer votre santé.",
+      "ar": "اكتشف كيف يمكن أن تحسن الأطعمة الغنية بالألياف صحتك."
+    },
+    "metaKeywords": {
+      "fr": "fibres, aliments sains, santé digestive, prévention maladies, nutrition, Maroc, bien-être, alimentation équilibrée, santé intestinale, fibres alimentaires, bénéfices nutritionnels, santé globale",
+      "ar": "الألياف, الأطعمة الصحية, الصحة الهضمية, الوقاية من الأمراض, التغذية, المغرب, الرفاهية, الغذاء المتوازن, الصحة المعوية, فوائد التغذية, الصحة العامة"
+    },
+    "content": {
+      "fr": [
+        "Les fibres sont un élément essentiel d'une alimentation équilibrée. Elles jouent un rôle crucial dans la santé digestive et peuvent aider à prévenir divers problèmes de santé.",
+        "Consommer des aliments riches en fibres peut favoriser une digestion saine en régulant le transit intestinal et en réduisant les risques de constipation. Cela contribue également à une meilleure santé intestinale.",
+        "Les fibres alimentaires peuvent également aider à contrôler le poids. Elles procurent une sensation de satiété, ce qui peut réduire les fringales et aider à maintenir un poids santé.",
+        "Il existe deux types de fibres : solubles et insolubles. Les deux types apportent des bienfaits, mais ils jouent des rôles différents dans le corps. Il est donc important d'inclure une variété d'aliments dans votre alimentation.",
+        "Les aliments riches en fibres comprennent les fruits, les légumes, les légumineuses et les céréales complètes. En intégrant ces aliments dans votre régime, vous pouvez facilement augmenter votre apport en fibres.",
+        "N'oubliez pas de boire suffisamment d'eau lorsque vous augmentez votre consommation de fibres. Cela aide à prévenir l'inconfort digestif et à assurer un bon fonctionnement intestinal.",
+        "Avant de modifier votre alimentation, il est toujours recommandé de consulter un professionnel de santé ou un nutritionniste pour des conseils personnalisés."
+      ],
+      "ar": [
+        "تعتبر الألياف عنصرًا أساسيًا في نظام غذائي متوازن. تلعب دورًا حاسمًا في الصحة الهضمية ويمكن أن تساعد في الوقاية من مشكلات صحية متعددة.",
+        "يمكن أن يعزز تناول الأطعمة الغنية بالألياف الهضم السليم عن طريق تنظيم حركة الأمعاء وتقليل مخاطر الإمساك، مما يساهم أيضًا في تحسين الصحة المعوية.",
+        "يمكن أن تساعد الألياف الغذائية أيضًا في التحكم في الوزن، إذ توفر شعورًا بالشبع، مما قد يقلل من الرغبة في تناول الطعام ويساعد في الحفاظ على وزن صحي.",
+        "توجد نوعان من الألياف: القابلة للذوبان وغير القابلة للذوبان. كلا النوعين يقدم فوائد، لكنهما يلعبان أدوارًا مختلفة في الجسم. من المهم إذن تضمين مجموعة متنوعة من الأطعمة في نظامك الغذائي.",
+        "تشمل الأطعمة الغنية بالألياف الفواكه والخضروات والبقوليات والحبوب الكاملة. من خلال دمج هذه الأطعمة في نظام غذائيك، يمكنك بسهولة زيادة كمية الألياف التي تتناولها.",
+        "تذكر أن تشرب كمية كافية من الماء عندما تزيد من استهلاكك للألياف. فهذا يساعد في منع الانزعاج الهضمي وضمان عمل الأمعاء بشكل جيد.",
+        "قبل تعديل نظامك الغذائي، يُوصى دائمًا باستشارة متخصص في الصحة أو أخصائي تغذية للحصول على نصائح مخصصة."
+      ]
+    },
+    "date": "2026-06-13"
+  },
+  {
     "slug": "bienfaits-des-aliments-ricos-en-antioxydants",
     "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
     "title": {
