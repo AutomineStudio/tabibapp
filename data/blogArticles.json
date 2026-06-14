@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-des-aliments-riches-en-proteines",
+    "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits des aliments riches en protéines",
+      "ar": "فوائد الأطعمة الغنية بالبروتين"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment les protéines contribuent à votre santé.",
+      "ar": "اكتشف كيف تساهم البروتينات في صحتك."
+    },
+    "metaKeywords": {
+      "fr": "aliments riches en protéines, santé, nutrition, bien-être, Maroc, alimentation équilibrée, protéines, muscle, énergie, prévention, santé globale, aliments sains, régime alimentaire, développement musculaire, santé digestive, choix alimentaires",
+      "ar": "الأطعمة الغنية بالبروتين, الصحة, التغذية, الرفاهية, المغرب, الغذاء المتوازن, البروتينات, العضلات, الطاقة, الوقاية, الصحة العامة, الأطعمة الصحية, النظام الغذائي, تطوير العضلات, الصحة الهضمية, الخيارات الغذائية"
+    },
+    "content": {
+      "fr": [
+        "Les protéines sont un élément essentiel de notre alimentation, jouant un rôle crucial dans la construction et la réparation des tissus corporels. Elles sont également nécessaires pour la production d'enzymes et d'hormones.",
+        "Les aliments riches en protéines incluent les viandes, les poissons, les œufs, les produits laitiers ainsi que les légumineuses. En intégrant une variété de ces sources dans votre régime, vous pouvez bénéficier d'un apport optimal.",
+        "Consommer suffisamment de protéines peut favoriser le maintien de la masse musculaire, surtout chez les personnes âgées. Cela aide à prévenir la sarcopénie, une perte de muscle liée à l'âge.",
+        "De plus, les protéines sont connues pour leur effet satiétogène. Elles peuvent vous aider à vous sentir rassasié plus longtemps, ce qui peut être bénéfique pour la gestion du poids.",
+        "Les protéines jouent également un rôle dans le métabolisme. Un apport adéquat peut augmenter légèrement le nombre de calories que votre corps brûle, ce qui peut favoriser la perte de poids.",
+        "Il est important de choisir des sources de protéines de qualité, telles que les viandes maigres et les produits laitiers faibles en gras, pour maximiser les bienfaits sans augmenter les risques pour la santé.",
+        "Enfin, avant d'apporter des changements significatifs à votre alimentation, il est conseillé de consulter un médecin ou un nutritionniste pour des conseils adaptés à vos besoins individuels."
+      ],
+      "ar": [
+        "تعتبر البروتينات عنصرًا أساسيًا في نظامنا الغذائي، حيث تلعب دورًا حيويًا في بناء وإصلاح الأنسجة في الجسم. كما أنها ضرورية لإنتاج الإنزيمات والهرمونات.",
+        "تشمل الأطعمة الغنية بالبروتينات اللحوم والأسماك والبيض ومنتجات الألبان وكذلك البقوليات. من خلال دمج مجموعة متنوعة من هذه المصادر في نظامك الغذائي، يمكنك الاستفادة من مدخول مثالي.",
+        "تناول كمية كافية من البروتينات يمكن أن يعزز الحفاظ على الكتلة العضلية، خاصة لدى كبار السن. يساعد ذلك في الوقاية من الساركوبينيا، وهي فقدان العضلات المرتبط بالعمر.",
+        "علاوة على ذلك، تُعرف البروتينات بتأثيرها الشبع. يمكن أن تساعدك على الشعور بالشبع لفترة أطول، مما قد يكون مفيدًا في إدارة الوزن.",
+        "تلعب البروتينات أيضًا دورًا في الأيض. يمكن أن تزيد الكمية المناسبة من السعرات الحرارية التي يحرقها جسمك قليلاً، مما قد يشجع على فقدان الوزن.",
+        "من المهم اختيار مصادر بروتين ذات جودة، مثل اللحوم الخالية من الدهون ومنتجات الألبان قليلة الدسم، لتعظيم الفوائد دون زيادة المخاطر الصحية.",
+        "أخيرًا، قبل إجراء تغييرات كبيرة على نظامك الغذائي، يُنصح باستشارة طبيب أو أخصائي تغذية للحصول على نصائح تتناسب مع احتياجاتك الفردية."
+      ]
+    },
+    "date": "2026-06-14"
+  },
+  {
     "slug": "bienfaits-des-aliments-riches-en-fibres",
     "image": "https://images.unsplash.com/photo-1505576633757-0ac1084af824?auto=format&fit=crop&w=1200&q=80",
     "title": {
