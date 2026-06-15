@@ -1,5 +1,42 @@
 [
   {
+    "slug": "importance-des-aliments-riches-en-vitamines",
+    "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "L'importance des aliments riches en vitamines",
+      "ar": "أهمية الأطعمة الغنية بالفيتامينات"
+    },
+    "excerpt": {
+      "fr": "Les vitamines jouent un rôle essentiel dans notre santé.",
+      "ar": "تلعب الفيتامينات دورًا أساسيًا في صحتنا."
+    },
+    "metaKeywords": {
+      "fr": "aliments riches en vitamines, santé, nutrition, prévention des maladies, bienfaits des vitamines, aliments sains, Maroc, santé globale, bien-être, éducation à la santé, pharmacie, médecine, alimentation équilibrée",
+      "ar": "الأطعمة الغنية بالفيتامينات, الصحة, التغذية, الوقاية من الأمراض, فوائد الفيتامينات, الأطعمة الصحية, المغرب, الصحة العامة, الرفاهية, التثقيف الصحي, الصيدلة, الطب, التغذية المتوازنة"
+    },
+    "content": {
+      "fr": [
+        "Les vitamines sont des nutriments essentiels qui jouent un rôle crucial dans le maintien de notre santé. Elles aident à réguler les processus corporels et à prévenir diverses maladies.",
+        "Il existe plusieurs types de vitamines, chacune ayant des fonctions distinctes. Les vitamines A, C, D, E et K, ainsi que les vitamines du complexe B, sont toutes importantes pour notre bien-être.",
+        "Consommer des aliments riches en vitamines peut renforcer notre système immunitaire, améliorer notre santé de la peau et contribuer à un bon fonctionnement du cerveau.",
+        "Les fruits et légumes, en particulier, sont d'excellentes sources de vitamines. Des aliments comme les agrumes, les carottes et les épinards sont particulièrement bénéfiques.",
+        "Il est important de varier son alimentation pour s'assurer d'obtenir une gamme complète de vitamines. Les régimes monotones peuvent entraîner des carences.",
+        "Avant de prendre des suppléments vitaminiques, il est conseillé de consulter un médecin ou un pharmacien. Une évaluation professionnelle peut aider à déterminer les besoins spécifiques.",
+        "En intégrant des aliments riches en vitamines dans votre alimentation quotidienne, vous favorisez non seulement votre santé, mais vous améliorez également votre qualité de vie."
+      ],
+      "ar": [
+        "تلعب الفيتامينات دورًا أساسيًا في صحتنا كمواد مغذية ضرورية. تساعد هذه العناصر في تنظيم العمليات الجسدية والوقاية من العديد من الأمراض.",
+        "توجد أنواع متعددة من الفيتامينات، كل منها يؤدي وظائف مختلفة. تعتبر الفيتامينات A و C و D و E و K، بالإضافة إلى فيتامينات مجموعة B، مهمة لصحتنا.",
+        "يمكن أن يساعد تناول الأطعمة الغنية بالفيتامينات في تعزيز جهاز المناعة لدينا، وتحسين صحة البشرة، والمساهمة في وظائف الدماغ السليمة.",
+        "تعتبر الفواكه والخضروات، وبشكل خاص، مصادر ممتازة للفيتامينات. تعتبر الأطعمة مثل الحمضيات، والجزر، والسبانخ مفيدة جدًا.",
+        "من المهم تنويع النظام الغذائي لضمان الحصول على مجموعة كاملة من الفيتامينات. يمكن أن تؤدي الحميات أحادية النوع إلى نقص الفيتامينات.",
+        "قبل تناول مكملات الفيتامينات، يُنصح باستشارة طبيب أو صيدلي. يمكن أن تساعد التقييمات المهنية في تحديد الاحتياجات الخاصة.",
+        "من خلال دمج الأطعمة الغنية بالفيتامينات في نظامك الغذائي اليومي، لا تعزز صحتك فحسب، بل تحسن أيضًا جودة حياتك."
+      ]
+    },
+    "date": "2026-06-15"
+  },
+  {
     "slug": "bienfaits-des-aliments-riches-en-proteines",
     "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
     "title": {
