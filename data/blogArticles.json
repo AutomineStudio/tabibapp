@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-de-lhydratation-pour-le-corps",
+    "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits de l'hydratation pour le corps",
+      "ar": "فوائد الترطيب للجسم"
+    },
+    "excerpt": {
+      "fr": "L'hydratation est essentielle pour maintenir une bonne santé.",
+      "ar": "الترطيب أساسي للحفاظ على صحة جيدة."
+    },
+    "metaKeywords": {
+      "fr": "hydration, santé, bienfaits de l'eau, prévention, santé globale, nutrition, Maroc, médicaments, conseils santé, bien-être, corps humain, système immunitaire, alimentation, équilibre, prévention des maladies, conseils pratiques",
+      "ar": "الترطيب, الصحة, فوائد الماء, الوقاية, الصحة العامة, التغذية, المغرب, الأدوية, نصائح صحية, الرفاهية, الجسم البشري, الجهاز المناعي, التغذية, التوازن, الوقاية من الأمراض, نصائح عملية"
+    },
+    "content": {
+      "fr": [
+        "L'hydratation joue un rôle clé dans le bon fonctionnement de notre organisme. Elle est essentielle pour de nombreux processus physiologiques et contribue à notre bien-être général.",
+        "Lorsque nous buvons suffisamment d'eau, cela aide à réguler la température corporelle. La transpiration, qui est un moyen naturel de refroidir le corps, nécessite une bonne hydratation.",
+        "Une bonne hydratation favorise également la digestion. L'eau aide à dissoudre les nutriments et à faciliter leur absorption dans le système digestif.",
+        "De plus, l'hydratation est cruciale pour la santé de la peau. Une peau bien hydratée paraît plus lumineuse et est moins sujette aux irritations.",
+        "Il est important de se rappeler que les besoins en hydratation peuvent varier d'une personne à l'autre, en fonction de l'âge, du poids et du niveau d'activité physique. Écoutez votre corps et buvez lorsque vous avez soif.",
+        "Les personnes âgées peuvent être plus susceptibles de souffrir de déshydratation, il est donc essentiel de veiller à ce qu'elles consomment suffisamment de liquides.",
+        "Enfin, n'oubliez pas de consulter un professionnel de la santé pour obtenir des conseils adaptés à vos besoins en matière d'hydratation et de santé."
+      ],
+      "ar": [
+        "يلعب الترطيب دورًا رئيسيًا في الأداء الجيد لجسمنا. إنه أمر ضروري للعديد من العمليات الفسيولوجية ويساهم في صحتنا العامة.",
+        "عندما نشرب كمية كافية من الماء، فإن ذلك يساعد في تنظيم درجة حرارة الجسم. التعرق، الذي هو وسيلة طبيعية لتبريد الجسم، يتطلب ترطيبًا جيدًا.",
+        "يساهم الترطيب الجيد أيضًا في عملية الهضم. يساعد الماء في إذابة العناصر الغذائية وتسهيل امتصاصها في الجهاز الهضمي.",
+        "بالإضافة إلى ذلك، يعتبر الترطيب أمرًا حيويًا لصحة الجلد. تبدو البشرة المرطبة أكثر إشراقًا وأقل عرضة للتهيج.",
+        "من المهم أن نتذكر أن احتياجات الترطيب قد تختلف من شخص لآخر، حسب العمر والوزن ومستوى النشاط البدني. استمع إلى جسمك واشرب عندما تشعر بالعطش.",
+        "قد يكون كبار السن أكثر عرضة للإصابة بالجفاف، لذلك من الضروري التأكد من أنهم يتناولون ما يكفي من السوائل.",
+        "أخيرًا، لا تنسَ استشارة متخصص في الصحة للحصول على نصائح تتناسب مع احتياجاتك في مجال الترطيب والصحة."
+      ]
+    },
+    "date": "2026-06-16"
+  },
+  {
     "slug": "importance-des-aliments-riches-en-vitamines",
     "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
     "title": {
