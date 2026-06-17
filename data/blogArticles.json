@@ -1,5 +1,42 @@
 [
   {
+    "slug": "alimentation-saine-pour-une-vie-equilibree",
+    "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Alimentation saine pour une vie équilibrée",
+      "ar": "التغذية الصحية لحياة متوازنة"
+    },
+    "excerpt": {
+      "fr": "Découvrez les clés d'une alimentation équilibrée pour améliorer votre santé.",
+      "ar": "اكتشف مفاتيح التغذية المتوازنة لتحسين صحتك."
+    },
+    "metaKeywords": {
+      "fr": "alimentation saine, nutrition équilibrée, santé, maladies chroniques, bien-être, prévention, Maroc, habitudes alimentaires, santé digestive, choix alimentaires, conseils nutritionnels, aliments nutritifs, santé globale",
+      "ar": "التغذية الصحية, التغذية المتوازنة, الصحة, الأمراض المزمنة, الرفاهية, الوقاية, المغرب, العادات الغذائية, الصحة الهضمية, الخيارات الغذائية, نصائح غذائية, الأطعمة المغذية, الصحة العامة"
+    },
+    "content": {
+      "fr": [
+        "Une alimentation saine est essentielle pour maintenir un bon état de santé. Elle joue un rôle crucial dans la prévention des maladies chroniques et le maintien d'un poids santé.",
+        "Consommer une variété d'aliments riches en nutriments permet d'apporter les vitamines et minéraux nécessaires au bon fonctionnement de votre corps.",
+        "Les fruits et légumes, en particulier, sont des éléments clés d'une alimentation équilibrée. Ils sont riches en fibres, antioxydants et autres composés bénéfiques.",
+        "Il est également important de veiller à la qualité des protéines. Optez pour des sources variées comme les légumineuses, le poisson et les produits laitiers.",
+        "Évitez les aliments transformés riches en sucres ajoutés et en graisses saturées, qui peuvent nuire à votre santé à long terme.",
+        "Hydratez-vous suffisamment tout au long de la journée. L'eau est essentielle pour le bon fonctionnement de tous les systèmes de votre corps.",
+        "Enfin, rappelez-vous que chaque individu est unique. Consultez toujours un professionnel de la santé ou un nutritionniste pour des conseils adaptés à vos besoins."
+      ],
+      "ar": [
+        "تعد التغذية الصحية ضرورية للحفاظ على صحة جيدة. تلعب دورًا حاسمًا في الوقاية من الأمراض المزمنة والحفاظ على وزن صحي.",
+        "يساعد تناول مجموعة متنوعة من الأطعمة الغنية بالمغذيات على توفير الفيتامينات والمعادن اللازمة لعمل جسمك بشكل صحيح.",
+        "تعتبر الفواكه والخضروات، على وجه الخصوص، عناصر رئيسية في نظام غذائي متوازن. فهي غنية بالألياف ومضادات الأكسدة وغيرها من المركبات المفيدة.",
+        "من المهم أيضًا الانتباه إلى جودة البروتينات. اختر مصادر متنوعة مثل البقوليات والأسماك ومنتجات الألبان.",
+        "تجنب الأطعمة المعالجة الغنية بالسكريات المضافة والدهون المشبعة، حيث يمكن أن تضر بصحتك على المدى الطويل.",
+        "احرص على شرب كمية كافية من الماء طوال اليوم. فالماء ضروري لعمل جميع أنظمة جسمك.",
+        "وأخيرًا، تذكر أن كل فرد فريد. استشر دائمًا متخصصًا في الرعاية الصحية أو أخصائي تغذية للحصول على نصائح تناسب احتياجاتك."
+      ]
+    },
+    "date": "2026-06-17"
+  },
+  {
     "slug": "bienfaits-de-lhydratation-pour-le-corps",
     "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
     "title": {
