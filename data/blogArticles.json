@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-des-aliments-bio-pour-la-sante",
+    "image": "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits des aliments bio pour la santé",
+      "ar": "فوائد الأطعمة العضوية للصحة"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment les aliments bio peuvent améliorer votre santé.",
+      "ar": "اكتشف كيف يمكن للأطعمة العضوية تحسين صحتك."
+    },
+    "metaKeywords": {
+      "fr": "aliments bio, santé, nutrition, bienfaits, agriculture biologique, produits naturels, santé globale, mode de vie sain, aliments nutritifs, prévention, France, Maroc, alimentation équilibrée, bien-être, choix alimentaires, éthique",
+      "ar": "الأطعمة العضوية, الصحة, التغذية, الفوائد, الزراعة العضوية, المنتجات الطبيعية, الصحة العامة, نمط حياة صحي, الأطعمة المغذية, الوقاية, فرنسا, المغرب, التغذية المتوازنة, الرفاهية, الخيارات الغذائية, الأخلاق"
+    },
+    "content": {
+      "fr": [
+        "Les aliments biologiques, souvent perçus comme une tendance, offrent de véritables bienfaits pour la santé. Leur culture sans pesticides ni engrais chimiques favorise une alimentation plus saine.",
+        "En consommant des aliments bio, vous réduisez votre exposition aux résidus chimiques. Cela contribue à une meilleure santé sur le long terme et à une diminution des risques de maladies.",
+        "Les aliments bio sont également souvent plus riches en nutriments. Des études montrent qu'ils peuvent contenir plus de vitamines, minéraux et antioxydants que leurs homologues conventionnels.",
+        "Un autre avantage des produits bio est leur impact positif sur l'environnement. En choisissant ces aliments, vous soutenez des pratiques agricoles durables qui préservent la biodiversité.",
+        "Il est essentiel de diversifier votre alimentation en intégrant des aliments bio. Cela permet non seulement d'améliorer votre santé, mais aussi de découvrir de nouvelles saveurs.",
+        "Néanmoins, il est important de consulter un professionnel de santé pour adapter ces choix alimentaires à vos besoins spécifiques. Chaque personne est unique, et une alimentation doit être personnalisée.",
+        "En fin de compte, privilégier les aliments bio peut être un pas vers un mode de vie plus sain, mais cela doit être fait en conscience et en consultation avec des experts en nutrition."
+      ],
+      "ar": [
+        "تعتبر الأطعمة العضوية، التي غالبًا ما تُعتبر موضة، لها فوائد حقيقية على الصحة. تساهم زراعتها بدون مبيدات أو أسمدة كيميائية في توفير غذاء أكثر صحة.",
+        "عند تناول الأطعمة العضوية، تقلل من تعرضك للمخلفات الكيميائية. وهذا يساهم في تحسين صحتك على المدى الطويل وتقليل مخاطر الأمراض.",
+        "الأطعمة العضوية غالبًا ما تكون أكثر غنى بالعناصر الغذائية. تظهر الدراسات أنها قد تحتوي على المزيد من الفيتامينات والمعادن ومضادات الأكسدة مقارنة بأقرانها التقليدية.",
+        "ميزة أخرى للمنتجات العضوية هي تأثيرها الإيجابي على البيئة. من خلال اختيار هذه الأطعمة، تدعم ممارسات زراعية مستدامة تحافظ على التنوع البيولوجي.",
+        "من الضروري تنويع نظامك الغذائي من خلال دمج الأطعمة العضوية. لا يحسن ذلك صحتك فحسب، بل يتيح لك أيضًا اكتشاف نكهات جديدة.",
+        "ومع ذلك، من المهم استشارة أخصائي صحة لتكييف هذه الخيارات الغذائية مع احتياجاتك الخاصة. فكل شخص فريد، ويجب تخصيص النظام الغذائي.",
+        "في النهاية، يمكن أن يكون تفضيل الأطعمة العضوية خطوة نحو نمط حياة أكثر صحة، ولكن يجب القيام بذلك بوعي وباستشارة خبراء التغذية."
+      ]
+    },
+    "date": "2026-06-18"
+  },
+  {
     "slug": "alimentation-saine-pour-une-vie-equilibree",
     "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
     "title": {
