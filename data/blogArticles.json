@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-de-la-nutrition-pour-la-sante",
+    "image": "https://images.unsplash.com/photo-1505576633757-0ac1084af824?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits de la nutrition pour la santé",
+      "ar": "فوائد التغذية للصحة"
+    },
+    "excerpt": {
+      "fr": "Une bonne nutrition est essentielle pour maintenir une santé optimale.",
+      "ar": "التغذية الجيدة ضرورية للحفاظ على صحة مثالية."
+    },
+    "metaKeywords": {
+      "fr": "nutrition, santé, bienfaits alimentaires, prévention, maladies chroniques, alimentation équilibrée, Maroc, conseils santé, vitamines, minéraux, régime alimentaire, santé globale, bien-être, style de vie sain",
+      "ar": "التغذية, الصحة, فوائد الطعام, الوقاية, الأمراض المزمنة, النظام الغذائي المتوازن, المغرب, نصائح صحية, الفيتامينات, المعادن, النظام الغذائي, الصحة العامة, الرفاهية, نمط حياة صحي"
+    },
+    "content": {
+      "fr": [
+        "La nutrition joue un rôle crucial dans le maintien de notre santé globale. Une alimentation équilibrée fournit les nutriments nécessaires pour le bon fonctionnement de notre corps.",
+        "Les aliments riches en vitamines et minéraux renforcent notre système immunitaire, nous aidant ainsi à prévenir diverses maladies. Il est important d'incorporer une variété d'aliments dans notre régime quotidien.",
+        "Une attention particulière doit être portée aux macronutriments : protéines, glucides et graisses saines. Chacun d'eux a une fonction spécifique et contribue à notre bien-être général.",
+        "La prévention des maladies chroniques, telles que le diabète et les maladies cardiovasculaires, peut être largement influencée par nos choix alimentaires. Adopter un mode de vie sain peut réduire considérablement les risques.",
+        "En choisissant des aliments entiers et minimement transformés, nous pouvons améliorer notre santé et notre énergie. Cela inclut des fruits, des légumes, des grains entiers et des sources de protéines maigres.",
+        "Il est également essentiel d'être conscient des portions et de la fréquence des repas. Une alimentation consciente peut aider à maintenir un poids santé et à éviter les excès.",
+        "Enfin, n'oubliez pas de consulter un professionnel de santé ou un nutritionniste pour des conseils adaptés à vos besoins personnels. Une bonne nutrition est la clé d'une vie saine."
+      ],
+      "ar": [
+        "تلعب التغذية دورًا حاسمًا في الحفاظ على صحتنا العامة. توفر لنا التغذية المتوازنة العناصر الغذائية اللازمة لعمل أجسادنا بشكل سليم.",
+        "تساعد الأطعمة الغنية بالفيتامينات والمعادن في تعزيز نظام المناعة لدينا، مما يساعدنا على الوقاية من العديد من الأمراض. من المهم تضمين مجموعة متنوعة من الأطعمة في نظامنا الغذائي اليومي.",
+        "يجب أن نولي اهتمامًا خاصًا للعناصر الغذائية الكبرى: البروتينات، الكربوهيدرات، والدهون الصحية. لكل منها وظيفة محددة وتساهم في رفاهيتنا العامة.",
+        "يمكن أن تتأثر الوقاية من الأمراض المزمنة، مثل السكري وأمراض القلب، بشكل كبير باختياراتنا الغذائية. يمكن أن يقلل اعتماد نمط حياة صحي من المخاطر بشكل كبير.",
+        "من خلال اختيار الأطعمة الكاملة والمصنعة بشكل ضئيل، يمكننا تحسين صحتنا وطاقة أجسادنا. يتضمن ذلك الفواكه، الخضروات، الحبوب الكاملة، ومصادر البروتين الخالية من الدهون.",
+        "من المهم أيضًا أن نكون واعين بالحجم والتكرار عند تناول الطعام. يمكن أن تساعدنا التغذية الواعية في الحفاظ على وزن صحي وتجنب الإفراط.",
+        "أخيرًا، تذكر استشارة أخصائي صحة أو أخصائي تغذية للحصول على نصائح تناسب احتياجاتك الشخصية. التغذية الجيدة هي مفتاح حياة صحية."
+      ]
+    },
+    "date": "2026-06-19"
+  },
+  {
     "slug": "bienfaits-des-aliments-bio-pour-la-sante",
     "image": "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=1200&q=80",
     "title": {
