@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-de-lalimentation-vegetale-pour-la-sante",
+    "image": "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits de l'alimentation végétale pour la santé",
+      "ar": "فوائد النظام الغذائي النباتي للصحة"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment une alimentation végétale peut améliorer votre santé générale.",
+      "ar": "اكتشف كيف يمكن أن يحسن النظام الغذائي النباتي صحتك العامة."
+    },
+    "metaKeywords": {
+      "fr": "alimentation végétale, santé, bienfaits, nutrition, santé globale, prévention maladies, Maroc, régime, légumes, fruits, protéines végétales, fibres alimentaires, mode de vie sain, santé durable, équilibre alimentaire",
+      "ar": "نظام غذائي نباتي, صحة, فوائد, تغذية, صحة شاملة, الوقاية من الأمراض, المغرب, نظام غذائي, خضروات, فواكه, بروتينات نباتية, ألياف غذائية, نمط حياة صحي, صحة مستدامة, توازن غذائي"
+    },
+    "content": {
+      "fr": [
+        "L'alimentation végétale, riche en fruits, légumes, légumineuses et céréales, offre de nombreux avantages pour la santé. Elle est souvent associée à une réduction des risques de maladies chroniques.",
+        "Les études montrent que les régimes à base de plantes peuvent diminuer l'incidence de maladies telles que le diabète de type 2, les maladies cardiaques et certains cancers. Ces aliments sont également riches en antioxydants et en fibres.",
+        "Un des principaux avantages de l'alimentation végétale est sa capacité à favoriser un poids santé. Les aliments d'origine végétale sont souvent moins caloriques et plus riches en nutriments, ce qui aide à maintenir un poids équilibré.",
+        "En intégrant davantage de plantes dans votre alimentation, vous pouvez également améliorer votre digestion. Les fibres présentes dans ces aliments aident à réguler le transit intestinal et à maintenir la santé digestive.",
+        "Il est important de s'assurer que votre alimentation végétale est variée pour obtenir tous les nutriments nécessaires. Pensez à inclure des sources de protéines végétales comme les haricots, les lentilles et les noix.",
+        "Avant de faire des changements significatifs à votre régime alimentaire, il est toujours conseillé de consulter un professionnel de santé. Un médecin ou un nutritionniste peut vous aider à élaborer un plan alimentaire adapté à vos besoins.",
+        "En conclusion, adopter une alimentation végétale peut apporter de nombreux bienfaits pour la santé. Non seulement elle contribue à la prévention des maladies, mais elle favorise également un mode de vie durable."
+      ],
+      "ar": [
+        "النظام الغذائي النباتي، الغني بالفواكه والخضروات والبقوليات والحبوب، يقدم العديد من الفوائد للصحة. وغالباً ما يرتبط بتقليل مخاطر الأمراض المزمنة.",
+        "تظهر الدراسات أن الأنظمة الغذائية القائمة على النباتات يمكن أن تقلل من الإصابة بأمراض مثل السكري من النوع 2، وأمراض القلب وبعض أنواع السرطان. كما أن هذه الأطعمة غنية بمضادات الأكسدة والألياف.",
+        "تتمثل إحدى الفوائد الرئيسية للنظام الغذائي النباتي في قدرته على تعزيز وزن صحي. الأطعمة النباتية غالباً ما تكون أقل سعرات حرارية وأكثر غنى بالعناصر الغذائية، مما يساعد في الحفاظ على وزن متوازن.",
+        "من خلال دمج المزيد من النباتات في نظامك الغذائي، يمكنك أيضاً تحسين عملية الهضم لديك. تساعد الألياف الموجودة في هذه الأطعمة على تنظيم حركة الأمعاء والحفاظ على صحة الجهاز الهضمي.",
+        "من المهم التأكد من أن نظامك الغذائي النباتي متنوع للحصول على جميع العناصر الغذائية الضرورية. احرص على تضمين مصادر البروتينات النباتية مثل الفاصولياء والعدس والمكسرات.",
+        "قبل إجراء تغييرات كبيرة في نظامك الغذائي، يُنصح دائماً باستشارة متخصص في الصحة. يمكن لطبيب أو أخصائي تغذية مساعدتك في وضع خطة غذائية تناسب احتياجاتك.",
+        "في الختام، يمكن أن يجلب اتباع نظام غذائي نباتي العديد من الفوائد الصحية. فهو لا يساهم فقط في الوقاية من الأمراض، بل يعزز أيضاً نمط حياة مستدام."
+      ]
+    },
+    "date": "2026-06-20"
+  },
+  {
     "slug": "bienfaits-de-la-nutrition-pour-la-sante",
     "image": "https://images.unsplash.com/photo-1505576633757-0ac1084af824?auto=format&fit=crop&w=1200&q=80",
     "title": {
