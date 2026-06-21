@@ -1,5 +1,42 @@
 [
   {
+    "slug": "limportance-des-aliments-nutritifs-pour-le-corps",
+    "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "L'importance des aliments nutritifs pour le corps",
+      "ar": "أهمية الأغذية المغذية للجسم"
+    },
+    "excerpt": {
+      "fr": "Découvrez pourquoi les aliments nutritifs sont essentiels pour votre santé.",
+      "ar": "اكتشف لماذا تعتبر الأغذية المغذية ضرورية لصحتك."
+    },
+    "metaKeywords": {
+      "fr": "aliments nutritifs, santé, prévention, Maroc, nutrition, bien-être, santé des adultes, alimentation équilibrée, choix alimentaires, habitudes saines",
+      "ar": "أغذية مغذية, صحة, وقاية, المغرب, تغذية, رفاهية, صحة البالغين, تغذية متوازنة, خيارات غذائية, عادات صحية"
+    },
+    "content": {
+      "fr": [
+        "Les aliments nutritifs jouent un rôle essentiel dans notre bien-être général. Ils fournissent les vitamines, minéraux et nutriments nécessaires pour le bon fonctionnement de notre corps.",
+        "Une alimentation riche en nutriments peut aider à prévenir diverses maladies chroniques. Une bonne nutrition peut réduire le risque de maladies cardiovasculaires, de diabète et d'obésité.",
+        "Il est important de privilégier les fruits, légumes, céréales complètes et protéines maigres dans notre alimentation quotidienne. Ces aliments sont non seulement bénéfiques mais également délicieux.",
+        "Le choix de consommer des aliments nutritifs favorise aussi une meilleure santé mentale. Une alimentation équilibrée peut influencer notre humeur et notre niveau d'énergie.",
+        "En intégrant une variété d'aliments nutritifs, on s'assure d'obtenir tous les acides aminés essentiels et autres nutriments nécessaires à notre corps.",
+        "Évitez de vous laisser séduire par les aliments transformés qui sont souvent riches en sucres et en gras malsains. Optez pour des aliments non transformés qui offrent de réels avantages pour la santé.",
+        "Enfin, n'oubliez jamais de consulter votre médecin ou votre pharmacien pour des conseils personnalisés sur votre nutrition et votre santé."
+      ],
+      "ar": [
+        "تعتبر الأغذية المغذية ضرورية لصحتنا العامة. فهي تزود الجسم بالفيتامينات والمعادن والعناصر الغذائية اللازمة لوظائفه السليمة.",
+        "تساعد التغذية الغنية بالعناصر الغذائية على الوقاية من العديد من الأمراض المزمنة. يمكن أن تقلل التغذية الجيدة من خطر الإصابة بأمراض القلب والسكري والسمنة.",
+        "من المهم تفضيل الفواكه والخضروات والحبوب الكاملة والبروتينات الخالية من الدهون في نظامنا الغذائي اليومي. هذه الأطعمة ليست مفيدة فحسب، بل لذيذة أيضاً.",
+        "يساهم اختيار تناول الأغذية المغذية في تعزيز صحتنا النفسية أيضاً. يمكن أن تؤثر التغذية المتوازنة على مزاجنا ومستوى طاقتنا.",
+        "من خلال دمج مجموعة متنوعة من الأغذية المغذية، نضمن الحصول على جميع الأحماض الأمينية الأساسية والعناصر الغذائية الضرورية لجسمنا.",
+        "تجنب الانجراف نحو الأطعمة المعالجة التي غالباً ما تكون غنية بالسكريات والدهون الضارة. اختر الأطعمة غير المعالجة التي تقدم فوائد صحية حقيقية.",
+        "وأخيراً، لا تنسَ استشارة طبيبك أو صيدليتك للحصول على نصائح مخصصة حول تغذيتك وصحتك."
+      ]
+    },
+    "date": "2026-06-21"
+  },
+  {
     "slug": "bienfaits-de-lalimentation-vegetale-pour-la-sante",
     "image": "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=1200&q=80",
     "title": {
