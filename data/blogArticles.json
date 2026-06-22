@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-de-lalimentation-mediterraneenne-pour-la-sante",
+    "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits de l'alimentation méditerranéenne pour la santé",
+      "ar": "فوائد النظام الغذائي المتوسطي للصحة"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment un régime méditerranéen peut améliorer votre santé.",
+      "ar": "اكتشف كيف يمكن لنظام غذائي متوسطي تحسين صحتك."
+    },
+    "metaKeywords": {
+      "fr": "alimentation méditerranéenne, santé, bienfaits nutritionnels, régime, prévention, maladies chroniques, Maroc, fruits et légumes, huiles saines, mode de vie, santé cardiaque, nutrition équilibrée, bien-être, conseils santé, habitudes alimentaires",
+      "ar": "النظام الغذائي المتوسطي, الصحة, فوائد التغذية, النظام الغذائي, الوقاية, الأمراض المزمنة, المغرب, الفواكه والخضروات, الزيوت الصحية, نمط الحياة, صحة القلب, التغذية المتوازنة, الرفاهية, نصائح صحية, العادات الغذائية"
+    },
+    "content": {
+      "fr": [
+        "L'alimentation méditerranéenne est souvent citée comme l'un des régimes les plus sains au monde. Elle se concentre sur la consommation de fruits, légumes, grains entiers et huiles saines, offrant ainsi une multitude de bienfaits pour la santé.",
+        "Ce régime est riche en antioxydants, en fibres et en acides gras insaturés, qui sont tous essentiels pour maintenir une bonne santé. Les aliments comme les olives et les noix, qui font partie intégrante de ce régime, sont également bénéfiques pour le cœur.",
+        "Des études ont montré que les personnes suivant un régime méditerranéen ont un risque réduit de maladies chroniques telles que les maladies cardiaques et le diabète. Cela est en grande partie dû à la réduction de l'inflammation dans le corps.",
+        "En intégrant une variété d'aliments frais et non transformés, ce régime favorise également une meilleure gestion du poids. Les portions sont généralement plus petites, ce qui encourage une alimentation consciente.",
+        "Un autre aspect clé de ce régime est l'importance de l'activité physique régulière. Associée à l'alimentation méditerranéenne, elle contribue à un mode de vie sain et actif.",
+        "Il est essentiel de rappeler que chaque individu est unique. Avant d'apporter des changements significatifs à votre alimentation, consultez un professionnel de santé pour des conseils adaptés à votre situation personnelle.",
+        "En conclusion, l'alimentation méditerranéenne offre un cadre sain et équilibré pour ceux qui cherchent à améliorer leur bien-être général. Adoptez ces principes alimentaires et observez les effets positifs sur votre santé."
+      ],
+      "ar": [
+        "يعتبر النظام الغذائي المتوسطي واحدًا من الأنظمة الأكثر صحة في العالم. يركز هذا النظام على استهلاك الفواكه والخضروات والحبوب الكاملة والزيوت الصحية، مما يوفر مجموعة متنوعة من الفوائد الصحية.",
+        "هذا النظام غني بمضادات الأكسدة والألياف والأحماض الدهنية غير المشبعة، وكلها ضرورية للحفاظ على صحة جيدة. الأطعمة مثل الزيتون والمكسرات، التي تشكل جزءًا لا يتجزأ من هذا النظام، مفيدة أيضًا لصحة القلب.",
+        "أظهرت الدراسات أن الأشخاص الذين يتبعون النظام الغذائي المتوسطي لديهم خطر أقل للإصابة بالأمراض المزمنة مثل أمراض القلب والسكري. يعود ذلك جزئيًا إلى تقليل الالتهابات في الجسم.",
+        "من خلال دمج مجموعة متنوعة من الأطعمة الطازجة وغير المعالجة، يعزز هذا النظام أيضًا إدارة الوزن بشكل أفضل. عادةً ما تكون الحصص أصغر، مما يشجع على تناول الطعام بوعي.",
+        "جانب آخر رئيسي من هذا النظام هو أهمية النشاط البدني المنتظم. عندما يرتبط بالنظام الغذائي المتوسطي، فإنه يساهم في نمط حياة صحي ونشط.",
+        "من الضروري أن نتذكر أن كل فرد فريد. قبل إجراء تغييرات كبيرة على نظامك الغذائي، استشر متخصصًا في الرعاية الصحية للحصول على نصائح تتماشى مع وضعك الشخصي.",
+        "في الختام، يوفر النظام الغذائي المتوسطي إطارًا صحيًا ومتوازنًا لأولئك الذين يسعون لتحسين رفاهيتهم العامة. اعتنق هذه المبادئ الغذائية ولاحظ التأثيرات الإيجابية على صحتك."
+      ]
+    },
+    "date": "2026-06-22"
+  },
+  {
     "slug": "limportance-des-aliments-nutritifs-pour-le-corps",
     "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
     "title": {
