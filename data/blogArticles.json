@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-de-lalimentation-mediterraneenne-2026",
+    "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les Bienfaits de l'Alimentation Méditerranéenne pour la Santé",
+      "ar": "فوائد النظام الغذائي المتوسطي للصحة"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment l'alimentation méditerranéenne peut améliorer votre santé.",
+      "ar": "اكتشف كيف يمكن أن يحسن النظام الغذائي المتوسطي صحتك."
+    },
+    "metaKeywords": {
+      "fr": "alimentation méditerranéenne, santé, bienfaits, nutrition, Maroc, médicaments, prévention, maladies chroniques, équilibre alimentaire, aliments sains, régime équilibré, santé digestive, bien-être, mode de vie sain, choix nutritionnels",
+      "ar": "النظام الغذائي المتوسطي, الصحة, الفوائد, التغذية, المغرب, الأدوية, الوقاية, الأمراض المزمنة, التوازن الغذائي, الأطعمة الصحية, النظام الغذائي المتوازن, الصحة الهضمية, الرفاهية, نمط الحياة الصحي, الاختيارات الغذائية"
+    },
+    "content": {
+      "fr": [
+        "L'alimentation méditerranéenne est souvent citée comme un modèle d'alimentation saine, riche en nutriments et bénéfique pour la santé. Elle privilégie les fruits, légumes, céréales complètes, légumineuses, noix, et l'huile d'olive, tout en limitant la consommation de viandes rouges et de produits laitiers.",
+        "De nombreuses études ont montré que ce type d'alimentation peut réduire le risque de maladies cardiovasculaires et améliorer la santé cardiaque. Les acides gras oméga-3, présents dans les poissons et certaines noix, jouent un rôle crucial dans cette protection.",
+        "En plus des bienfaits cardiovasculaires, l'alimentation méditerranéenne est également associée à une meilleure gestion du poids. La consommation élevée de fibres provenant des fruits et légumes aide à réguler l'appétit et favorise une digestion saine.",
+        "Cette diète est aussi bénéfique pour la santé mentale. Certains chercheurs suggèrent qu'elle peut réduire les symptômes d'anxiété et de dépression, en grande partie grâce à ses composants antioxydants et anti-inflammatoires.",
+        "Il est important de noter que l'alimentation méditerranéenne encourage également un mode de vie actif. L'intégration d'activités physiques régulières est essentielle pour maximiser les bienfaits de cette alimentation.",
+        "Pour ceux qui souhaitent adopter ce régime, il est conseillé de consulter un nutritionniste ou un diététicien. Ils peuvent aider à personnaliser les choix alimentaires en fonction des besoins et des préférences individuelles.",
+        "Enfin, n'oubliez pas de demander conseil à votre médecin ou pharmacien avant d'apporter des changements significatifs à votre régime alimentaire, surtout si vous avez des conditions de santé préexistantes."
+      ],
+      "ar": [
+        "يعتبر النظام الغذائي المتوسطي نموذجاً للأكل الصحي، حيث إنه غني بالمغذيات وذو فوائد صحية. يركز هذا النظام على الفواكه، والخضروات، والحبوب الكاملة، والبقوليات، والمكسرات، وزيت الزيتون، مع تقليل استهلاك اللحوم الحمراء ومنتجات الألبان.",
+        "أظهرت العديد من الدراسات أن هذا النوع من التغذية يمكن أن يقلل من خطر الإصابة بأمراض القلب ويحسن صحة القلب. تلعب الأحماض الدهنية أوميغا-3، الموجودة في الأسماك وبعض المكسرات، دوراً حاسماً في هذا الحماية.",
+        "بالإضافة إلى الفوائد القلبية، يرتبط النظام الغذائي المتوسطي أيضاً بإدارة أفضل للوزن. يساعد الاستهلاك العالي من الألياف من الفواكه والخضروات في تنظيم الشهية وتعزيز هضم صحي.",
+        "هذه الحمية مفيدة أيضاً للصحة النفسية. يشير بعض الباحثين إلى أنها يمكن أن تقلل من أعراض القلق والاكتئاب، ويرجع ذلك في الغالب إلى مكوناتها المضادة للأكسدة والمضادة للالتهابات.",
+        "من المهم ملاحظة أن النظام الغذائي المتوسطي يشجع أيضاً على نمط حياة نشط. إن دمج الأنشطة البدنية المنتظمة أمر ضروري لتعظيم فوائد هذا النظام الغذائي.",
+        "بالنسبة لأولئك الذين يرغبون في تبني هذا النظام، يُنصح باستشارة أخصائي تغذية أو اختصاصي غذائي. يمكنهم المساعدة في تخصيص الخيارات الغذائية وفقاً للاحتياجات والتفضيلات الفردية.",
+        "أخيراً، لا تنسَ استشارة طبيبك أو صيدلي قبل إجراء تغييرات كبيرة على نظامك الغذائي، خاصة إذا كنت تعاني من حالات صحية مسبقة."
+      ]
+    },
+    "date": "2026-06-24"
+  },
+  {
     "slug": "bienfaits-de-lalimentation-mediterraneenne-pour-la-sante-2026",
     "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80",
     "title": {
