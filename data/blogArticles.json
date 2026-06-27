@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-de-lalimentation-mediterraneenne-pour-le-bien-etre",
+    "image": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits de l'alimentation méditerranéenne pour le bien-être",
+      "ar": "فوائد النظام الغذائي المتوسطي للصحة العامة"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment l'alimentation méditerranéenne contribue à votre bien-être.",
+      "ar": "اكتشف كيف يساهم النظام الغذائي المتوسطي في صحتك العامة."
+    },
+    "metaKeywords": {
+      "fr": "alimentation méditerranéenne, santé, bien-être, nutrition, Maroc, aliments sains, prévention, maladies chroniques, médecine, habitudes alimentaires, régime équilibré, santé globale, vitamines, minéraux, recettes, conseils nutritionnels",
+      "ar": "النظام الغذائي المتوسطي, الصحة, التغذية, الرفاهية, المغرب, الأطعمة الصحية, الوقاية, الأمراض المزمنة, الطب, العادات الغذائية, النظام الغذائي المتوازن, الصحة العامة, الفيتامينات, المعادن, الوصفات, نصائح غذائية"
+    },
+    "content": {
+      "fr": [
+        "L'alimentation méditerranéenne est reconnue non seulement pour son goût, mais aussi pour ses nombreux bienfaits pour la santé. Ce régime riche en fruits, légumes, céréales complètes, et graisses saines comme l'huile d'olive favorise un état de bien-être général.",
+        "Ce mode de vie alimentaire s'accompagne d'une consommation modérée de produits laitiers et de protéines animales, surtout celles issues de la mer. Ces choix nutritionnels sont essentiels pour maintenir un équilibre sain dans l'alimentation.",
+        "Des études montrent que l'alimentation méditerranéenne pourrait réduire le risque de maladies chroniques telles que les maladies cardiaques et le diabète. En intégrant ce régime, vous pourriez non seulement améliorer votre santé physique, mais également votre santé mentale.",
+        "Le partage des repas en famille et entre amis est également une caractéristique de cette culture alimentaire. Cela favorise non seulement de bonnes relations sociales, mais contribue aussi à une meilleure digestion et à une expérience alimentaire plus joyeuse.",
+        "Il est important de se rappeler que la diversité des aliments dans l'alimentation méditerranéenne aide à couvrir tous les besoins nutritionnels. En consommant une variété d'aliments, vous vous assurez d'obtenir suffisamment de vitamines et de minéraux.",
+        "Pour ceux qui envisagent de changer leur régime alimentaire, il est conseillé de consulter un médecin ou un nutritionniste. Ils peuvent vous aider à adapter l'alimentation méditerranéenne à vos besoins spécifiques.",
+        "En conclusion, l'alimentation méditerranéenne ne se limite pas à la nourriture; elle est un véritable mode de vie qui invite à prendre soin de soi, tant physiquement que mentalement."
+      ],
+      "ar": [
+        "يُعرف النظام الغذائي المتوسطي ليس فقط بنكهته، بل أيضًا بفوائده العديدة للصحة. تعتمد هذه الحمية الغنية بالفواكه والخضروات والحبوب الكاملة والدهون الصحية مثل زيت الزيتون على تعزيز الصحة العامة.",
+        "يتم تناول منتجات الألبان والبروتينات الحيوانية بشكل معتدل، وخاصة تلك المستمدة من البحر. هذه الخيارات الغذائية أساسية للحفاظ على توازن صحي في النظام الغذائي.",
+        "تشير الدراسات إلى أن النظام الغذائي المتوسطي قد يساعد في تقليل مخاطر الأمراض المزمنة مثل أمراض القلب والسكري. من خلال دمج هذا النظام، يمكنك تحسين صحتك البدنية وكذلك صحتك النفسية.",
+        "إن مشاركة الوجبات مع العائلة والأصدقاء هي أيضًا سمة من سمات هذه الثقافة الغذائية. فهي تعزز العلاقات الاجتماعية الجيدة، وتساهم أيضًا في تحسين الهضم وتجعل تجربة تناول الطعام أكثر متعة.",
+        "من المهم أن نتذكر أن تنوع الأطعمة في النظام الغذائي المتوسطي يساعد على تلبية جميع الاحتياجات الغذائية. من خلال استهلاك مجموعة متنوعة من الأطعمة، تضمن حصولك على ما يكفي من الفيتامينات والمعادن.",
+        "لمن يفكر في تغيير نظامه الغذائي، يُنصح بالتشاور مع طبيب أو أخصائي تغذية. هم يمكنهم مساعدتك في تعديل النظام الغذائي المتوسطي ليتناسب مع احتياجاتك الخاصة.",
+        "في الختام، لا يقتصر النظام الغذائي المتوسطي على الطعام؛ بل هو نمط حياة حقيقي يدعو إلى العناية بالنفس، جسديًا وعقليًا."
+      ]
+    },
+    "date": "2026-06-27"
+  },
+  {
     "slug": "bienfaits-de-lalimentation-mediterraneenne-sante",
     "image": "https://images.unsplash.com/photo-1535914254981-b5012eebbd15?auto=format&fit=crop&w=1200&q=80",
     "title": {
