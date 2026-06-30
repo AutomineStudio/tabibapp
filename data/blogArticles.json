@@ -1,5 +1,42 @@
 [
   {
+    "slug": "bienfaits-de-la-nutrition-mediterraneenne",
+    "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80",
+    "title": {
+      "fr": "Les bienfaits de la nutrition méditerranéenne",
+      "ar": "فوائد التغذية المتوسطية"
+    },
+    "excerpt": {
+      "fr": "Découvrez comment un régime méditerranéen peut améliorer votre santé.",
+      "ar": "اكتشف كيف يمكن لنظام غذائي متوسطي تحسين صحتك."
+    },
+    "metaKeywords": {
+      "fr": "nutrition méditerranéenne, santé, régime méditerranéen, bienfaits, aliments sains, prévention, Maroc, alimentation équilibrée, santé globale, mode de vie sain, vitamines, minéraux, santé cardiaque, alimentation, habitudes saines, prévention des maladies",
+      "ar": "التغذية المتوسطية, الصحة, نظام غذائي متوسطي, الفوائد, الأطعمة الصحية, الوقاية, المغرب, التغذية المتوازنة, الصحة العامة, نمط حياة صحي, الفيتامينات, المعادن, صحة القلب, الأطعمة, العادات الصحية, الوقاية من الأمراض"
+    },
+    "content": {
+      "fr": [
+        "Le régime méditerranéen est reconnu pour ses multiples bienfaits sur la santé. En intégrant des aliments riches en nutriments, ce mode de vie contribue à la prévention de diverses maladies chroniques.",
+        "Ce régime se compose principalement de fruits, légumes, céréales complètes, et huiles saines, comme l'huile d'olive. Ces aliments sont non seulement savoureux, mais également bénéfiques pour le corps et l'esprit.",
+        "Les études montrent que ce type d'alimentation peut réduire le risque de maladies cardiaques, d'accidents vasculaires cérébraux et de diabète de type 2. Il est important de considérer ces aspects pour un bien-être durable.",
+        "En plus de ses bienfaits physiques, le régime méditerranéen encourage des pratiques sociales comme le partage des repas, favorisant ainsi des liens familiaux et communautaires.",
+        "Il est essentiel de se rappeler qu'une alimentation équilibrée ne se limite pas à un seul régime. Il est crucial d'ajuster ses choix alimentaires à ses besoins personnels et à ses préférences.",
+        "Avant de faire des changements significatifs dans votre alimentation, consultez un professionnel de la santé ou un nutritionniste pour vous assurer que ces choix vous conviennent.",
+        "En conclusion, adopter une approche méditerranéenne peut apporter une contribution significative à votre santé. En choisissant des aliments nutritifs et en maintenant des habitudes saines, vous pouvez améliorer votre qualité de vie."
+      ],
+      "ar": [
+        "يُعتبر النظام الغذائي المتوسطي معروفًا بفوائده العديدة على الصحة. من خلال دمج الأطعمة الغنية بالمغذيات، يساهم هذا النمط الحياتي في الوقاية من مختلف الأمراض المزمنة.",
+        "يتكون هذا النظام الغذائي بشكل أساسي من الفواكه والخضروات والحبوب الكاملة والزيوت الصحية، مثل زيت الزيتون. هذه الأطعمة ليست فقط لذيذة، بل أيضًا مفيدة للجسم والعقل.",
+        "تظهر الدراسات أن هذا النوع من التغذية يمكن أن يقلل من خطر الإصابة بأمراض القلب والسكتات الدماغية ومرض السكري من النوع الثاني. من المهم أن نأخذ هذه الجوانب في الاعتبار من أجل رفاهية دائمة.",
+        "بالإضافة إلى فوائده الجسدية، يشجع النظام الغذائي المتوسطي على ممارسات اجتماعية مثل مشاركة الوجبات، مما يعزز الروابط الأسرية والمجتمعية.",
+        "من الضروري أن نتذكر أن التغذية المتوازنة لا تقتصر على نظام غذائي واحد. من المهم ضبط خياراتك الغذائية حسب احتياجاتك الشخصية وتفضيلاتك.",
+        "قبل إجراء تغييرات كبيرة في نظامك الغذائي، استشر متخصصًا في الصحة أو خبير تغذية للتأكد من أن هذه الخيارات تناسبك.",
+        "في الختام، يمكن أن يسهم اعتماد نهج متوسطي بشكل كبير في صحتك. من خلال اختيار الأطعمة المغذية والحفاظ على عادات صحية، يمكنك تحسين جودة حياتك."
+      ]
+    },
+    "date": "2026-06-30"
+  },
+  {
     "slug": "bienfaits-de-lalimentation-mediterraneenne",
     "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80",
     "title": {
